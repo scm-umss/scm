@@ -2,6 +2,7 @@
 
 use Illuminate\Support\Facades\Route;
 
+
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -21,6 +22,7 @@ Auth::routes();
 
 Route::get('/home', 'HomeController@index')->name('home');
 
+// Rutas para especialidades
 Route::get('/especialidades','EspecialidadController@index')->name('especialidades.index');
 Route::get('/especialidades/create','EspecialidadController@create')->name('especialidades.create');
 Route::post('/especialidades','EspecialidadController@store')->name('especialidades.store');
@@ -28,3 +30,7 @@ Route::get('/especialidades/{especialidad}/edit','EspecialidadController@edit')-
 Route::put('/especialidades/{especialidad}','EspecialidadController@update')->name('especialidades.update');
 Route::delete('/especialidades/{especialidad}','EspecialidadController@destroy')->name('especialidades.destroy');
 
+// Rutas para usuarios
+Route::get('/usuarios','UsuariosController@index')->name('usuarios.index');
+Route::get('/usuarios/{usuario}/edit','UsuariosController@edit')->name('usuarios.edit');
+Route::delete('/usuarios/{usuario}','UsuariosController@destroy')->name('usuarios.destroy');
