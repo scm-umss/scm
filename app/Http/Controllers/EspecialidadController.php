@@ -37,12 +37,23 @@ class EspecialidadController extends Controller
     public function store(Request $request)
     {
         // dd($request->all());
-        $descripcion = new Especialidad();
-        $descripcion->descripcion = $request->input('descripcion');
+        $rules = [
+            'nombre' => 'required|min:5'
+        ];
 
-        $descripcion->save();
+        $message = [
+            'nombre.required' => 'El nombre es requerido',
+            'nombre.min' => 'El nombre debe tener más de 5 caracteres'
+        ];
+        $this->validate($request, $rules, $message);
 
-        return 'Desde store';
+        $especialidad = new Especialidad();
+        $especialidad->nombre = $request->input('nombre');
+        $especialidad->descripcion = $request->input('descripcion');
+
+        $especialidad->save();
+
+        return redirect('/especialidades');
     }
 
     /**
@@ -77,6 +88,14 @@ class EspecialidadController extends Controller
     public function update(Request $request, Especialidad $especialidad)
     {
         // dd($request->all());
+        // Reglas de validación
+        $rules = [
+            'nombre' => 'required|min:5'
+        ];
+
+        // Validación de datos para actualizar
+        $this->validate($request, $rules);
+
         $especialidad->descripcion = $request['descripcion'];
         $especialidad->save();
         return redirect()->action('EspecialidadController@index');
