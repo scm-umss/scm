@@ -4,6 +4,7 @@
 
 
 <div class="col-md-6 mx-auto bg-white p-3">
+    <a class="btn btn-primary float-right mb-3" href="{{ route('usuarios.create') }}" role="button">Nuevo Usuario</a>
     <table class="table table-striped">
         <thead>
             <tr>

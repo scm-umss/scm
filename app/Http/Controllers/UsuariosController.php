@@ -53,7 +53,7 @@ class UsuariosController extends Controller
             // los mensajes van aqui
         ];
 
-        $this->validate($request, $rules, $message);
+        $this->validate($request, $rules);
 
         $usuario = new User();
         $usuario->nombre = $request->input('nombre');
@@ -66,7 +66,7 @@ class UsuariosController extends Controller
 
         $usuario->save();
 
-        return redirect()=>route('usuarios.index');
+        return redirect()->route('usuarios.index');
     }
 
     /**
