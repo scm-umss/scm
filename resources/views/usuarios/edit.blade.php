@@ -5,17 +5,17 @@
     <div class="row justify-content-center">
         <div class="col-md-8">
             <div class="card">
-                <div class="card-header">{{ __('Register') }}</div>
+                <div class="card-header">{{ __('Update') }}</div>
 
                 <div class="card-body">
-                    <form method="POST" action="{{ route('usuarios.store') }}">
+                    <form method="POST" action="{{ route('usuarios.update', $usuario->id) }}">
                         @csrf
-
+                        @method('PUT')
                         <div class="form-group row">
                             <label for="nombre" class="col-md-4 col-form-label text-md-right">Nombre</label>
 
                             <div class="col-md-6">
-                                <input id="nombre" type="text" class="form-control @error('nombre') is-invalid @enderror" name="nombre" value="{{ old('nombre') }}" autocomplete="nombre" autofocus>
+                                <input id="nombre" type="text" class="form-control @error('nombre') is-invalid @enderror" name="nombre" value="{{ $usuario->nombre }}" autocomplete="nombre" autofocus>
 
                                 @error('nombre')
                                     <span class="invalid-feedback" role="alert">
@@ -29,7 +29,7 @@
                             <label for="ap_paterno" class="col-md-4 col-form-label text-md-right">Apellido materno</label>
 
                             <div class="col-md-6">
-                                <input id="ap_paterno" type="text" class="form-control @error('ap_paterno') is-invalid @enderror" name="ap_paterno" value="{{ old('ap_paterno') }}" autocomplete="ap_paterno" autofocus>
+                                <input id="ap_paterno" type="text" class="form-control @error('ap_paterno') is-invalid @enderror" name="ap_paterno" value="{{ $usuario->ap_paterno }}" autocomplete="ap_paterno" autofocus>
 
                                 @error('ap_paterno')
                                     <span class="invalid-feedback" role="alert">
@@ -43,7 +43,7 @@
                             <label for="ap_materno" class="col-md-4 col-form-label text-md-right">Apellido Paterno</label>
 
                             <div class="col-md-6">
-                                <input id="ap_materno" type="text" class="form-control @error('ap_materno') is-invalid @enderror" name="ap_materno" value="{{ old('ap_materno') }}" autocomplete="ap_materno" autofocus>
+                                <input id="ap_materno" type="text" class="form-control @error('ap_materno') is-invalid @enderror" name="ap_materno" value="{{ $usuario->ap_materno }}" autocomplete="ap_materno" autofocus>
 
                                 @error('ap_materno')
                                     <span class="invalid-feedback" role="alert">
@@ -57,7 +57,7 @@
                             <label for="telefono" class="col-md-4 col-form-label text-md-right">Teléfono</label>
 
                             <div class="col-md-6">
-                                <input id="telefono" type="text" class="form-control @error('telefono') is-invalid @enderror" name="telefono" value="{{ old('telefono') }}"  autocomplete="telefono" autofocus>
+                                <input id="telefono" type="text" class="form-control @error('telefono') is-invalid @enderror" name="telefono" value="{{ $usuario->telefono }}"  autocomplete="telefono" autofocus>
 
                                 @error('telefono')
                                     <span class="invalid-feedback" role="alert">
@@ -75,8 +75,7 @@
 
                                 <select class="form-control" name="rol">
                                     @foreach(["admin" => "Administrador", "medico" => "Médico Profesional", "paciente" => "Paciente"] as $rol => $rolE)
-
-                                    <option value="{{ $rol }}">{{ $rolE }}</option>
+                                    <option value="{{ $rol }}" {{ $usuario->rol == $rol ? 'selected' : '' }}>{{ $rolE }}</option>
                                     @endforeach
                                 </select>
 
@@ -92,7 +91,7 @@
                             <label for="email" class="col-md-4 col-form-label text-md-right">{{ __('E-Mail Address') }}</label>
 
                             <div class="col-md-6">
-                                <input id="email" type="email" class="form-control @error('email') is-invalid @enderror" name="email" value="{{ old('email') }}" autocomplete="email">
+                                <input id="email" type="email" class="form-control @error('email') is-invalid @enderror" name="email" value="{{ $usuario->email }}" autocomplete="email">
 
                                 @error('email')
                                     <span class="invalid-feedback" role="alert">
@@ -106,7 +105,7 @@
                             <label for="password" class="col-md-4 col-form-label text-md-right">{{ __('Password') }}</label>
 
                             <div class="col-md-6">
-                                <input id="password" type="password" class="form-control @error('password') is-invalid @enderror" name="password"  autocomplete="new-password">
+                                <input id="password" type="password" class="form-control @error('password') is-invalid @enderror" name="password" autocomplete="new-password">
 
                                 @error('password')
                                     <span class="invalid-feedback" role="alert">
@@ -123,15 +122,14 @@
                                 <input id="password-confirm" type="password" class="form-control" name="password_confirmation"  autocomplete="new-password">
                             </div>
                         </div>
-
+                        
                         <div class="form-group row">
                             <label for="estado" class="col-md-4 col-form-label text-md-right">Estado</label>
 
                             <div class="col-md-6">
                                 <select class="form-control" name="estado">
                                     @foreach(["a" => "Activo", "i" => "Inactivo"] as $estado => $estadoTexto)
-
-                                    <option value="{{ $estado }}">{{ $estadoTexto }}</option>
+                                    <option value="{{ $estado }}" {{ $usuario->estado == $estado ? 'selected' : '' }}>{{ $estadoTexto }}</option>
                                     @endforeach
                                 </select>
 
@@ -142,11 +140,11 @@
                                 @enderror
                             </div>
                         </div>
-
+                        
                         <div class="form-group row mb-0">
                             <div class="col-md-6 offset-md-4">
                                 <button type="submit" class="btn btn-primary">
-                                    {{ __('Register') }}
+                                    Actualizar
                                 </button>
                             </div>
                         </div>

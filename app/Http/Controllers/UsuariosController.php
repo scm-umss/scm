@@ -45,6 +45,7 @@ class UsuariosController extends Controller
             'ap_materno' => 'required|string|max:255',
             'telefono' => 'required|string|max:255',
             'rol' => 'required',
+            'estado' => 'required',
         ];
 
         $message = [
@@ -63,6 +64,7 @@ class UsuariosController extends Controller
         $usuario->ap_materno = $request->input('ap_materno');
         $usuario->telefono = $request->input('telefono');
         $usuario->rol = $request->input('rol');
+        $usuario->estado = $request->input('estado');
 
         $usuario->save();
 
@@ -86,9 +88,9 @@ class UsuariosController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit($id)
+    public function edit(User $usuario)
     {
-        //
+        return view('usuarios.edit', compact('usuario'));
     }
 
     /**
@@ -98,9 +100,42 @@ class UsuariosController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(Request $request, User $usuario)
     {
-        //
+        $rules = [
+            'nombre' => 'required|string|max:255',
+            'email' => 'required|string|email|max:255|unique:users,email,'.$usuario->id,
+            'password' => 'nullable|string|min:8|confirmed',
+            'ap_paterno' => 'required|string|max:255',
+            'ap_materno' => 'required|string|max:255',
+            'telefono' => 'required|string|max:255',
+            'rol' => 'required',
+            'estado' => 'required',
+        ];
+
+        $message = [
+            'nombre.required' => 'El nombre es requerido',
+            'nombre.min' => 'El nombre debe tener más de 5 caracteres'
+            // los mensajes van aqui
+        ];
+
+        $this->validate($request, $rules);
+
+        //$usuario = new User();
+        $usuario->nombre = $request->input('nombre');
+        $usuario->email = $request->input('email');
+        if ($request->input('password') <> '') {
+            $usuario->password = $request->input('password');
+        }        
+        $usuario->ap_paterno = $request->input('ap_paterno');
+        $usuario->ap_materno = $request->input('ap_materno');
+        $usuario->telefono = $request->input('telefono');
+        $usuario->rol = $request->input('rol');
+        $usuario->estado = $request->input('estado');
+
+        $usuario->update();
+
+        return redirect()->route('usuarios.index');
     }
 
     /**
@@ -111,6 +146,6 @@ class UsuariosController extends Controller
      */
     public function destroy($id)
     {
-        //
+        
     }
 }

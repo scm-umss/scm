@@ -14,6 +14,7 @@
                 <th scope="col">Teléfono</th>
                 <th scope="col">Rol</th>
                 <th scope="col">Email</th>
+                <th scope="col">Estado</th>
                 <th scope="col">Acciones</th>
 
             </tr>
@@ -27,6 +28,11 @@
                     <td>{{ $usuario->telefono }}</td>
                     <td>{{ $usuario->rol }}</td>
                     <td>{{ $usuario->email }}</td>
+                    <td>@if ($usuario->estado == 'a')
+                        Activo
+                      @else 
+                        Inactivo
+                     @endif</td>
                     <td>
 
                         <form action="{{ route('usuarios.destroy', ['usuario' => $usuario->id]) }}"
