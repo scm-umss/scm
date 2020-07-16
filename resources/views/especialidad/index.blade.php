@@ -4,6 +4,7 @@
 
 
 <div class="col-md-6 mx-auto bg-white p-3">
+    <a class="btn btn-primary float-right mb-3" href="{{ route('especialidad.create') }}" role="button">Nuevo Especialidad</a>
     <table class="table table-striped">
         <thead>
             <tr>
@@ -21,11 +22,11 @@
                     <td>{{ $especialidad->descripcion }}</td>
                     <td>
 
-                        <form action="{{ route('especialidades.destroy', ['especialidad' => $especialidad->id]) }}"
+                        <form action="{{ route('especialidad.destroy', ['especialidad' => $especialidad->id]) }}"
                             method="POST">
                             @csrf
                             @method('DELETE')
-                            <a href="{{ route('especialidades.edit', ['especialidad' => $especialidad->id]) }}" class="btn btn-sm btn-primary">Editar</a>
+                            <a href="{{ route('especialidad.edit', ['especialidad' => $especialidad->id]) }}" class="btn btn-sm btn-primary">Editar</a>
                             <button type="submit" class="btn btn-sm btn-danger">Eliminar</button>
                             </form>
                     </td>

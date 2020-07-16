@@ -3,7 +3,7 @@
 @section('content')
 <div class="container">
     <div class="row justify-content-center mt-5">
-        <form action="{{ route('especialidades.update', ['especialidad' => $especialidad->id]) }}"
+        <form action="{{ route('especialidad.update', ['especialidad' => $especialidad->id]) }}"
         class="col-md-9 col-xs-12 card card-body"
         method="POST">
             @csrf

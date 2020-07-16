@@ -2,8 +2,11 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\UsuariosRequest;
 use App\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Hash;
+
 //use Illuminate\Support\Facades\Validator;
 
 class UsuariosController extends Controller
@@ -35,25 +38,8 @@ class UsuariosController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(UsuariosRequest $request)
     {
-        $rules = [
-            'nombre' => 'required|string|max:255',
-            'email' => 'required|string|email|max:255|unique:users',
-            'password' => 'required|string|min:8|confirmed',
-            'ap_paterno' => 'required|string|max:255',
-            'ap_materno' => 'required|string|max:255',
-            'telefono' => 'required|string|max:255',
-            'rol' => 'required',
-        ];
-
-        $message = [
-            'nombre.required' => 'El nombre es requerido',
-            'nombre.min' => 'El nombre debe tener más de 5 caracteres'
-            // los mensajes van aqui
-        ];
-
-        $this->validate($request, $rules);
 
         $usuario = new User();
         $usuario->nombre = $request->input('nombre');
@@ -86,9 +72,9 @@ class UsuariosController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit($id)
+    public function edit(User $usuario)
     {
-        //
+        return view('usuarios.edit', compact('usuario'));
     }
 
     /**
@@ -98,9 +84,23 @@ class UsuariosController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(Request $request, User $usuario)
     {
-        //
+
+        // dd( $usuario);
+        $usuario->nombre = $request->input('nombre');
+        $usuario->email = $request->input('email');
+        $usuario->ap_paterno = $request->input('ap_paterno');
+        $usuario->ap_materno = $request->input('ap_materno');
+        $usuario->telefono = $request->input('telefono');
+        $usuario->rol = $request->input('rol');
+        if($request->password){
+            $usuario->password = Hash::make($request->input('password'));
+            // dd($usuario->password);
+        }
+        $usuario->save();
+
+        return redirect()->route('usuarios.index');
     }
 
     /**
