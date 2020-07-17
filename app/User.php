@@ -16,7 +16,7 @@ class User extends Authenticatable
      * @var array
      */
     protected $fillable = [
-        'email', 'password','ap_paterno', 'ap_materno', 'nombre', 'telefono', 'rol'
+        'email', 'password', 'ap_paterno', 'ap_materno', 'nombre', 'telefono', 'rol', 'estado'
     ];
 
     /**
@@ -36,4 +36,19 @@ class User extends Authenticatable
     protected $casts = [
         'email_verified_at' => 'datetime',
     ];
+
+    public function roles(){
+        return $this->belongsToMany(Rol::class, 'rol_user');
+    }
+
+    public function tieneRol(array $roles){
+        foreach($roles as $rol){
+            foreach ($this->roles as $usuarioRol) {
+                if($usuarioRol->slug == $rol){
+                    return true;
+                }
+            }
+
+        }
+    }
 }

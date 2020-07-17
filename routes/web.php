@@ -28,6 +28,9 @@ Route::resource('/especialidad','EspecialidadController')->names('especialidad')
 // Rutas para usuarios
 Route::resource('/usuarios','UsuariosController')->names('usuarios');
 
+Route::resource('/rol','RolController')->names('rol');
+
+
 // Route::get('/usuarios','UsuariosController@index')->name('usuarios.index');
 // Route::get('/usuarios/create','UsuariosController@create')->name('usuarios.create');
 // Route::post('/usuarios','UsuariosController@store')->name('usuarios.store');

@@ -3,20 +3,34 @@
 @section('content')
     <div class="container">
         <div class="row justify-content-center mt-5">
-            <form action="{{ route('especialidad.store') }}" method="POST" class="col-md-9 col-xs-12 card card-body">
+
+            <form action="{{ route('rol.store') }}" method="POST" class="col-md-9 col-xs-12 card card-body">
                 @csrf
 
-                <fieldset class="border p-4">
-                    <legend class="text-primary">Complete el formulario para registrar una especialidad</legend>
+
+
                     <div class="form-group">
                         <label for="nombre"> Nombre:</label>
                         <input type="text"
                             name="nombre"
                             id="nombre"
-                            placeholder="Nombre de especialidad"
+                            placeholder="Nombre de rol"
                             value="{{ old('nombre') }}"
                             class="form-control @error('nombre') is-invalid @enderror mb-4">
                             @error('nombre')
+                                <div class="invalid-feedback">
+                                    {{ $message }}
+                                </div>
+                            @enderror
+
+                        <label for="slug"> Slug:</label>
+                        <input type="text"
+                            name="slug"
+                            id="slug"
+                            placeholder="slug de rol"
+                            value="{{ old('slug') }}"
+                            class="form-control @error('slug') is-invalid @enderror mb-4">
+                            @error('slug')
                                 <div class="invalid-feedback">
                                     {{ $message }}
                                 </div>
@@ -26,7 +40,7 @@
                         <input type="text"
                             name="descripcion"
                             id="descripcion"
-                            placeholder="Descripción de especialidad"
+                            placeholder="Descripción del rol"
                             value="{{ old('descripcion') }}"
                             class="form-control @error('descripcion') is-invalid @enderror mb-4">
                             @error('descripcion')
@@ -35,9 +49,9 @@
                                 </div>
                             @enderror
                         <button type="submit" class="btn btn-primary btn-md">Guardar</button>
-                        <a href="{{ route('especialidad.index') }}" class="btn btn-danger px4">Cancelar</a>
+                        <a href="{{ route('rol.index') }}" class="btn btn-danger px4">Cancelar</a>
                     </div>
-                </fieldset>
+
 
             </form>
 
@@ -45,3 +59,4 @@
     </div>
 
 @endsection
+

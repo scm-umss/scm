@@ -33,7 +33,15 @@
                 <div class="collapse navbar-collapse" id="navbarSupportedContent">
                     <!-- Left Side Of Navbar -->
                     <ul class="navbar-nav mr-auto">
-
+                        <li class="nav-item">
+                            <a href="{{ route('usuarios.index') }}" class="nav-link">Usuarios</a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="{{ route('rol.index') }}" class="nav-link">Roles</a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="{{ route('especialidad.index') }}" class="nav-link">Especialidad</a>
+                        </li>
                     </ul>
 
                     <!-- Right Side Of Navbar -->
@@ -45,7 +53,7 @@
                             </li>
                             @if (Route::has('register'))
                                 <li class="nav-item">
-                                    <a class="nav-link" href="{{ route('register') }}">{{ __('Register') }}</a>
+                                    <a class="nav-link" href="{{ route('usuarios.create') }}">{{ __('Register') }}</a>
                                 </li>
                             @endif
                         @else

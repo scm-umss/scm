@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateEspecialidadsTable extends Migration
+class CreateRolUserTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,10 +13,10 @@ class CreateEspecialidadsTable extends Migration
      */
     public function up()
     {
-        Schema::create('especialidads', function (Blueprint $table) {
+        Schema::create('rol_user', function (Blueprint $table) {
             $table->id();
-            $table->string('nombre')->unique();
-            $table->string('descripcion')->nullable();
+            $table->foreignId('user_id')->constrained()->cascadeOnDelete();
+            $table->foreignId('rol_id')->constrained()->cascadeOnDelete();
             $table->timestamps();
         });
     }
@@ -28,6 +28,6 @@ class CreateEspecialidadsTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('especialidads');
+        Schema::dropIfExists('rol_user');
     }
 }

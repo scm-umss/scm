@@ -44,6 +44,7 @@
 
                 <div class="form-group">
                     <input type="submit" class="btn btn-primary" value="Actualizar">
+                    <a href="{{ route('especialidad.index') }}" class="btn btn-danger px4">Cancelar</a>
                 </div>
 
             </fieldset>
