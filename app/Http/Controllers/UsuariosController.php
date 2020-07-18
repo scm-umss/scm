@@ -13,13 +13,18 @@ use Illuminate\Support\Facades\Hash;
 
 class UsuariosController extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware('auth');
+    }
     /**
      * Display a listing of the resource.
      *
      * @return \Illuminate\Http\Response
      */
     public function index()
-    {
+    {        
+        //$this->authorize('view', null);
         $u = User::find(1);
         // $ur = $u->roles()->slug;
         $usuarios = User::all();
@@ -44,8 +49,7 @@ class UsuariosController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function store(UsuariosRequest $request)
-    {
-
+    {        
         // dd($request->all());
         $usuario = new User();
         $usuario->nombre = $request->input('nombre');
@@ -57,7 +61,7 @@ class UsuariosController extends Controller
         $usuario->telefono = $request->input('telefono');
         // $usuario->rol = $request->input('rol');
         $usuario->estado = $request->input('estado');
-
+       
         $usuario->save();
         $usuario->roles()->sync([$request->input('rol')]);
         return redirect()->route('usuarios.index');
@@ -82,6 +86,7 @@ class UsuariosController extends Controller
      */
     public function edit(User $usuario)
     {
+        //$this->authorize('viewAny');
         $roles = Rol::orderBy('nombre', 'ASC')->get();
         // dd($usuario->roles[0]->nombre);
         return view('usuarios.edit', compact('usuario', 'roles'));
