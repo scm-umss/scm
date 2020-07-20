@@ -15,9 +15,17 @@ class AdminMiddleware
      */
     public function handle($request, Closure $next)
     {
-        //dd(auth()->user()->roles()->slug);
-        //if (auth()->user()->tieneRol(['admin'])) {
-        //   return $next($request);
-        //}
+
+        // if (auth()->user()->roles[0]->slug == 'admin') {
+        //     return $next($request);
+        // }else{
+        //     return redirect('/');
+        // }
+        // dd(auth()->user()->tieneRol(['admin']));
+        if (auth()->user()->tieneRol(['admin'])) {
+          return $next($request);
+        }else {
+            return redirect('/');
+        }
     }
 }

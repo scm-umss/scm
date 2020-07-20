@@ -15,7 +15,7 @@ class UsuariosController extends Controller
 {
     public function __construct()
     {
-        $this->middleware('auth');
+        $this->middleware(['auth', 'admin']);
     }
     /**
      * Display a listing of the resource.
@@ -23,12 +23,11 @@ class UsuariosController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function index()
-    {        
+    {
         //$this->authorize('view', null);
-        $u = User::find(1);
-        // $ur = $u->roles()->slug;
+
         $usuarios = User::all();
-        return view('usuarios.index', compact('usuarios', 'u'));
+        return view('usuarios.index', compact('usuarios'));
     }
 
     /**
@@ -49,7 +48,7 @@ class UsuariosController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function store(UsuariosRequest $request)
-    {        
+    {
         // dd($request->all());
         $usuario = new User();
         $usuario->nombre = $request->input('nombre');
@@ -61,7 +60,7 @@ class UsuariosController extends Controller
         $usuario->telefono = $request->input('telefono');
         // $usuario->rol = $request->input('rol');
         $usuario->estado = $request->input('estado');
-       
+
         $usuario->save();
         $usuario->roles()->sync([$request->input('rol')]);
         return redirect()->route('usuarios.index');
