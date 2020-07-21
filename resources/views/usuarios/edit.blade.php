@@ -93,7 +93,7 @@
                                 <div class="col-md-6">
                                     {{-- <input id="rol" type="text" class="form-control @error('rol') is-invalid @enderror" name="rol" value="{{ old('rol') }}" required autocomplete="rol" autofocus> --}}
 
-                                    <select name="rol" id="rol" class="form-control">
+                                    {{-- <select name="rol" id="rol" class="form-control">
                                         @foreach ($roles as $rol)
                                             <option value="{{ $rol->id }}"
 
@@ -104,7 +104,18 @@
                                             @endisset
                                             >{{ $rol->nombre }}</option>
                                         @endforeach
-                                    </select>
+                                    </select> --}}
+
+                                    @foreach ($roles as $rol)
+                                        <input id="{{ $rol->slug }}" name="roles[]" type="checkbox" class="form-check-input checkbox" value="{{ $rol->id }}"
+                                            @foreach($usuario->roles as $rol_usuario)
+                                                @if ($rol->nombre == $rol_usuario->nombre)
+                                                    checked
+                                                @endif
+                                            @endforeach
+                                        >
+                                        <label for="{{ $rol->slug }}" class="form-check-label">{{ $rol->nombre }}</label>
+                                    @endforeach
 
                                     @error('rol')
                                         <span class="invalid-feedback" role="alert">

@@ -49,7 +49,8 @@ class UsuariosController extends Controller
      */
     public function store(UsuariosRequest $request)
     {
-        // dd($request->all());
+        //dd($request->all());
+
         $usuario = new User();
         $usuario->nombre = $request->input('nombre');
         $usuario->email = $request->input('email');
@@ -62,7 +63,9 @@ class UsuariosController extends Controller
         $usuario->estado = $request->input('estado');
 
         $usuario->save();
-        $usuario->roles()->sync([$request->input('rol')]);
+
+        $usuario->roles()->sync($request->roles);
+        
         return redirect()->route('usuarios.index');
     }
 
@@ -114,7 +117,7 @@ class UsuariosController extends Controller
             // dd($usuario->password);
         }
         $usuario->save();
-        $usuario->roles()->sync([$request->input('rol')]);
+        $usuario->roles()->sync($request->roles);
         // $usuario->update();
 
         return redirect()->route('usuarios.index');
