@@ -84,48 +84,34 @@
                             </div>
 
                             <div class="form-group row">
-                                <label for="rol" class="col-md-4 col-form-label text-md-right">Roles</label>
+                                <label for="rol" class="col-md-4 col-form-label text-md-right">Roles:</label>
 
                                 <div class="col-md-6">
-                                    {{-- <input id="rol" type="text" class="form-control @error('rol') is-invalid @enderror" name="rol" value="{{ old('rol') }}" required autocomplete="rol" autofocus> --}}
-
-                                    {{-- <select class="form-control" name="rol">
-                                        @foreach(["admin" => "Administrador", "medico" => "Médico Profesional", "paciente" => "Paciente"] as $rol => $rolE)
-
-                                        <option value="{{ $rol }}">{{ $rolE }}</option>
-                                        @endforeach
-                                    </select> --}}
-
-                                    
-                                        {{-- <select name="rol" id="rol" class="form-control">
-                                        @foreach ($roles as $rol)
-                                            <option value="{{ $rol->id }}"
-
-                                            >{{ $rol->nombre }}</option>
-                                        @endforeach
-                                    </select> --}}                                    
-                                    <div class="custom-control custom-checkbox">
-                                        @foreach ($roles as $rol)
+                                    @foreach ($roles as $rol)
+                                    <div class="form-check form-check-inline">
+                                        <input class="form-check-input"
+                                            type="checkbox"
+                                            id="{{ $rol->slug }}"
+                                            name="roles[]"
+                                            value="{{ $rol->id }}"
+                                        >
+                                        <label class="form-check-label" for="{{ $rol->slug }}">{{ $rol->nombre }}</label>
+                                    </div>
+                                    @endforeach
+{{--
                                         <input id="{{ $rol->slug }}" name="roles[]" type="checkbox" class="custom-control-input" value="{{ $rol->id }}">
-                                        <label for="{{ $rol->slug }}" class="form-check-label">{{ $rol->nombre }}</label>
-                                        @endforeach
+                                        <label for="" class="form-check-label">{{ $rol->nombre }}</label> --}}
+
 
                                         @error('rol')
                                             <span class="invalid-feedback" role="alert">
                                                 <strong>{{ $message }}</strong>
                                             </span>
                                         @enderror
-                                    </div>
-                                    {{-- <input id="rol-admin" name="rol-admin" type="checkbox" class="form-check-input" value="1">
-                                    <label for="rol-admin" class="form-check-label">Administrador</label>
 
-                                    <input name="rol-medico" type="checkbox" class="form-control" value="Medico"/>
-                                    <label for="rol-medico">Médico</label>
-
-                                    <input name="rol-paciente" type="checkbox" class="form-control" value="Paciente"/>
-                                    <label for="rol-paciente">Paciente</label> --}}
                                 </div>
                             </div>
+
 
                             <div class="form-group row">
                                 <label for="estado" class="col-md-4 col-form-label text-md-right">Estado</label>

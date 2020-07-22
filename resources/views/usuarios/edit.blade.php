@@ -19,7 +19,7 @@
                         <fieldset class="border p-4">
                             <legend class="text-primary">Datos personales</legend>
                             <div class="form-group row">
-                                <label for="nombre" class="col-md-4 col-form-label text-md-right">Nombre:</label>
+                                <label for="nombre" class="col-md-4 col-form-label text-md-right">Nombres:</label>
 
                                 <div class="col-md-6">
                                     <input id="nombre" type="text" class="form-control @error('nombre') is-invalid @enderror" name="nombre" value="{{ $usuario->nombre }}" autocomplete="nombre" autofocus>
@@ -91,32 +91,22 @@
                                 <label for="rol" class="col-md-4 col-form-label text-md-right">Rol:</label>
 
                                 <div class="col-md-6">
-                                    {{-- <input id="rol" type="text" class="form-control @error('rol') is-invalid @enderror" name="rol" value="{{ old('rol') }}" required autocomplete="rol" autofocus> --}}
-
-                                    {{-- <select name="rol" id="rol" class="form-control">
-                                        @foreach ($roles as $rol)
-                                            <option value="{{ $rol->id }}"
-
-                                            @isset($usuario->roles[0]->nombre)
-                                                @if ($rol->nombre == $usuario->roles[0]->nombre)
-                                                    selected
-                                                @endif
-                                            @endisset
-                                            >{{ $rol->nombre }}</option>
-                                        @endforeach
-                                    </select> --}}
-
                                     @foreach ($roles as $rol)
-                                        <input id="{{ $rol->slug }}" name="roles[]" type="checkbox" class="form-check-input checkbox" value="{{ $rol->id }}"
+                                        <div class="form-check form-check-inline">
+                                            <input class="form-check-input"
+                                            type="checkbox"
+                                            id="{{ $rol->slug }}"
+                                            name="roles[]"
+                                            value="{{ $rol->id }}"
                                             @foreach($usuario->roles as $rol_usuario)
                                                 @if ($rol->nombre == $rol_usuario->nombre)
                                                     checked
                                                 @endif
                                             @endforeach
-                                        >
-                                        <label for="{{ $rol->slug }}" class="form-check-label">{{ $rol->nombre }}</label>
+                                             >
+                                            <label class="form-check-label" for="{{ $rol->slug }}">{{ $rol->nombre }}</label>
+                                        </div>
                                     @endforeach
-
                                     @error('rol')
                                         <span class="invalid-feedback" role="alert">
                                             <strong>{{ $message }}</strong>

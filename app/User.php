@@ -37,6 +37,13 @@ class User extends Authenticatable
         'email_verified_at' => 'datetime',
     ];
 
+    protected static function booted()
+    {
+        static::created(function ($user) {
+            $user->perfil()->create();
+        });
+    }
+
     public function roles(){
         return $this->belongsToMany(Rol::class, 'rol_user');
     }
@@ -50,5 +57,9 @@ class User extends Authenticatable
             }
 
         }
+    }
+
+    public function perfil(){
+        return $this->hasOne(Perfil::class);
     }
 }

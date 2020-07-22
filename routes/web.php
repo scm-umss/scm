@@ -30,9 +30,5 @@ Route::resource('/usuarios','UsuariosController')->names('usuarios');
 
 Route::resource('/rol','RolController')->names('rol');
 
+Route::resource('/perfil','PerfilController')->only(['show','edit','update'])->names('perfil');
 
-// Route::get('/usuarios','UsuariosController@index')->name('usuarios.index');
-// Route::get('/usuarios/create','UsuariosController@create')->name('usuarios.create');
-// Route::post('/usuarios','UsuariosController@store')->name('usuarios.store');
-// Route::get('/usuarios/{usuario}/edit','UsuariosController@edit')->name('usuarios.edit');
-// Route::delete('/usuarios/{usuario}','UsuariosController@destroy')->name('usuarios.destroy');
