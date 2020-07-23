@@ -8,7 +8,7 @@
                 <div class="card-header">Registrar usuario</div>
 
                 <div class="card-body">
-                    <form method="POST" action="{{ route('usuarios.store') }}">
+                    <form method="POST" action="{{ route('usuarios.store') }}" enctype="multipart/form-data">
                         @csrf
 
                         <fieldset class="border p-4">
@@ -131,6 +131,20 @@
                                     @enderror
                                 </div>
                             </div>
+
+                            <div class="form-group row">
+                                <label for="imagen" class="col-md-4 col-form-label text-md-right">Foto</label>
+                                <input type="file" name="imagen" id="imagen" class="form-control @error('imagen') is-invalid @enderror">
+                                <div>
+                                    <p>Imagen Actual</p>
+                                    <img src="" style="width:300px"/>
+                                </div>
+                                @error('imagen')
+                                    <span class="invalid-feedback" role="alert">
+                                        <strong>{{ $message }}</strong>
+                                    </span>
+                                @enderror
+                            </div>
                         </fieldset>
 
                         <fieldset class="border p-4">
@@ -173,7 +187,18 @@
 
                         </fieldset>
 
+                        <fieldset class="border p-4">
+                            <legend class="text-primary">Datos de medico</legend>
+                            <div class="form-group row">
+                                <label for="especialidades" class="col-md-4 col-form-label text-md-right">Especialidades:</label>
 
+                                <select class="form-control" name="especialidades[]" multiple>
+                                    @foreach($especialidades as $especialidad)
+                                        <option value="{{ $especialidad->id }}">{{ $especialidad->nombre }}</option>
+                                    @endforeach
+                                </select>
+                            </div>
+                        </fieldset>
 
                         <div class="form-group mt-3 d-flex justify-content-center">
                             <div class="">

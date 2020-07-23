@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Especialidad;
 use App\Http\Requests\UsuariosRequest;
 use App\Http\Requests\UsuariosUpdateRequest;
 use App\Rol;
@@ -37,8 +38,11 @@ class UsuariosController extends Controller
      */
     public function create()
     {
-        $roles = Rol::all();
-        return view('usuarios.create', compact('roles'));
+        $this->authorize('create', User::class);
+        
+        $roles = Rol::orderBy('nombre', 'ASC')->get();
+        $especialidades = Especialidad::orderBy('nombre', 'ASC')->get();
+        return view('usuarios.create', compact('roles', 'especialidades'));
     }
 
     /**
@@ -48,7 +52,8 @@ class UsuariosController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function store(UsuariosRequest $request)
-    {
+    {        
+        $this->authorize('create', User::class);
         //dd($request->all());
 
         $usuario = new User();
@@ -60,13 +65,25 @@ class UsuariosController extends Controller
         $usuario->ci = $request->input('ci');
         $usuario->telefono = $request->input('telefono');
         // $usuario->rol = $request->input('rol');
-        $usuario->estado = $request->input('estado');
+        $usuario->estado = $request->input('estado');        
+  
+        if($request['imagen']){
+            //obtener imagen
+            $ruta_imagen = $request['imagen']->store('upload-perfiles','public');
+            //Resize de la imagen con intervention image
+            //$img = Image::make(public_path("storage/{$ruta_imagen}"))->fit(600,600);
+            //$img->save();
+
+            // Crear un arreglo de imagen
+            //$array_imagen = ['imagen' => $ruta_imagen];
+            $usuario->imagen = $ruta_imagen;
+        }
 
         $usuario->save();
-
         $usuario->roles()->sync($request->roles);
-        
-        return redirect()->route('usuarios.index');
+        $usuario->especialidades()->sync($request->especialidades);
+
+        return redirect()->route('usuarios.index')->with('status', 'Usuario creado exitosamente!');
     }
 
     /**
@@ -75,9 +92,9 @@ class UsuariosController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function show(User $usuario)
     {
-        //
+        $this->authorize('view', $usuario);
     }
 
     /**
@@ -88,10 +105,12 @@ class UsuariosController extends Controller
      */
     public function edit(User $usuario)
     {
-        //$this->authorize('viewAny');
+        $this->authorize('update', $usuario);
+
         $roles = Rol::orderBy('nombre', 'ASC')->get();
+        $especialidades = Especialidad::orderBy('nombre', 'ASC')->get();
         // dd($usuario->roles[0]->nombre);
-        return view('usuarios.edit', compact('usuario', 'roles'));
+        return view('usuarios.edit', compact('usuario', 'roles', 'especialidades'));
     }
 
     /**
@@ -103,8 +122,8 @@ class UsuariosController extends Controller
      */
     public function update(UsuariosUpdateRequest $request, User $usuario)
     {
-
-        // dd( $usuario);
+        $this->authorize('update', $usuario);
+        //dd( $request->all());
         $usuario->nombre = $request->input('nombre');
         $usuario->email = $request->input('email');
         $usuario->ap_paterno = $request->input('ap_paterno');
@@ -118,9 +137,10 @@ class UsuariosController extends Controller
         }
         $usuario->save();
         $usuario->roles()->sync($request->roles);
+        $usuario->especialidades()->sync($request->especialidades);
         // $usuario->update();
 
-        return redirect()->route('usuarios.index');
+        return redirect()->route('usuarios.index')->with('status', 'Usuario actualizado exitosamente!');
     }
 
     public function estadoUsaurio(Request $request){
@@ -135,6 +155,6 @@ class UsuariosController extends Controller
      */
     public function destroy(User $usuario)
     {
-
+        $this->authorize('delete', $usuario);
     }
 }

@@ -5,6 +5,11 @@
 
 <div class="container col-md-8">
     <div class="card shadow">
+        @if (session('status'))
+            <div class="alert alert-success">
+                {{ session('status') }}
+            </div>
+        @endif
         <div class="card-header d-flex justify-content-between">
             <h4>Lista de usuarios</h4>
             <a class="btn btn-success" href="{{ route('usuarios.create') }}" role="button">Nuevo Usuario</a>
@@ -37,7 +42,7 @@
                             @endforeach
 
                             </td>
-                            <td>{{ $usuario->email }}</td>
+                            <td><img src="/storage/{{ $usuario->imagen }}" style="width:80px"></td>
                             <td>@if ($usuario->estado == 'a')
                                 Activo
                             @else

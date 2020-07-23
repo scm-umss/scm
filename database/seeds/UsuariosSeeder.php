@@ -1,5 +1,6 @@
 <?php
 
+use App\Especialidad;
 use App\Rol;
 use App\User;
 use Illuminate\Database\Seeder;
@@ -68,5 +69,17 @@ class UsuariosSeeder extends Seeder
         $admin->roles()->sync([$rolAdmin->id]);
         $medico->roles()->sync([$rolMedico->id]);
         $paciente->roles()->sync([$rolPaciente->id]);
+
+        $traumatologia = Especialidad::create([
+            'nombre' => 'Traumatologia',
+            'descripcion' => 'Descripcion 1',
+        ]);
+
+        $psicologia = Especialidad::create([
+            'nombre' => 'Psicologia',
+            'descripcion' => 'Descripcion 2',
+        ]);
+
+        $medico->especialidades()->sync([$traumatologia->id, $psicologia->id]);
     }
 }

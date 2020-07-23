@@ -16,7 +16,7 @@ class User extends Authenticatable
      * @var array
      */
     protected $fillable = [
-        'email', 'password', 'ap_paterno', 'ap_materno', 'nombre', 'telefono', 'estado'
+        'email', 'password', 'ap_paterno', 'ap_materno', 'nombre', 'telefono', 'estado', 'imagen'
     ];
 
     /**
@@ -48,6 +48,14 @@ class User extends Authenticatable
         return $this->belongsToMany(Rol::class, 'rol_user');
     }
 
+    public function isSuperAdmin() {
+        return $this->tieneRol(['admin']);
+    }
+
+    public function especialidades(){
+        return $this->belongsToMany(Especialidad::class, 'especialidad_user');
+    }
+
     public function tieneRol(array $roles){
         foreach($roles as $rol){
             foreach ($this->roles as $usuarioRol) {
@@ -55,7 +63,6 @@ class User extends Authenticatable
                     return true;
                 }
             }
-
         }
     }
 

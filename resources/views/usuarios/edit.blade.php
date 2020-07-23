@@ -132,6 +132,20 @@
                                     @enderror
                                 </div>
                             </div>
+
+                            <div class="form-group row">
+                                <label for="imagen" class="col-md-4 col-form-label text-md-right">Foto</label>
+                                <input type="file" name="imagen" id="imagen" class="form-control @error('imagen') is-invalid @enderror">
+                                <div>
+                                    <p>Imagen Actual</p>
+                                    <img src="/storage/{{ $usuario->imagen }}" style="width:300px"/>
+                                </div>
+                                @error('imagen')
+                                    <span class="invalid-feedback" role="alert">
+                                        <strong>{{ $message }}</strong>
+                                    </span>
+                                @enderror
+                            </div>
                         </fieldset>
 
                         <fieldset class="border p-4">
@@ -155,7 +169,7 @@
 
                                 <div class="col-md-6">
                                     <input id="password" type="password" class="form-control @error('password') is-invalid @enderror" name="password"  autocomplete="new-password">
-
+                                    </br>
                                     @error('password')
                                         <span class="invalid-feedback" role="alert">
                                             <strong>{{ $message }}</strong>
@@ -173,7 +187,22 @@
                             </div>
                         </fieldset>
 
+                        <fieldset class="border p-4">
+                            <legend class="text-primary">Datos de medico</legend>
+                            <div class="form-group row">
+                                <label for="especialidades" class="col-md-4 col-form-label text-md-right">Especialidades:</label>
 
+                                <select class="form-control" name="especialidades[]" multiple>
+                                    @foreach($especialidades as $especialidad)
+                                        <option value="{{ $especialidad->id }}"
+                                            @foreach ($usuario->especialidades as $esp_usuario)
+                                                {{ $esp_usuario->id == $especialidad->id ? 'selected' : ''}}
+                                            @endforeach
+                                        >{{ $especialidad->nombre }}</option>
+                                    @endforeach
+                                </select>
+                            </div>
+                        </fieldset>
 
                         <div class="form-group row mb-0">
                             <div class="col-md-6 offset-md-4">
