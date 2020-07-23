@@ -39,7 +39,7 @@ class UsuariosController extends Controller
     public function create()
     {
         $this->authorize('create', User::class);
-        
+
         $roles = Rol::orderBy('nombre', 'ASC')->get();
         $especialidades = Especialidad::orderBy('nombre', 'ASC')->get();
         return view('usuarios.create', compact('roles', 'especialidades'));
@@ -52,7 +52,7 @@ class UsuariosController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function store(UsuariosRequest $request)
-    {        
+    {
         $this->authorize('create', User::class);
         //dd($request->all());
 
@@ -65,8 +65,8 @@ class UsuariosController extends Controller
         $usuario->ci = $request->input('ci');
         $usuario->telefono = $request->input('telefono');
         // $usuario->rol = $request->input('rol');
-        $usuario->estado = $request->input('estado');        
-  
+        $usuario->estado = $request->input('estado');
+
         if($request['imagen']){
             //obtener imagen
             $ruta_imagen = $request['imagen']->store('upload-perfiles','public');
@@ -95,6 +95,7 @@ class UsuariosController extends Controller
     public function show(User $usuario)
     {
         $this->authorize('view', $usuario);
+        return view('usuarios.show', compact('usuario'));
     }
 
     /**

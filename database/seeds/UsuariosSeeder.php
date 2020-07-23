@@ -15,6 +15,7 @@ class UsuariosSeeder extends Seeder
      */
     public function run()
     {
+        $faker = Faker\Factory::create();
         // User::truncate();
         // Rol::truncate();
         $admin = User::create([
@@ -26,6 +27,7 @@ class UsuariosSeeder extends Seeder
             'email' => 'admin@admin.com',
             'password' => Hash::make('12345678'),
             'estado' => 'a',
+           'imagen'=>$faker->imageUrl(400, 400, 'cats'),
         ]);
 
         $medico = User::create([
@@ -37,6 +39,7 @@ class UsuariosSeeder extends Seeder
             'email' => 'medico@scm.com',
             'password' => Hash::make('12345678'),
             'estado' => 'a',
+            'imagen'=>$faker->imageUrl(400, 400, 'cats'),
         ]);
         $paciente = User::create([
             'nombre' => 'Paciente',
@@ -47,6 +50,7 @@ class UsuariosSeeder extends Seeder
             'email' => 'paciente@scm.com',
             'password' => Hash::make('12345678'),
             'estado' => 'a',
+            'imagen'=>$faker->imageUrl(400, 400, 'cats'),
         ]);
 
 

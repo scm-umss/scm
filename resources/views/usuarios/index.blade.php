@@ -54,7 +54,7 @@
                                     method="POST">
                                     @csrf
                                     @method('DELETE')
-                                    <a href="{{ route('usuarios.edit', ['usuario' => $usuario->id]) }}" class="btn btn-sm btn-primary">Editar</a>
+                                    <a href="{{ route('usuarios.show', ['usuario' => $usuario->id]) }}" class="btn btn-sm btn-info">Detalles</a>
                                     <button type="submit" class="btn btn-sm btn-danger">Eliminar</button>
                                     </form>
                             </td>
