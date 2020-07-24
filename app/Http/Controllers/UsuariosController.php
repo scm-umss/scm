@@ -71,8 +71,8 @@ class UsuariosController extends Controller
             //obtener imagen
             $ruta_imagen = $request['imagen']->store('upload-perfiles','public');
             //Resize de la imagen con intervention image
-            //$img = Image::make(public_path("storage/{$ruta_imagen}"))->fit(600,600);
-            //$img->save();
+            $img = Image::make(public_path("storage/{$ruta_imagen}"))->fit(500,500);
+            $img->save();
 
             // Crear un arreglo de imagen
             //$array_imagen = ['imagen' => $ruta_imagen];
@@ -135,6 +135,17 @@ class UsuariosController extends Controller
         if($request->password){
             $usuario->password = Hash::make($request->input('password'));
             // dd($usuario->password);
+        }
+        if($request['imagen']){
+            //obtener imagen
+            $ruta_imagen = $request['imagen']->store('upload-perfiles','public');
+            //Resize de la imagen con intervention image
+            $img = Image::make(public_path("storage/{$ruta_imagen}"))->fit(500,500);
+            $img->save();
+
+            // Crear un arreglo de imagen
+            //$array_imagen = ['imagen' => $ruta_imagen];
+            $usuario->imagen = $ruta_imagen;
         }
         $usuario->save();
         $usuario->roles()->sync($request->roles);

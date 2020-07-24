@@ -32,6 +32,7 @@ class UsuariosRequest extends FormRequest
             'ap_materno' => 'nullable|string|max:255',
             'ci' => 'required|string|max:255',
             'telefono' => 'required|string|max:255',
+            'imagen' => 'nullable|image',
         ];
     }
 }

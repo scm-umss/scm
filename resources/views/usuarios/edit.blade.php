@@ -1,10 +1,11 @@
 @extends('layouts.app')
 
-@section('content')
-{{-- @foreach ($usuario->roles as $rol)
-<li>{{ dd($rol->nombre) }}</li>
+@section('styles')
+<link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-beta.1/dist/css/select2.min.css" rel="stylesheet" />
+@endsection
 
-@endforeach --}}
+@section('content')
+
 
 <div class="container">
     <div class="row justify-content-center">
@@ -13,7 +14,7 @@
                 <div class="card-header">Actualización de usuario</div>
 
                 <div class="card-body">
-                    <form method="POST" action="{{ route('usuarios.update', $usuario->id) }}">
+                    <form method="POST" action="{{ route('usuarios.update', $usuario->id) }}" enctype="multipart/form-data">
                         @csrf
                         @method('PUT')
                         <fieldset class="border p-4">
@@ -191,16 +192,17 @@
                             <legend class="text-primary">Datos de medico</legend>
                             <div class="form-group row">
                                 <label for="especialidades" class="col-md-4 col-form-label text-md-right">Especialidades:</label>
-
-                                <select class="form-control" name="especialidades[]" multiple>
-                                    @foreach($especialidades as $especialidad)
-                                        <option value="{{ $especialidad->id }}"
-                                            @foreach ($usuario->especialidades as $esp_usuario)
-                                                {{ $esp_usuario->id == $especialidad->id ? 'selected' : ''}}
-                                            @endforeach
-                                        >{{ $especialidad->nombre }}</option>
-                                    @endforeach
-                                </select>
+                                <div class="col-md-6">
+                                    <select  id="especialidades" class="form-control" name="especialidades[]" multiple>
+                                        @foreach($especialidades as $especialidad)
+                                            <option value="{{ $especialidad->id }}"
+                                                @foreach ($usuario->especialidades as $esp_usuario)
+                                                    {{ $esp_usuario->id == $especialidad->id ? 'selected' : ''}}
+                                                @endforeach
+                                            >{{ $especialidad->nombre }}</option>
+                                        @endforeach
+                                    </select>
+                                </div>
                             </div>
                         </fieldset>
 
@@ -217,4 +219,18 @@
         </div>
     </div>
 </div>
+@endsection
+
+
+@section('scripts')
+<script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-beta.1/dist/js/select2.min.js" defer></script>
+<script>
+document.addEventListener('DOMContentLoaded', ()=>{
+    $("#especialidades").select2({
+            allowClear:true,
+            placeholder: 'Seleccionar especialidad'
+        });
+});
+</script>
+
 @endsection

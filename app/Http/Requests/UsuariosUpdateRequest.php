@@ -29,6 +29,7 @@ class UsuariosUpdateRequest extends FormRequest
             'ap_paterno' => 'required|string|max:255',
             'ap_materno' => 'nullable|string|max:255',
             'telefono' => 'required|string|max:255',
+            'imagen' => 'nullable|image',
         ];
     }
 }
