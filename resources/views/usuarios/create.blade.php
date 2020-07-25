@@ -102,10 +102,6 @@
                                         <label class="form-check-label" for="{{ $rol->slug }}">{{ $rol->nombre }}</label>
                                     </div>
                                     @endforeach
-{{--
-                                        <input id="{{ $rol->slug }}" name="roles[]" type="checkbox" class="custom-control-input" value="{{ $rol->id }}">
-                                        <label for="" class="form-check-label">{{ $rol->nombre }}</label> --}}
-
 
                                         @error('rol')
                                             <span class="invalid-feedback" role="alert">
@@ -137,17 +133,19 @@
                             </div>
 
                             <div class="form-group row">
-                                <label for="imagen" class="col-md-4 col-form-label text-md-right">Foto</label>
-                                <input type="file" name="imagen" id="imagen" class="form-control @error('imagen') is-invalid @enderror">
-                                <div>
-                                    <p>Imagen Actual</p>
-                                    <img src="" style="width:300px"/>
+                                <label for="imagen" class="col-md-4 col-form-label text-md-right">Foto:</label>
+                                <div class="content py-4">
+                                    <input type="file" name="imagen" id="imagen" class="form-control @error('imagen') is-invalid @enderror">
+                                    {{-- <div>
+                                        <p>Imagen Actual</p>
+                                        <img src="" style="width:300px"/>
+                                    </div> --}}
+                                    @error('imagen')
+                                        <span class="invalid-feedback" role="alert">
+                                            <strong>{{ $message }}</strong>
+                                        </span>
+                                    @enderror
                                 </div>
-                                @error('imagen')
-                                    <span class="invalid-feedback" role="alert">
-                                        <strong>{{ $message }}</strong>
-                                    </span>
-                                @enderror
                             </div>
                         </fieldset>
 

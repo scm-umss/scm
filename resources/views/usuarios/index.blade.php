@@ -19,13 +19,14 @@
             <table class="table table-striped">
                 <thead>
                     <tr>
-                        <th scope="col">Nombre</th>
-                        <th scope="col">Apellido Paterno</th>
-                        <th scope="col">Apellido Materno</th>
+                        <th scope="col">Nombre Completo</th>
+                        {{-- <th scope="col">Apellido Paterno</th>
+                        <th scope="col">Apellido Materno</th> --}}
                         <th scope="col">Teléfono</th>
-                        <th scope="col">Rol</th>
-                        <th scope="col">Email</th>
+                        <th scope="col">Roles</th>
+                        {{-- <th scope="col">Email</th> --}}
                         <th scope="col">Estado</th>
+                        <th scope="col">Fotos</th>
                         <th scope="col">Acciones</th>
 
                     </tr>
@@ -33,21 +34,20 @@
                 <tbody>
                     @foreach ($usuarios as $usuario)
                         <tr>
-                            <td>{{ $usuario->nombre }}</td>
-                            <td>{{ $usuario->ap_paterno }}</td>
-                            <td>{{ $usuario->ap_materno }}</td>
+                            <td>{{ $usuario->nombre }} {{ $usuario->ap_paterno }} {{ $usuario->ap_materno }}</td>
                             <td>{{ $usuario->telefono }}</td>
                             <td>@foreach ($usuario->roles as $rol)
                                 {{ $rol->nombre }}
                             @endforeach
-
                             </td>
-                            <td><img src="/storage/{{ $usuario->imagen }}" style="width:80px"></td>
                             <td>@if ($usuario->estado == 'a')
-                                Activo
-                            @else
-                                Inactivo
-                            @endif</td>
+                                    Activo
+                                @else
+                                    Inactivo
+                                @endif
+                            </td>
+
+                            <td><img src="/storage/{{ $usuario->imagen }}" style="width:60px"></td>
                             <td>
 
                                 <form action="{{ route('usuarios.destroy', ['usuario' => $usuario->id]) }}"
@@ -55,6 +55,7 @@
                                     @csrf
                                     @method('DELETE')
                                     <a href="{{ route('usuarios.show', ['usuario' => $usuario->id]) }}" class="btn btn-sm btn-info">Detalles</a>
+                                    <a href="{{ route('usuarios.edit', ['usuario' => $usuario->id]) }}" class="btn btn-sm btn-secondary">Editar</a>
                                     <button type="submit" class="btn btn-sm btn-danger">Eliminar</button>
                                     </form>
                             </td>

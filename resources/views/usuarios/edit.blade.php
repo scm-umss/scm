@@ -11,7 +11,9 @@
     <div class="row justify-content-center">
         <div class="col-md-8">
             <div class="card">
-                <div class="card-header">Actualización de usuario</div>
+                <div class="card-header d-flex justify-content-between">Actualización de usuario
+                    <a href="{{ route('usuarios.index') }}" class="btn btn-danger px-4" role="button">Cancelar</a>
+                </div>
 
                 <div class="card-body">
                     <form method="POST" action="{{ route('usuarios.update', $usuario->id) }}" enctype="multipart/form-data">
@@ -136,9 +138,10 @@
 
                             <div class="form-group row">
                                 <label for="imagen" class="col-md-4 col-form-label text-md-right">Foto</label>
-                                <input type="file" name="imagen" id="imagen" class="form-control @error('imagen') is-invalid @enderror">
+                                <div class="content py-4">
+                                    <input type="file" name="imagen" id="imagen" class="form-control @error('imagen') is-invalid @enderror">
                                 <div>
-                                    <p>Imagen Actual</p>
+                                    <p class="pt-4">Imagen Actual</p>
                                     <img src="/storage/{{ $usuario->imagen }}" style="width:300px"/>
                                 </div>
                                 @error('imagen')
@@ -146,6 +149,7 @@
                                         <strong>{{ $message }}</strong>
                                     </span>
                                 @enderror
+                                </div>
                             </div>
                         </fieldset>
 

@@ -2,13 +2,14 @@
 
 namespace App\Http\Controllers;
 
-use App\Especialidad;
-use App\Http\Requests\UsuariosRequest;
-use App\Http\Requests\UsuariosUpdateRequest;
 use App\Rol;
 use App\User;
+use App\Especialidad;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
+use Intervention\Image\Facades\Image;
+use App\Http\Requests\UsuariosRequest;
+use App\Http\Requests\UsuariosUpdateRequest;
 
 //use Illuminate\Support\Facades\Validator;
 
@@ -16,7 +17,7 @@ class UsuariosController extends Controller
 {
     public function __construct()
     {
-        $this->middleware(['auth', 'admin']);
+        $this->middleware(['auth', 'admin'])->except('show');
     }
     /**
      * Display a listing of the resource.
@@ -95,7 +96,9 @@ class UsuariosController extends Controller
     public function show(User $usuario)
     {
         $this->authorize('view', $usuario);
-        return view('usuarios.show', compact('usuario'));
+        $roles = Rol::pluck('slug','id');
+        // dd($roles);
+        return view('usuarios.show', compact('usuario', 'roles'));
     }
 
     /**
