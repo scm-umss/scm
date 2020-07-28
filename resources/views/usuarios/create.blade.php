@@ -117,7 +117,7 @@
                                 <label for="estado" class="col-md-4 col-form-label text-md-right">Estado</label>
 
                                 <div class="col-md-6">
-                                    <select class="form-control" name="estado">
+                                    <select class="form-control" name="estado" id="estado">
                                         @foreach(["a" => "Activo", "i" => "Inactivo"] as $estado => $estadoTexto)
 
                                         <option value="{{ $estado }}">{{ $estadoTexto }}</option>

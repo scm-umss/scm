@@ -12,7 +12,7 @@
         @endif
         <div class="card-header d-flex justify-content-between">
             <h4>Lista de usuarios</h4>
-            <a class="btn btn-success" href="{{ route('usuarios.create') }}" role="button">Nuevo Usuario</a>
+            <a class="btn btn-success" href="{{ route('usuarios.create') }}" role="button" dusk="crear-usuario">Nuevo Usuario</a>
         </div>
         <div class="card-body">
 
@@ -55,7 +55,7 @@
                                     @csrf
                                     @method('DELETE')
                                     <a href="{{ route('usuarios.show', ['usuario' => $usuario->id]) }}" class="btn btn-sm btn-info">Detalles</a>
-                                    <a href="{{ route('usuarios.edit', ['usuario' => $usuario->id]) }}" class="btn btn-sm btn-secondary">Editar</a>
+                                    <a href="{{ route('usuarios.edit', ['usuario' => $usuario->id]) }}" class="btn btn-sm btn-secondary" dusk="editar-usuario-{{ $usuario->id }}">Editar</a>
                                     <button type="submit" class="btn btn-sm btn-danger">Eliminar</button>
                                     </form>
                             </td>
