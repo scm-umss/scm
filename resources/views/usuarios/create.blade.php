@@ -221,11 +221,11 @@
 @section('scripts')
 <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-beta.1/dist/js/select2.min.js" defer></script>
 <script>
-document.addEventListener('DOMContentLoaded', ()=>{
+    document.addEventListener('DOMContentLoaded', ()=>{
     $("#especialidades").select2({
-            allowClear:true,
+            allowClear: true,
             placeholder: 'Seleccionar especialidad'
-        });
+    });
 });
 </script>
 

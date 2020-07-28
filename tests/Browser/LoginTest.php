@@ -17,17 +17,21 @@ class LoginTest extends DuskTestCase
      */
     public function testExample()
     {
-        $user = factory(User::class)->create([
-             'email' => 'alxndrdnl1992@gmail.com',
-        ]);
+        $this->seed();
+
+        // $user = factory(User::class)->create([
+        //      'email' => 'admin@admin.com',
+        // ]);
 
         //$user = User::find(1);
-        $this->browse(function (Browser $browser) use ($user) {
+        $this->browse(function (Browser $browser) {
             $browser->visit('/login')
-                    ->type('email', $user->email)
-                    ->type('password', 'password')
+                    ->type('email', 'admin@admin.com')
+                    ->type('password', '12345678')
+                    ->screenshot('login_admin')
                     ->press('Acceder')
-                    ->assertPathIs('/home');
+                    ->assertPathIs('/home')
+                    ->screenshot('login_success');
         });
     }
 }

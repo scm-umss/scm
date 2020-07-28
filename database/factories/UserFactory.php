@@ -17,6 +17,14 @@ use Illuminate\Support\Str;
 |
 */
 
+$factory->define(Rol::class, function (Faker $faker) {
+    return [
+        'slug' => 'admin',
+        'nombre' => 'Administrador',
+        'descripcion' => 'Super Usuario',
+    ];
+});
+
 $factory->define(User::class, function (Faker $faker) {
     return [
         'ap_paterno' => $faker->lastName,
@@ -30,5 +38,8 @@ $factory->define(User::class, function (Faker $faker) {
         // 'rol' => $faker->randomElement($array = array ('admin','medico','paciente')),
         'estado' => $faker->randomElement($array = array ('a','i')),
         'remember_token' => Str::random(10),
+        'roles' => factory(Rol::class),
     ];
 });
+
+
