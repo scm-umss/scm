@@ -36,6 +36,7 @@ class AdminTest extends DuskTestCase
             $first->loginAs(User::find(2))
                 ->visit('/usuarios')
                 ->assertSee('Laravel')
+                ->pause(100)
                 ->screenshot('AdminTest_admin_middleware_2');
         });
     }
