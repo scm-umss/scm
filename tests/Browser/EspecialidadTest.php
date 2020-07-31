@@ -21,15 +21,15 @@ class EspecialidadTest extends DuskTestCase
             $browser->loginAs(User::find(1))
                 ->visit('/especialidad')
                 ->assertSee('Especialidades')
-                ->screenshot('especialidades-index')
+                ->screenshot('EspecialidadTest_test_registrar_especialidad_1')
                 ->click('@nueva-especialidad')
                 ->assertPathIs('/especialidad/create')
-                ->screenshot('especialidad-create')
+                ->screenshot('EspecialidadTest_test_registrar_especialidad_2')
                 ->type('nombre', 'Especialidad test')
                 ->type('descripcion', 'descripcion test')
                 ->press('Guardar')
                 ->assertPathIs('/especialidad')
-                ->screenshot('especialidad-registrado')
+                ->screenshot('EspecialidadTest_test_registrar_especialidad_3')
                 ;
         });
 
@@ -45,11 +45,11 @@ class EspecialidadTest extends DuskTestCase
                 ->assertSee('Especialidades')
                 ->click('@editar-especialidad-1')
                 ->assertPathIs('/especialidad/1/edit')
-                ->screenshot('01 especialidad-edit')
+                ->screenshot('EspecialidadTest_test_actualizar_especialidad_1')
                 ->type('descripcion', 'Descripcion actualizada')
                 ->press('Actualizar')
                 ->assertPathIs('/especialidad')
-                ->screenshot('02 especialidad-ractualizado')
+                ->screenshot('EspecialidadTest_test_actualizar_especialidad_2')
                 ;
         });
 

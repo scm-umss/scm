@@ -28,8 +28,9 @@ Route::resource('/especialidad','EspecialidadController')->names('especialidad')
 // Rutas para usuarios
 Route::get('/usuarios/inactivos','UsuariosController@inactivos')->name('usuarios.inactivos');
 Route::get('/usuarios/restore/{id}','UsuariosController@restore')->name('usuarios.restore');
+Route::get('/usuarios/destroy/{id}','UsuariosController@destroy')->name('usuarios.destroy');
 
-Route::resource('/usuarios','UsuariosController')->names('usuarios');
+Route::resource('/usuarios','UsuariosController')->except('destroy')->names('usuarios');
 
 Route::resource('/rol','RolController')->names('rol');
 

@@ -17,30 +17,18 @@ class MedicoShowTest extends DuskTestCase
      */
 
 
-    public function testExample()
+    public function test_medico_perfil()
     {
         $this->seed();
 
         $this->browse(function ($first) {
             $first->loginAs(User::find(2))
-                //   ->screenshot('noadmin_home')
                   ->visit('/usuarios/2')
-
                   ->assertSee('Estás registrado como: Médico')
-                  ->screenshot('show_medico_2')
+                  ->screenshot('MedicoShowTest_test_medico_perfil_1')
                   ->visit('/usuarios/3')
-                  ->assertSee('403')
-                  ->screenshot('show_mdico_paciente');
+                  ->assertSee('Página no autorizada')
+                  ->screenshot('MedicoShowTest_test_medico_perfil_2');
         });
-
-        // Medico ve
-        // $this->browse(function ($first) {
-        //     $first->loginAs(User::find(2))
-        //         //   ->screenshot('noadmin_home')
-        //           ->visit('/usuarios/3')
-
-        //           ->assertSee('Estás registrado como: Médico')
-        //           ->screenshot('show_medico_2');
-        // });
     }
 }

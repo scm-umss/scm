@@ -66,7 +66,7 @@ class UsuariosController extends Controller
         $usuario->ci = $request->input('ci');
         $usuario->telefono = $request->input('telefono');
         // $usuario->rol = $request->input('rol');
-        $usuario->estado = $request->input('estado');
+        // $usuario->estado = $request->input('estado');
 
         if($request['imagen']){
             //obtener imagen
@@ -134,7 +134,7 @@ class UsuariosController extends Controller
         $usuario->ap_materno = $request->input('ap_materno');
         $usuario->telefono = $request->input('telefono');
         // $usuario->rol = $request->input('rol');
-        $usuario->estado = $request->input('estado');
+        //$usuario->estado = $request->input('estado');
         if($request->password){
             $usuario->password = Hash::make($request->input('password'));
             // dd($usuario->password);
@@ -168,8 +168,9 @@ class UsuariosController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy(User $usuario)
+    public function destroy($id)
     {
+        $usuario = User::findOrFail($id);
         $this->authorize('delete', $usuario);
         $usuario->delete();
         return redirect()->route('usuarios.index')->with('status', 'Usuario dado de baja exitosamente!.');

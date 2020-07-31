@@ -15,29 +15,28 @@ class AdminTest extends DuskTestCase
      *
      * @return void
      */
-    public function testExample()
-    {        
+    public function test_admin_middleware()
+    {
         // $user = factory(User::class)->create([
         //     'email' => 'admin@admin.com',
         //     'roles' => 'admin',
         // ]);
 
         $this->seed();
-
+        // Usuario logeado como admin
         $this->browse(function ($first) {
             $first->loginAs(User::find(1))
-                  ->screenshot('admin_home')
-                  ->visit('/usuarios')
-                  ->screenshot('admin_usuarios')
-                  ->assertSee('Lista de usuarios');
+                ->visit('/usuarios')
+                ->assertSee('Lista de usuarios')
+                ->screenshot('AdminTest_admin_middleware_1');
         });
 
+        // Usuario logeado no admin
         $this->browse(function ($first) {
             $first->loginAs(User::find(2))
-                  ->screenshot('noadmin_home')
-                  ->visit('/usuarios')
-                  ->screenshot('noadmin_usuarios')
-                  ->assertSee('Laravel');
+                ->visit('/usuarios')
+                ->assertSee('Laravel')
+                ->screenshot('AdminTest_admin_middleware_2');
         });
     }
 }

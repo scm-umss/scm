@@ -15,7 +15,7 @@ class LoginTest extends DuskTestCase
      *
      * @return void
      */
-    public function testExample()
+    public function test_login_usuario()
     {
         $this->seed();
 
@@ -28,10 +28,10 @@ class LoginTest extends DuskTestCase
             $browser->visit('/login')
                     ->type('email', 'admin@admin.com')
                     ->type('password', '12345678')
-                    ->screenshot('login_admin')
+                    ->screenshot('LoginTest_test_login_usuario_1')
                     ->press('Acceder')
                     ->assertPathIs('/home')
-                    ->screenshot('login_success');
+                    ->screenshot('LoginTest_test_login_usuario_2');
         });
     }
 }

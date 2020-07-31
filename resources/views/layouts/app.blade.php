@@ -33,19 +33,25 @@
 
                 <div class="collapse navbar-collapse" id="navbarSupportedContent">
                     <!-- Left Side Of Navbar -->
+
                     @auth
-                    <ul class="navbar-nav mr-auto">
-                        <li class="nav-item">
-                            <a href="{{ route('usuarios.index') }}" class="nav-link">Usuarios</a>
-                        </li>
-                        <li class="nav-item">
-                            <a href="{{ route('rol.index') }}" class="nav-link">Roles</a>
-                        </li>
-                        <li class="nav-item">
-                            <a href="{{ route('especialidad.index') }}" class="nav-link">Especialidad</a>
-                        </li>
-                    </ul>
+                        @if (auth()->user()->tieneRol(['admin']))
+                        <ul class="navbar-nav mr-auto">
+
+                            <li class="nav-item">
+                                <a href="{{ route('usuarios.index') }}" class="nav-link">Usuarios</a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="{{ route('rol.index') }}" class="nav-link">Roles</a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="{{ route('especialidad.index') }}" class="nav-link">Especialidad</a>
+                            </li>
+                        </ul>
+                        @endif
                     @endauth
+
+
 
 
                     <!-- Right Side Of Navbar -->

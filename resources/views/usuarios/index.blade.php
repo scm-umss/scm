@@ -28,7 +28,7 @@
                         <th scope="col">Teléfono</th>
                         <th scope="col">Roles</th>
                         {{-- <th scope="col">Email</th> --}}
-                        <th scope="col">Estado</th>
+                        {{-- <th scope="col">Estado</th> --}}
                         <th scope="col">Fotos</th>
                         <th scope="col">Acciones</th>
 
@@ -43,24 +43,25 @@
                                 {{ $rol->nombre }}
                             @endforeach
                             </td>
-                            <td>@if ($usuario->estado == 'a')
+                            {{-- <td>@if ($usuario->estado == 'a')
                                     Activo
                                 @else
                                     Inactivo
                                 @endif
-                            </td>
+                            </td> --}}
 
                             <td><img src="/storage/{{ $usuario->imagen }}" style="width:60px"></td>
                             <td>
 
-                                <form action="{{ route('usuarios.destroy', ['usuario' => $usuario->id]) }}"
+                                {{-- <form action="{{ route('usuarios.destroy', ['usuario' => $usuario->id]) }}"
                                     method="POST">
                                     @csrf
                                     @method('DELETE')
-                                    <a href="{{ route('usuarios.show', ['usuario' => $usuario->id]) }}" class="btn btn-sm btn-info">Detalles</a>
-                                    <a href="{{ route('usuarios.edit', ['usuario' => $usuario->id]) }}" class="btn btn-sm btn-secondary" dusk="editar-usuario-{{ $usuario->id }}">Editar</a>
-                                    <button type="submit" class="btn btn-sm btn-danger">Eliminar</button>
-                                    </form>
+                                </form> --}}
+                                <a href="{{ route('usuarios.show', ['usuario' => $usuario->id]) }}" class="btn btn-sm btn-info">Detalles</a>
+                                <a href="{{ route('usuarios.edit', ['usuario' => $usuario->id]) }}" class="btn btn-sm btn-secondary" dusk="editar-usuario-{{ $usuario->id }}">Editar</a>
+                                <a href="{{ route('usuarios.destroy', $usuario->id) }}" class="btn btn-sm btn-danger" dusk="eliminar-usuario-{{ $usuario->id }}" >Eliminar</a>
+                                {{-- <button type="submit" class="btn btn-sm btn-danger">Eliminar</button> --}}
                             </td>
                         </tr>
                     @endforeach
