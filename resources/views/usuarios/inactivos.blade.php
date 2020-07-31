@@ -11,11 +11,8 @@
             </div>
         @endif
         <div class="card-header d-flex justify-content-between">
-            <h4>Lista de usuarios</h4>
-            <div class="d-flex align-right">
-                <a class="btn btn-warning mr-2" href="{{ route('usuarios.inactivos') }}" role="button" dusk="ver-inactivos">Ver Inactivos</a>
-                <a class="btn btn-success" href="{{ route('usuarios.create') }}" role="button" dusk="crear-usuario">Nuevo Usuario</a>
-            </div>
+            <h4>Usuarios inactivos</h4>
+            <a class="btn btn-warning mr-2" href="{{ route('usuarios.index') }}" role="button" dusk="ver-activos">Ver Activos</a>
         </div>
         <div class="card-body">
 
@@ -23,12 +20,8 @@
                 <thead>
                     <tr>
                         <th scope="col">Nombre Completo</th>
-                        {{-- <th scope="col">Apellido Paterno</th>
-                        <th scope="col">Apellido Materno</th> --}}
                         <th scope="col">Teléfono</th>
                         <th scope="col">Roles</th>
-                        {{-- <th scope="col">Email</th> --}}
-                        <th scope="col">Estado</th>
                         <th scope="col">Fotos</th>
                         <th scope="col">Acciones</th>
 
@@ -43,24 +36,13 @@
                                 {{ $rol->nombre }}
                             @endforeach
                             </td>
-                            <td>@if ($usuario->estado == 'a')
-                                    Activo
-                                @else
-                                    Inactivo
-                                @endif
-                            </td>
 
                             <td><img src="/storage/{{ $usuario->imagen }}" style="width:60px"></td>
                             <td>
-
-                                <form action="{{ route('usuarios.destroy', ['usuario' => $usuario->id]) }}"
-                                    method="POST">
-                                    @csrf
-                                    @method('DELETE')
-                                    <a href="{{ route('usuarios.show', ['usuario' => $usuario->id]) }}" class="btn btn-sm btn-info">Detalles</a>
-                                    <a href="{{ route('usuarios.edit', ['usuario' => $usuario->id]) }}" class="btn btn-sm btn-secondary" dusk="editar-usuario-{{ $usuario->id }}">Editar</a>
-                                    <button type="submit" class="btn btn-sm btn-danger">Eliminar</button>
-                                    </form>
+                                {{-- <form action="{{ route('usuarios.restore', $usuario->id) }}" method="POST">
+                                @csrf --}}
+                                <a href="{{ route('usuarios.restore', $usuario->id) }}" class="btn btn-sm btn-secondary" dusk="restaurar-usuario-{{ $usuario->id }}"> Restaurar</a>
+                                {{-- </form> --}}
                             </td>
                         </tr>
                     @endforeach

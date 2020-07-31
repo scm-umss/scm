@@ -171,5 +171,20 @@ class UsuariosController extends Controller
     public function destroy(User $usuario)
     {
         $this->authorize('delete', $usuario);
+        $usuario->delete();
+        return redirect()->route('usuarios.index')->with('status', 'Usuario dado de baja exitosamente!.');
+    }
+
+    public function inactivos(){
+        $usuarios = User::onlyTrashed()->get();
+
+        return view('usuarios.inactivos', compact('usuarios'));
+    }
+    public function restore($id){
+        // $usuario = User::withTrashed()->where('id', $id)->first();
+        $usuario = User::withTrashed()->findOrFail($id);
+        $usuario->restore();
+
+        return redirect()->route('usuarios.inactivos')->with('status', 'Usuario restaurado exitosamente!');
     }
 }

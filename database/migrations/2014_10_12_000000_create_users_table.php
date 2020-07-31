@@ -25,6 +25,7 @@ class CreateUsersTable extends Migration
             $table->string('password');
             $table->enum('estado', ['a', 'i']);
             $table->string('imagen')->default('default.png');
+            $table->softDeletes();
             $table->rememberToken();
             $table->timestamps();
         });

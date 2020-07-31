@@ -9,7 +9,10 @@
     <div class="row justify-content-center">
         <div class="col-md-8">
             <div class="card shadow">
-                <div class="card-header">Registrar usuario</div>
+                <div class="card-header d-flex justify-content-between">
+                    <h4>Registrar usuario</h4>
+                    <a class="btn btn-danger" href="{{ route('usuarios.index') }}" role="button" dusk="ver-activos">Cancelar</a>
+                </div>
 
                 <div class="card-body">
                     <form method="POST" action="{{ route('usuarios.store') }}" enctype="multipart/form-data">

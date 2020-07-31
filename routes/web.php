@@ -26,6 +26,9 @@ Route::get('/home', 'HomeController@index')->name('home');
 Route::resource('/especialidad','EspecialidadController')->names('especialidad');
 
 // Rutas para usuarios
+Route::get('/usuarios/inactivos','UsuariosController@inactivos')->name('usuarios.inactivos');
+Route::get('/usuarios/restore/{id}','UsuariosController@restore')->name('usuarios.restore');
+
 Route::resource('/usuarios','UsuariosController')->names('usuarios');
 
 Route::resource('/rol','RolController')->names('rol');

@@ -57,7 +57,7 @@ class EspecialidadController extends Controller
 
         $especialidad->save();
 
-        return redirect()->route('especialidad.index');
+        return redirect()->route('especialidad.index')->with('status','Especialidad registrada exitosamente!');
     }
 
     /**
@@ -102,7 +102,7 @@ class EspecialidadController extends Controller
 
         $especialidad->descripcion = $request['descripcion'];
         $especialidad->save();
-        return redirect()->route('especialidad.index');
+        return redirect()->route('especialidad.index')->with('status','Especialidad actualizada exitosamente!');
     }
 
     /**
