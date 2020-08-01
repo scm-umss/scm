@@ -50,6 +50,10 @@ class User extends Authenticatable
         return $this->belongsToMany(Rol::class, 'rol_user');
     }
 
+    public function horarios(){
+        return $this->hasMany(Horario::class);
+    }
+
     public function isSuperAdmin() {
         return $this->tieneRol(['admin']);
     }

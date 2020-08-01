@@ -36,3 +36,4 @@ Route::resource('/rol','RolController')->names('rol');
 
 Route::resource('/perfil','PerfilController')->only(['show','edit','update'])->names('perfil');
 
+Route::resource('/horarios', 'HorarioController')->only(['show', 'edit','update'])->names('horarios');
