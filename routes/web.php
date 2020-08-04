@@ -43,4 +43,7 @@ Route::get('/medicos', 'MedicoController@index')->name('medicos.index');
 /** Gestion de pacientes  */
 Route::get('/pacientes', 'PacienteController@index')->name('pacientes.index');
 
-Route::resource('/horarios', 'HorarioController')->only(['show', 'edit','update'])->names('horarios');
+// Route::resource('/horarios', 'HorarioController')->only(['show', 'edit','update'])->names('horarios');
+
+Route::get('/horarios','HorarioController@edit')->name('horarios.edit');
+Route::put('/horarios','HorarioController@update')->name('horarios.update');
