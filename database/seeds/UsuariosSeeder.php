@@ -2,6 +2,7 @@
 
 use App\Especialidad;
 use App\Rol;
+use App\Sucursal;
 use App\User;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\Hash;
@@ -70,7 +71,7 @@ class UsuariosSeeder extends Seeder
             'descripcion' => 'El usuario paciente solo puede ver sus citas y perfil.'
         ]);
 
-        $admin->roles()->sync([$rolAdmin->id]);
+        $admin->roles()->sync([$rolAdmin->id, $rolMedico->id]);
         $medico->roles()->sync([$rolMedico->id]);
         $paciente->roles()->sync([$rolPaciente->id]);
 
@@ -84,6 +85,21 @@ class UsuariosSeeder extends Seeder
             'descripcion' => 'Descripcion 2',
         ]);
 
+        $admin->especialidades()->sync([$traumatologia->id, $psicologia->id]);
         $medico->especialidades()->sync([$traumatologia->id, $psicologia->id]);
+
+        $sucursal1 = Sucursal::create([
+            'nombre' => 'Sucursal 1',
+            'descripcion' => '',
+            'direccion' => 'Ayacucho esquina Heroinas S/N',
+            'telefonos' => '4444444',
+        ]);
+
+        $sucursal2 = Sucursal::create([
+            'nombre' => 'Sucursal 2',
+            'descripcion' => '',
+            'direccion' => 'America esquina Beijing S/N',
+            'telefonos' => '4441234',
+        ]);
     }
 }

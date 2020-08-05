@@ -3,7 +3,9 @@
 namespace App\Http\Controllers;
 
 use App\Horario;
+use App\Sucursal;
 use Carbon\Carbon;
+use App\Especialidad;
 use Illuminate\Http\Request;
 use Monolog\Handler\PushoverHandler;
 
@@ -60,9 +62,18 @@ class HorarioController extends Controller
     public function edit()
     {
         // $horarios = Horario::all();
-        $dias = [
-            'Lunes', 'Martes', 'Miércoles', 'Jueves', 'Viernes', 'Sábado', 'Domingo'
-        ];
+        //dd(Carbon::getDays());
+        // Carbon::create(Carbon::getDays()[$dia])->locale('es_BO')->dayName
+        // $dias = [
+        //     0 => 'Domingo',
+        //     1 => 'Lunes',
+        //     2 => 'Martes',
+        //     3 => 'Miércoles',
+        //     4 => 'Jueves',
+        //     5 => 'Viernes',
+        //     6 => 'Sábado',
+        // ];
+        $dias = Carbon::getDays();
 
         $tm_hora_inicio = Carbon::createFromTimeString('07:00:00');
         $tm_hora_fin = Carbon::createFromTimeString('12:00:00');
@@ -84,10 +95,16 @@ class HorarioController extends Controller
         //     $horarios->push(new Horario());
         // }
 
+        $sucursales = Sucursal::all();
 
-        // dd($horarios->toArray());
+        $especialidades = Especialidad::find(auth()->user()->especialidadesId());
+        // auth()->user()->especialidades();
+        //dd($especialidades);
+        //$u_especialidad = User::find(1)->with('')
+
+        //dd(auth()->user()->especialidadesMedico());
         // $horarios = Horario::all();
-        return view('horarios.edit', compact('dias', 'horario_tm', 'horario_tt'));
+        return view('horarios.edit', compact('dias', 'horario_tm', 'horario_tt', 'sucursales', 'especialidades'));
     }
 
     /**
@@ -100,25 +117,33 @@ class HorarioController extends Controller
     public function update(Request $request)
     {
         // dd($request->all());
+        
         $activo = $request->input('activo');
         $tm_hora_inicio = $request->input('tm_hora_inicio');
         $tm_hora_fin = $request->input('tm_hora_fin');
+        $tm_sucursal = $request->input('tm_sucursal');
         $tt_hora_inicio = $request->input('tt_hora_inicio');
         $tt_hora_fin = $request->input('tt_hora_fin');
+        $tt_sucursal = $request->input('tt_sucursal');
         $user_id = auth()->user()->id;
         $dia= $request->input('dia');
+
+        if(in_array('0', $tm_sucursal) or in_array('0', $tt_sucursal))
+            return back()->with('error', 'Debe seleccionar un sucursal');
 
         for ($i=0; $i < 7; $i++) {
             Horario::updateOrCreate(
                 [
                     'user_id' => $user_id,
-                    'dia' => $dia[$i],
+                    'dia' => $i,
                 ],[
                     'activo' => in_array($i, $activo),
                     'tm_hora_inicio' => $tm_hora_inicio[$i],
                     'tm_hora_fin' => $tm_hora_fin[$i],
+                    'tm_sucursal' => $tm_sucursal[$i],
                     'tt_hora_inicio' => $tt_hora_inicio[$i],
                     'tt_hora_fin' => $tt_hora_fin[$i],
+                    'tt_sucursal' => $tt_sucursal[$i],
                 ]
             );
         }
