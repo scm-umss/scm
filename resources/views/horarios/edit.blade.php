@@ -26,6 +26,11 @@
                                 {{ session('status') }}
                             </div>
                         @endif
+                        @if (session('error'))
+                        <div class="alert alert-danger">
+                            {{ session('error') }}
+                        </div>
+                        @endif
                         <form method="POST" action="" >
                             @csrf
                             @method('PUT')
@@ -41,7 +46,7 @@
                                 </thead>
                                 <tbody>
                                     @foreach ($dias as $key => $dia)
-                                    <input type="hidden" name="dia[]" id="dia" value="{{ $dia }}">
+                                    <input type="hidden" name="dia[]" id="dia" value="{{ $key }}">
                                         <tr>
                                             <td>{{ $dia }}</td>
                                             <td><div class="form-check">
@@ -62,7 +67,7 @@
                                                     </div>
 
                                                     <div class="col">
-                                                        <select name="tm_hora_fin[]" id="" class="form-control">
+                                                        <select name="tm_hora_fin[]" id="tm_sucursal" class="form-control">
                                                             @foreach ($horario_tm as $hora_tm)
                                                             <option value="{{$hora_tm}}">
                                                                {{$hora_tm}}
@@ -73,6 +78,24 @@
                                                 </div>
 
                                             </td>
+                                            <td>
+                                                <select name="tm_sucursal[]" id="" class="form-control">
+                                                    <option value="0">--Seleccionar sucursal--</option>
+                                                    @foreach ($sucursales as $sucursal)
+                                                    <option value="{{ $sucursal->id }}">{{ $sucursal->nombre }}</option>
+                                                    @endforeach
+                                                </select>
+                                            </td>
+
+                                            <td>
+                                                <select name="tm_especialidad[]" id="tm_especialidad" class="form-control">
+                                                    <option value="0">--Seleccionar especialidad--</option>
+                                                    @foreach ($especialidades as $especialidad)
+                                                    <option value="{{ $especialidad->id }}">{{ $especialidad->nombre }}</option>
+                                                    @endforeach
+                                                </select>
+                                            </td>
+
                                             <td>
                                                 <div class="row">
                                                     <div class="col">
@@ -95,6 +118,23 @@
                                                         </select>
                                                     </div>
                                                 </div>
+                                            </td>
+                                            <td>
+                                                <select name="tt_sucursal[]" id="tt_sucursal" class="form-control">
+                                                    <option value="0">--Seleccionar sucursal--</option>
+                                                    @foreach ($sucursales as $sucursal)
+                                                    <option value="{{ $sucursal->id }}">{{ $sucursal->nombre }}</option>
+                                                    @endforeach
+                                                </select>
+                                            </td>
+
+                                            <td>
+                                                <select name="tt_especialidad[]" id="tt_especialidad" class="form-control">
+                                                    <option value="0">--Seleccionar especialidad--</option>
+                                                    @foreach ($especialidades as $especialidad)
+                                                    <option value="{{ $especialidad->id }}">{{ $especialidad->nombre }}</option>
+                                                    @endforeach
+                                                </select>
                                             </td>
 
 

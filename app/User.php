@@ -62,6 +62,11 @@ class User extends Authenticatable
         return $this->belongsToMany(Especialidad::class, 'especialidad_user');
     }
 
+    public function especialidadesId()
+    {
+        return $this->especialidades()->pluck('especialidad_id')->all();
+    }
+
     public function tieneRol(array $roles){
         foreach($roles as $rol){
             foreach ($this->roles as $usuarioRol) {
@@ -82,5 +87,9 @@ class User extends Authenticatable
 
     public function getActivoAttribute(){
         return $this->where('deleted_at',null);
+    }
+    
+    public function especialidadesMedico(){
+        return $this->especialidades();
     }
 }
