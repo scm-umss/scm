@@ -1,21 +1,17 @@
 @extends('layouts.app')
 
-@section('styles')
-<link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-beta.1/dist/css/select2.min.css" rel="stylesheet" />
-@endsection
-
 @section('content')
 
-{{-- {{ dd($horarios) }} --}}
+{{-- {{ dd($horario_medico) }} --}}
 <div class="container">
     <div class="row justify-content-center">
-        <div class="col-md-10">
+        {{-- <div class="col-md-12"> --}}
             <form action="{{ route('horarios.update') }}" method="POST">
                 @csrf
                 @method('PUT')
 
                 <div class="card">
-                    <div class="card-header d-flex justify-content-between">Actualización de usuario
+                    <div class="card-header d-flex justify-content-between">Horario de trabajo
                         <button type="submit" class="btn btn-primary">Guardar Horario</button>
                         {{-- <a href="{{ route('usuarios.index') }}" class="btn btn-danger px-4" role="button">Cancelar</a> --}}
                     </div>
@@ -31,26 +27,30 @@
                             {{ session('error') }}
                         </div>
                         @endif
-                        <form method="POST" action="" >
-                            @csrf
-                            @method('PUT')
+
                             <table class="table table-striped">
                                 <thead>
                                     <tr>
                                         <th scope="col">Día</th>
                                         <th scope="col">Activo</th>
                                         <th scope="col">Turno mañana</th>
-                                        <th scope="col">Turno Tarde</th>
+                                        <th scope="col">Sucursal</th>
+                                        <th scope="col">Especialidad</th>
 
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    @foreach ($dias as $key => $dia)
-                                    <input type="hidden" name="dia[]" id="dia" value="{{ $key }}">
+                                    @foreach ($horarios_medico as $key => $horario_dia)
+                                    {{-- <input type="hidden" name="dia_tm[]" id="dia_tm" value="{{ $key }}"> --}}
                                         <tr>
-                                            <td>{{ $dia }}</td>
+                                            <td>{{ $dias[$key] }}</td>
                                             <td><div class="form-check">
-                                                <input id="activo" name="activo[]" value="{{ $key }}" class="form-check-input" type="checkbox" checked>
+                                                <input id="tm_activo" name="tm_activo[]" value="{{ $key }}"
+                                                class="form-check-input" type="checkbox"
+                                                @if ($horario_dia->tm_activo)
+                                                    checked
+                                                @endif
+                                                >
                                             </td>
 
                                             <td>
@@ -78,9 +78,10 @@
                                                 </div>
 
                                             </td>
+
                                             <td>
                                                 <select name="tm_sucursal[]" id="" class="form-control">
-                                                    <option value="0">--Seleccionar sucursal--</option>
+                                                    {{-- <option value="0">--Seleccionar sucursal--</option> --}}
                                                     @foreach ($sucursales as $sucursal)
                                                     <option value="{{ $sucursal->id }}">{{ $sucursal->nombre }}</option>
                                                     @endforeach
@@ -89,11 +90,52 @@
 
                                             <td>
                                                 <select name="tm_especialidad[]" id="tm_especialidad" class="form-control">
-                                                    <option value="0">--Seleccionar especialidad--</option>
+                                                    {{-- <option value="0">--Seleccionar--</option> --}}
                                                     @foreach ($especialidades as $especialidad)
                                                     <option value="{{ $especialidad->id }}">{{ $especialidad->nombre }}</option>
                                                     @endforeach
                                                 </select>
+                                            </td>
+                                        </tr>
+                                    @endforeach
+                                </tbody>
+                            </table>
+
+
+                    </div>
+                    <div class="card-body">
+                        @if (session('status'))
+                            <div class="alert alert-success">
+                                {{ session('status') }}
+                            </div>
+                        @endif
+                        @if (session('error'))
+                        <div class="alert alert-danger">
+                            {{ session('error') }}
+                        </div>
+                        @endif
+
+                            <table class="table table-striped">
+                                <thead>
+                                    <tr>
+                                        <th scope="col">Día</th>
+                                        <th scope="col">Activo</th>
+                                        <th scope="col">Turno Tarde</th>
+                                        <th scope="col">Sucursal</th>
+                                        <th scope="col">Especialidad</th>
+
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    @foreach ($horarios_medico as $key => $horario_dia)
+                                    {{-- <input type="hidden" name="dia_tt[]" id="dia_tt" value="{{ $key }}"> --}}
+                                        <tr>
+                                            <td>{{ $dias[$key] }}</td>
+                                            <td><div class="form-check">
+                                                <input id="tt_activo" name="tt_activo[]" value="{{ $key }}" class="form-check-input" type="checkbox"
+                                                @if ($horario_dia->tt_activo)
+                                                    checked
+                                                @endif>
                                             </td>
 
                                             <td>
@@ -121,7 +163,7 @@
                                             </td>
                                             <td>
                                                 <select name="tt_sucursal[]" id="tt_sucursal" class="form-control">
-                                                    <option value="0">--Seleccionar sucursal--</option>
+                                                    {{-- <option value="0">--Seleccionar sucursal--</option> --}}
                                                     @foreach ($sucursales as $sucursal)
                                                     <option value="{{ $sucursal->id }}">{{ $sucursal->nombre }}</option>
                                                     @endforeach
@@ -130,53 +172,22 @@
 
                                             <td>
                                                 <select name="tt_especialidad[]" id="tt_especialidad" class="form-control">
-                                                    <option value="0">--Seleccionar especialidad--</option>
+                                                    {{-- <option value="0">--Seleccionar--</option> --}}
                                                     @foreach ($especialidades as $especialidad)
                                                     <option value="{{ $especialidad->id }}">{{ $especialidad->nombre }}</option>
                                                     @endforeach
                                                 </select>
                                             </td>
-
-
-                                            <td>
-
-
-                                                {{-- <a href="{{ route('usuarios.show', ['usuario' => $usuario->id]) }}" class="btn btn-sm btn-info">Detalles</a>
-                                                <a href="{{ route('usuarios.edit', ['usuario' => $usuario->id]) }}" class="btn btn-sm btn-secondary" dusk="editar-usuario-{{ $usuario->id }}">Editar</a>
-                                                <a href="{{ route('usuarios.destroy', $usuario->id) }}" class="btn btn-sm btn-danger" dusk="eliminar-usuario-{{ $usuario->id }}" >Eliminar</a> --}}
-
-                                            </td>
                                         </tr>
                                     @endforeach
                                 </tbody>
                             </table>
-
-                            <div class="form-group row mb-0">
-                                <div class="col-md-6 offset-md-4">
-                                    <button type="submit" class="btn btn-primary">
-                                        Actualizar
-                                    </button>
-                                </div>
-                            </div>
-                        </form>
                     </div>
                 </div>
+
             </form>
-        </div>
+        {{-- </div> --}}
     </div>
 </div>
 @endsection
 
-
-@section('scripts')
-<script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-beta.1/dist/js/select2.min.js" defer></script>
-<script>
-document.addEventListener('DOMContentLoaded', ()=>{
-    $("#especialidades").select2({
-            allowClear:true,
-            placeholder: 'Seleccionar especialidad'
-        });
-});
-</script>
-
-@endsection

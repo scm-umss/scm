@@ -80,8 +80,4 @@ class User extends Authenticatable
     public function perfil(){
         return $this->hasOne(Perfil::class);
     }
-
-    public function especialidadesMedico(){
-        return $this->especialidades();
-    }
 }

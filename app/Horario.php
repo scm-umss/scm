@@ -8,11 +8,12 @@ class Horario extends Model
 {
     protected $fillable = [
         'dia',
-        'activo',
+        'tm_activo',
         'tm_hora_inicio',
         'tm_hora_fin',
         'tm_sucursal',
         'tm_especialidad',
+        'tt_activo',
         'tt_hora_inicio',
         'tt_hora_fin',
         'tt_sucursal',
