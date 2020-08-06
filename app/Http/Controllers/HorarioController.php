@@ -11,47 +11,6 @@ use Monolog\Handler\PushoverHandler;
 
 class HorarioController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function index()
-    {
-        //
-    }
-
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
-    {
-        //
-    }
-
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
-    public function store(Request $request)
-    {
-        // return $request;
-    }
-
-    /**
-     * Display the specified resource.
-     *
-     * @param  \App\Horario  $horario
-     * @return \Illuminate\Http\Response
-     */
-    public function show(Horario $horario)
-    {
-        //
-    }
 
     /**
      * Show the form for editing the specified resource.
@@ -61,8 +20,12 @@ class HorarioController extends Controller
      */
     public function edit()
     {
-        // $horarios = Horario::all();
-        //dd(Carbon::getDays());
+        $horarios_medico = Horario::where('user_id', auth()->user()->id)->get();
+
+        $dias = Carbon::getDays();
+
+
+        // dd($horario_medico->toArray());
         // Carbon::create(Carbon::getDays()[$dia])->locale('es_BO')->dayName
         // $dias = [
         //     0 => 'Domingo',
@@ -73,38 +36,47 @@ class HorarioController extends Controller
         //     5 => 'Viernes',
         //     6 => 'Sábado',
         // ];
-        $dias = Carbon::getDays();
+
+        // $dias_tt = Carbon::getDays();
 
         $tm_hora_inicio = Carbon::createFromTimeString('07:00:00');
         $tm_hora_fin = Carbon::createFromTimeString('12:00:00');
         $tt_hora_inicio = Carbon::createFromTimeString('14:00:00');
         $tt_hora_fin = Carbon::createFromTimeString('18:00:00');
 
-        $horario_tm [] = $tm_hora_inicio->format('H:i');
-        while ($tm_hora_inicio < $tm_hora_fin) {
-            $horario_tm[] = $tm_hora_inicio->addMinutes(30)->format('H:i');
+
+        if(count($horarios_medico) > 0){
+            $horario_tm [] = $tm_hora_inicio->format('H:i');
+            while ($tm_hora_inicio < $tm_hora_fin) {
+                $horario_tm[] = $tm_hora_inicio->addMinutes(30)->format('H:i');
+            }
+
+            $horario_tt [] = $tt_hora_inicio->format('H:i');
+            while ($tt_hora_inicio < $tt_hora_fin) {
+                $horario_tt[] = $tt_hora_inicio->addMinutes(30)->format('H:i');
+            }
+        }else{
+            $horarios_medico = collect();
+            for ($i=0; $i < 7; $i++) {
+                $horarios_medico->push(new Horario());
+            }
+            $horario_tm [] = $tm_hora_inicio->format('H:i');
+            while ($tm_hora_inicio < $tm_hora_fin) {
+                $horario_tm[] = $tm_hora_inicio->addMinutes(30)->format('H:i');
+            }
+
+            $horario_tt [] = $tt_hora_inicio->format('H:i');
+            while ($tt_hora_inicio < $tt_hora_fin) {
+                $horario_tt[] = $tt_hora_inicio->addMinutes(30)->format('H:i');
+            }
         }
 
-        $horario_tt [] = $tt_hora_inicio->format('H:i');
-        while ($tt_hora_inicio < $tt_hora_fin) {
-            $horario_tt[] = $tt_hora_inicio->addMinutes(30)->format('H:i');
-        }
-        // dd($horario_tm);
-        // $horarios = collect();
-        // for($i=0; $i<7; $i++){
-        //     $horarios->push(new Horario());
-        // }
 
         $sucursales = Sucursal::all();
 
         $especialidades = Especialidad::find(auth()->user()->especialidadesId());
-        // auth()->user()->especialidades();
-        //dd($especialidades);
-        //$u_especialidad = User::find(1)->with('')
 
-        //dd(auth()->user()->especialidadesMedico());
-        // $horarios = Horario::all();
-        return view('horarios.edit', compact('dias', 'horario_tm', 'horario_tt', 'sucursales', 'especialidades'));
+        return view('horarios.edit', compact('dias', 'horario_tm', 'horario_tt', 'sucursales', 'especialidades', 'horarios_medico'));
     }
 
     /**
@@ -117,48 +89,72 @@ class HorarioController extends Controller
     public function update(Request $request)
     {
         // dd($request->all());
-        
-        $activo = $request->input('activo');
+
+        $tm_activo = $request->input('tm_activo') ? : [];
         $tm_hora_inicio = $request->input('tm_hora_inicio');
         $tm_hora_fin = $request->input('tm_hora_fin');
         $tm_sucursal = $request->input('tm_sucursal');
+        $tm_especialidad = $request->input('tm_especialidad');
+
+        $tt_activo = $request->input('tt_activo') ? : [];
         $tt_hora_inicio = $request->input('tt_hora_inicio');
         $tt_hora_fin = $request->input('tt_hora_fin');
         $tt_sucursal = $request->input('tt_sucursal');
+        $tt_especialidad = $request->input('tt_especialidad');
+        // $dia_tm = $request->input('dia_tm');
+        // $dia_tt = $request->input('dia_tt');
+
         $user_id = auth()->user()->id;
-        $dia= $request->input('dia');
+        // $dia= $request->input('dia');
 
-        if(in_array('0', $tm_sucursal) or in_array('0', $tt_sucursal))
-            return back()->with('error', 'Debe seleccionar un sucursal');
 
+        // dd($request->all());
+        // for ($i=0; $i < 7; $i++) {
+        //     if(in_array($i, $activo)){
+        //         if($tm_sucursal[$i] != '0' or $tm_sucursal[$i] != '0'){
+        //             Horario::updateOrCreate(
+        //                 [
+        //                     'user_id' => $user_id,
+        //                     'dia' => $i,
+        //                 ],[
+        //                     'activo' => in_array($i, $activo),
+        //                     'tm_hora_inicio' => $tm_hora_inicio[$i],
+        //                     'tm_hora_fin' => $tm_hora_fin[$i],
+        //                     'tm_sucursal' => $tm_sucursal[$i],
+        //                     'tt_hora_inicio' => $tt_hora_inicio[$i],
+        //                     'tt_hora_fin' => $tt_hora_fin[$i],
+        //                     'tt_sucursal' => $tt_sucursal[$i],
+        //                 ]
+        //             );
+        //         }
+        //         else{
+        //             return back()->with('error', 'Debe seleccionar un sucursal');
+        //         }
+        //     }
+        // }
+
+        // if(in_array('0', $tm_sucursal) or in_array('0', $tt_sucursal))
+        //  return back()->with('error', 'Debe seleccionar un sucursal');
         for ($i=0; $i < 7; $i++) {
             Horario::updateOrCreate(
                 [
                     'user_id' => $user_id,
                     'dia' => $i,
                 ],[
-                    'activo' => in_array($i, $activo),
+                    'tm_activo' => in_array($i, $tm_activo),
                     'tm_hora_inicio' => $tm_hora_inicio[$i],
                     'tm_hora_fin' => $tm_hora_fin[$i],
                     'tm_sucursal' => $tm_sucursal[$i],
+                    'tm_especialidad' => $tm_especialidad[$i],
+                    'tt_activo' => in_array($i, $tt_activo),
                     'tt_hora_inicio' => $tt_hora_inicio[$i],
                     'tt_hora_fin' => $tt_hora_fin[$i],
                     'tt_sucursal' => $tt_sucursal[$i],
+                    'tt_especialidad' => $tt_especialidad[$i],
                 ]
             );
         }
 
         return back()->with('status', 'Horario Actualizado exitosamente!.');
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  \App\Horario  $horario
-     * @return \Illuminate\Http\Response
-     */
-    public function destroy(Horario $horario)
-    {
-        //
     }
 }
