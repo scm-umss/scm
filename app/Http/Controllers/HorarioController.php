@@ -40,12 +40,12 @@ class HorarioController extends Controller
         // dd($horarios_medico);
         $dias = $this->dias;
 
-        if(count($horarios_medico) > 0){
+        if (count($horarios_medico) > 0) {
             $horario_tm = $this->getHoras('07:00:00', '12:00:00');
             $horario_tt = $this->getHoras('14:00:00', '18:00:00');
-        }else{
+        } else {
             $horarios_medico = collect();
-            for ($i=0; $i < 7; $i++) {
+            for ($i = 0; $i < 7; $i++) {
                 $horarios_medico->push(new Horario());
             }
             $horario_tm = $this->getHoras('07:00:00', '12:00:00');
@@ -60,10 +60,11 @@ class HorarioController extends Controller
         return view('horarios.edit', compact('dias', 'usuario', 'horario_tm', 'horario_tt', 'sucursales', 'especialidades', 'horarios_medico'));
     }
 
-    public function getHoras($inicio, $fin){
+    public function getHoras($inicio, $fin)
+    {
         $hora_inicio = Carbon::createFromTimeString($inicio);
         $hora_fin = Carbon::createFromTimeString($fin);
-        $horas [] = $hora_inicio->format('H:i');
+        $horas[] = $hora_inicio->format('H:i');
         while ($hora_inicio < $hora_fin) {
             $horas[] = $hora_inicio->addMinutes(30)->format('H:i');
         }
@@ -83,13 +84,13 @@ class HorarioController extends Controller
         $usuario = User::findOrfail($id);
         $this->authorize('update', $usuario);
 
-        $tm_activo = $request->input('tm_activo') ? : [];
+        $tm_activo = $request->input('tm_activo') ?: [];
         $tm_hora_inicio = $request->input('tm_hora_inicio');
         $tm_hora_fin = $request->input('tm_hora_fin');
         $tm_sucursal = $request->input('tm_sucursal');
         $tm_especialidad = $request->input('tm_especialidad');
 
-        $tt_activo = $request->input('tt_activo') ? : [];
+        $tt_activo = $request->input('tt_activo') ?: [];
         $tt_hora_inicio = $request->input('tt_hora_inicio');
         $tt_hora_fin = $request->input('tt_hora_fin');
         $tt_sucursal = $request->input('tt_sucursal');
@@ -98,31 +99,32 @@ class HorarioController extends Controller
         // $dia_tt = $request->input('dia_tt');
 
         // $user_id = auth()->user()->id;
+        // dd($request->all());
         $error = [];
-        for ($i=0; $i < 7; $i++) {
-            $hora_inicio = Carbon::createFromTimeString($tm_hora_inicio[$i].':00');
-            $hora_fin = Carbon::createFromTimeString($tm_hora_fin[$i].':00');
-            if ($hora_inicio >= $hora_fin) {
-                $error[] = "Horario inconsistente para el día ". $this->dias[$i] . " y turno Mañana";
-                // return back()->with('error', $error);
-            }
+        for ($i = 0; $i < 7; $i++) {
+            if (in_array($i, $tm_activo)) {
 
-            $hora_inicio = Carbon::createFromTimeString($tt_hora_inicio[$i].':00');
-            $hora_fin = Carbon::createFromTimeString($tt_hora_fin[$i].':00');
-            if ($hora_inicio >= $hora_fin) {
-                $error[] = "Horario inconsistente para el día ". $this->dias[$i] . " y turno Tarde";
+                if ($tm_hora_inicio[$i] >= $tm_hora_fin[$i]) {
+                    $error[] = "Horario inconsistente para el día " . $this->dias[$i] . " y turno Mañana";
+                }
+            }
+            if (in_array($i, $tt_activo)) {
+                if ($tt_hora_inicio[$i] >= $tt_hora_fin[$i]) {
+                    $error[] = "Horario inconsistente para el día " . $this->dias[$i] . " y turno Tarde";
+                }
             }
         }
         if (count($error) > 0) {
             return back()->with('error', $error);
         }
 
-        for ($i=0; $i < 7; $i++) {
+        for ($i = 0; $i < 7; $i++) {
             Horario::updateOrCreate(
                 [
                     'user_id' => $id,
                     'dia' => $i,
-                ],[
+                ],
+                [
                     'tm_activo' => in_array($i, $tm_activo),
                     'tm_hora_inicio' => $tm_hora_inicio[$i],
                     'tm_hora_fin' => $tm_hora_fin[$i],

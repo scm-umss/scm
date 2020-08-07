@@ -50,7 +50,7 @@
                                     <tr>
                                         <td>{{ $dias[$key] }}</td>
                                         <td><div class="form-check">
-                                            <input id="tm_activo" name="tm_activo[]" value="{{ $key }}"
+                                            <input id="tm_activo" name="tm_activo[]" value="{{$key}}" @if(is_array(old('tm_activo')) && in_array($key, old('tm_activo'))) checked @endif
                                             class="form-check-input" type="checkbox"
                                             @if ($horario_dia->tm_activo)
                                                 checked
