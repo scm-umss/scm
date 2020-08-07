@@ -35,8 +35,8 @@
                     <!-- Left Side Of Navbar -->
 
                     @auth
-                        @if (auth()->user()->tieneRol(['admin']))
                         <ul class="navbar-nav mr-auto">
+                            @if (auth()->user()->tieneRol(['admin']))
 
                             <li class="nav-item">
                                 <a href="{{ route('usuarios.index') }}" class="nav-link">Usuarios</a>
@@ -47,8 +47,15 @@
                             <li class="nav-item">
                                 <a href="{{ route('especialidad.index') }}" class="nav-link">Especialidad</a>
                             </li>
+                            @endif
+                            @if (auth()->user()->tieneRol(['admin', 'medico']))
+                            <li class="nav-item">
+                                <a href="{{ route('horarios.edit', auth()->user()->id) }}" class="nav-link">Horarios</a>
+                            </li>
+                            @endif
+
                         </ul>
-                        @endif
+
                     @endauth
 
 
