@@ -55,7 +55,7 @@ class HorarioController extends Controller
 
         $sucursales = Sucursal::all();
 
-        $especialidades = Especialidad::find(auth()->user()->especialidadesId());
+        $especialidades = Especialidad::find($usuario->especialidadesId());
 
         return view('horarios.edit', compact('dias', 'usuario', 'horario_tm', 'horario_tt', 'sucursales', 'especialidades', 'horarios_medico'));
     }
@@ -99,7 +99,7 @@ class HorarioController extends Controller
         // $dia_tt = $request->input('dia_tt');
 
         // $user_id = auth()->user()->id;
-        // dd($request->all());
+        //dd($request->input());
         $error = [];
         for ($i = 0; $i < 7; $i++) {
             if (in_array($i, $tm_activo)) {
@@ -115,7 +115,7 @@ class HorarioController extends Controller
             }
         }
         if (count($error) > 0) {
-            return back()->with('error', $error);
+            return back()->with('error', $error)->withInput($request->input());
         }
 
         for ($i = 0; $i < 7; $i++) {

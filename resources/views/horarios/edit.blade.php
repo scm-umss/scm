@@ -50,9 +50,10 @@
                                     <tr>
                                         <td>{{ $dias[$key] }}</td>
                                         <td><div class="form-check">
-                                            <input id="tm_activo" name="tm_activo[]" value="{{$key}}" @if(is_array(old('tm_activo')) && in_array($key, old('tm_activo'))) checked @endif
+                                            <input id="tm_activo" name="tm_activo[{{$key}}]" value="{{$key}}"
                                             class="form-check-input" type="checkbox"
-                                            @if ($horario_dia->tm_activo)
+                                            @if ((is_array(old('tm_activo')) && in_array($key, old('tm_activo'))) or
+                                                (!is_array(old('tm_activo')) && $horario_dia->tm_activo))
                                                 checked
                                             @endif
                                             > <label for="tm_activo">Mañana</label>
@@ -63,7 +64,9 @@
                                                 <div class="col">
                                                     <select name="tm_hora_inicio[]" id="" class="form-control">
                                                         @foreach ($horario_tm as $hora_tm)
-                                                        <option value="{{ $hora_tm }}" @if ($horario_dia->tm_hora_inicio == $hora_tm.':00')
+                                                        <option value="{{ $hora_tm }}"
+                                                        @if ((is_array(old('tm_hora_inicio')) && in_array($hora_tm, old('tm_hora_inicio'))) or
+                                                            (!is_array(old('tm_hora_inicio')) && ($horario_dia->tm_hora_inicio == $hora_tm.':00')))
                                                             selected
                                                         @endif>
                                                             {{$hora_tm}}
@@ -77,7 +80,9 @@
                                                 <div class="col">
                                                     <select name="tm_hora_fin[]" id="tm_sucursal" class="form-control">
                                                         @foreach ($horario_tm as $hora_tm)
-                                                        <option value="{{$hora_tm}}" @if ($horario_dia->tm_hora_fin == $hora_tm.':00')
+                                                        <option value="{{$hora_tm}}"
+                                                        @if ((is_array(old('tm_hora_fin')) && in_array($hora_tm, old('tm_hora_fin'))) or
+                                                            (!is_array(old('tm_hora_fin')) && ($horario_dia->tm_hora_fin == $hora_tm.':00')))
                                                             selected
                                                         @endif>
                                                             {{$hora_tm}}
@@ -94,7 +99,8 @@
                                                 {{-- <option value="0">--Seleccionar sucursal--</option> --}}
                                                 @foreach ($sucursales as $sucursal)
                                                 <option value="{{ $sucursal->id }}"
-                                                    @if ($sucursal->id == $horario_dia->tm_sucursal)
+                                                    @if ((is_array(old('tm_sucursal')) && in_array($sucursal->id, old('tm_sucursal'))) or
+                                                        ((!is_array(old('tm_sucursal'))) && ($sucursal->id == $horario_dia->tm_sucursal)))
                                                         selected
                                                     @endif
                                                     >{{ $sucursal->nombre }}</option>
@@ -107,9 +113,10 @@
                                                 {{-- <option value="0">--Seleccionar--</option> --}}
                                                 @foreach ($especialidades as $especialidad)
                                                 <option value="{{ $especialidad->id }}"
-                                                    @if ($especialidad->id == $horario_dia->tm_especialidad)
-                                                    selected
-                                                @endif>{{ $especialidad->nombre }}</option>
+                                                    @if ((is_array(old('tm_especialidad')) && in_array($especialidad->id, old('tm_especialidad'))) or
+                                                        ((!is_array(old('tm_especialidad'))) && ($especialidad->id == $horario_dia->tm_especialidad)))
+                                                        selected
+                                                    @endif>{{ $especialidad->nombre }}</option>
                                                 @endforeach
                                             </select>
                                         </td>
@@ -118,7 +125,8 @@
                                         <td></td>
                                         <td><div class="form-check">
                                             <input id="tt_activo" name="tt_activo[]" value="{{ $key }}" class="form-check-input" type="checkbox"
-                                            @if ($horario_dia->tt_activo)
+                                            @if ((is_array(old('tt_activo')) && in_array($key, old('tt_activo'))) or
+                                                (!is_array(old('tt_activo')) && $horario_dia->tt_activo))
                                                 checked
                                             @endif>
                                             <label for="tt_activo">Tarde</label>
@@ -129,9 +137,10 @@
                                                 <div class="col">
                                                     <select name="tt_hora_inicio[]" id="" class="form-control">
                                                         @foreach ($horario_tt as $hora_tt)
-                                                        <option value="{{$hora_tt}}" @if ($horario_dia->tt_hora_inicio == $hora_tt.':00')
-                                                            selected
-                                                        @endif>
+                                                        <option value="{{$hora_tt}}" @if ((is_array(old('tt_hora_inicio')) && in_array($hora_tt, old('tt_hora_inicio'))) or
+                                                        (!is_array(old('tt_hora_inicio')) && ($horario_dia->tt_hora_inicio == $hora_tt.':00')))
+                                                        selected
+                                                    @endif>
                                                             {{$hora_tt}}
                                                         </option>
                                                         @endforeach
@@ -141,7 +150,9 @@
                                                 <div class="col">
                                                     <select name="tt_hora_fin[]" id="" class="form-control">
                                                         @foreach ($horario_tt as $hora_tt)
-                                                        <option value="{{$hora_tt}}" @if ($horario_dia->tt_hora_fin == $hora_tt.':00')
+                                                        <option value="{{$hora_tt}}"
+                                                        @if ((is_array(old('tt_hora_fin')) && in_array($hora_tt, old('tt_hora_fin'))) or
+                                                            (!is_array(old('tt_hora_fin')) && ($horario_dia->tt_hora_fin == $hora_tt.':00')))
                                                             selected
                                                         @endif>
                                                             {{$hora_tt}}
@@ -156,7 +167,8 @@
                                                 {{-- <option value="0">--Seleccionar sucursal--</option> --}}
                                                 @foreach ($sucursales as $sucursal)
                                                 <option value="{{ $sucursal->id }}"
-                                                    @if ($sucursal->id == $horario_dia->tt_sucursal)
+                                                @if ((is_array(old('tt_sucursal')) && in_array($sucursal->id, old('tt_sucursal'))) or
+                                                    ((!is_array(old('tt_sucursal'))) && ($sucursal->id == $horario_dia->tt_sucursal)))
                                                     selected
                                                 @endif>{{ $sucursal->nombre }}</option>
                                                 @endforeach
@@ -168,9 +180,10 @@
                                                 {{-- <option value="0">--Seleccionar--</option> --}}
                                                 @foreach ($especialidades as $especialidad)
                                                 <option value="{{ $especialidad->id }}"
-                                                    @if ($especialidad->id == $horario_dia->tt_especialidad)
-                                                    selected
-                                                @endif>{{ $especialidad->nombre }}</option>
+                                                    @if ((is_array(old('tt_especialidad')) && in_array($especialidad->id, old('tt_especialidad'))) or
+                                                        ((!is_array(old('tt_especialidad'))) && ($especialidad->id == $horario_dia->tt_especialidad)))
+                                                        selected
+                                                    @endif>{{ $especialidad->nombre }}</option>
                                                 @endforeach
                                             </select>
                                         </td>
