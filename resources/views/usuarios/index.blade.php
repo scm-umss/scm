@@ -58,7 +58,7 @@
                                     @csrf
                                     @method('DELETE')
                                 </form> --}}
-                                <a href="{{ route('usuarios.show', ['usuario' => $usuario->id]) }}" class="btn btn-sm btn-info">Detalles</a>
+                                <a href="{{ route('usuarios.show', ['usuario' => $usuario->id]) }}" class="btn btn-sm btn-info" dusk="ver-detalles-{{ $usuario->id }}">Detalles</a>
                                 <a href="{{ route('usuarios.edit', ['usuario' => $usuario->id]) }}" class="btn btn-sm btn-secondary" dusk="editar-usuario-{{ $usuario->id }}">Editar</a>
                                 <a href="{{ route('usuarios.destroy', $usuario->id) }}" class="btn btn-sm btn-danger" dusk="eliminar-usuario-{{ $usuario->id }}" >Eliminar</a>
                                 {{-- <button type="submit" class="btn btn-sm btn-danger">Eliminar</button> --}}
