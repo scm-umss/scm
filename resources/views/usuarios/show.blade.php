@@ -49,7 +49,7 @@
                                         <div class="tab-pane fade show active" id="medico" role="tabpanel" aria-labelledby="home-tab">
                                             <p class="card-text">Especialidades: {{ $usuario->especialidades->pluck('nombre')->implode(', ') }}</p>
                                             <div>
-                                                <a href="{{ route('horarios.edit', $usuario->id) }}" class="btn btn-info">Ver Horarios</a>
+                                                <a href="{{ route('horarios.edit', $usuario->id) }}" class="btn btn-info" dusk="crear-horario-{{ $usuario->id }}">Ver Horarios</a>
                                             </div>
                                         </div>
                                         <div class="tab-pane fade" id="paciente" role="tabpanel" aria-labelledby="profile-tab">Informacion del paciente

@@ -62,7 +62,7 @@
                                         <td>
                                             <div class="row">
                                                 <div class="col">
-                                                    <select name="tm_hora_inicio[]" id="" class="form-control">
+                                                    <select name="tm_hora_inicio[]" id="tm_hora_inicio" class="form-control">
                                                         @foreach ($horario_tm as $hora_tm)
                                                         <option value="{{ $hora_tm }}"
                                                         @if ((is_array(old('tm_hora_inicio')) && in_array($hora_tm, old('tm_hora_inicio'))) or
@@ -78,7 +78,7 @@
                                                 </div>
 
                                                 <div class="col">
-                                                    <select name="tm_hora_fin[]" id="tm_sucursal" class="form-control">
+                                                    <select name="tm_hora_fin[]" id="tm_hora_fin" class="form-control">
                                                         @foreach ($horario_tm as $hora_tm)
                                                         <option value="{{$hora_tm}}"
                                                         @if ((is_array(old('tm_hora_fin')) && in_array($hora_tm, old('tm_hora_fin'))) or
@@ -95,7 +95,7 @@
                                         </td>
 
                                         <td>
-                                            <select name="tm_sucursal[]" id="" class="form-control">
+                                            <select name="tm_sucursal[]" id="tm_sucursal" class="form-control">
                                                 {{-- <option value="0">--Seleccionar sucursal--</option> --}}
                                                 @foreach ($sucursales as $sucursal)
                                                 <option value="{{ $sucursal->id }}"
@@ -135,7 +135,7 @@
                                         <td>
                                             <div class="row">
                                                 <div class="col">
-                                                    <select name="tt_hora_inicio[]" id="" class="form-control">
+                                                    <select name="tt_hora_inicio[]" id="tt_hora_inicio" class="form-control">
                                                         @foreach ($horario_tt as $hora_tt)
                                                         <option value="{{$hora_tt}}" @if ((is_array(old('tt_hora_inicio')) && in_array($hora_tt, old('tt_hora_inicio'))) or
                                                         (!is_array(old('tt_hora_inicio')) && ($horario_dia->tt_hora_inicio == $hora_tt.':00')))
@@ -148,7 +148,7 @@
                                                 </div>
 
                                                 <div class="col">
-                                                    <select name="tt_hora_fin[]" id="" class="form-control">
+                                                    <select name="tt_hora_fin[]" id="tt_hora_fin" class="form-control">
                                                         @foreach ($horario_tt as $hora_tt)
                                                         <option value="{{$hora_tt}}"
                                                         @if ((is_array(old('tt_hora_fin')) && in_array($hora_tt, old('tt_hora_fin'))) or
