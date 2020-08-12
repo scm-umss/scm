@@ -28,7 +28,6 @@ class MedicoController extends Controller
         }
 
         // dd($medicos);
-
         return view('medicos.index', compact('medicos'));
     }
 

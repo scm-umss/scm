@@ -28,7 +28,6 @@ class PacienteController extends Controller
         }
 
         // dd($medicos);
-
         return view('pacientes.index', compact('pacientes'));
     }
 

@@ -37,7 +37,6 @@
                     @auth
                         <ul class="navbar-nav mr-auto">
                             @if (auth()->user()->tieneRol(['admin']))
-
                             <li class="nav-item">
                                 <a href="{{ route('usuarios.index') }}" class="nav-link">Usuarios</a>
                             </li>

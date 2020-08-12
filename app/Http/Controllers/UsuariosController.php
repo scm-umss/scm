@@ -182,9 +182,9 @@ class UsuariosController extends Controller
     }
     public function restore($id){
         // $usuario = User::withTrashed()->where('id', $id)->first();
-        $usuario = User::withTrashed()->findOrFail($id);
-        $usuario->restore();
+        // $usuario = User::withTrashed()->findOrFail($id);
+        // $usuario->restore();
 
-        return redirect()->route('usuarios.inactivos')->with('status', 'Usuario restaurado exitosamente!');
+        // return redirect()->route('usuarios.inactivos')->with('status', 'Usuario restaurado exitosamente!');
     }
 }

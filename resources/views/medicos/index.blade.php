@@ -24,7 +24,7 @@
                         <th scope="col">Nombre Completo</th>
                         <th scope="col">Teléfono</th>
                         <th scope="col">Especialidades</th>
-                        {{-- <th scope="col">Fotos</th> --}}
+                        <th scope="col">Fotos</th>
                         <th scope="col">Acciones</th>
 
                     </tr>
