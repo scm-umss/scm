@@ -37,9 +37,14 @@
                     @auth
                         <ul class="navbar-nav mr-auto">
                             @if (auth()->user()->tieneRol(['admin']))
-
                             <li class="nav-item">
                                 <a href="{{ route('usuarios.index') }}" class="nav-link">Usuarios</a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="{{ route('medicos.index') }}" class="nav-link">Médicos</a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="{{ route('pacientes.index') }}" class="nav-link">Pacientes</a>
                             </li>
                             <li class="nav-item">
                                 <a href="{{ route('rol.index') }}" class="nav-link">Roles</a>

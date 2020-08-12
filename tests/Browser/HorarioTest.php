@@ -80,6 +80,7 @@ class HorarioTest extends DuskTestCase
         });
         $this->assertDatabaseHas('horarios', ['dia' => '0', 'tm_activo' => '1']);
     }
+
     public function test_crear_horario_inconsistente_como_admin()
     {
         $this->seed();
@@ -105,9 +106,10 @@ class HorarioTest extends DuskTestCase
                 ->select('#tt_sucursal')
                 ->select('#tt_especialidad')
                 ->press('Guardar Horario')
-                // ->assertPathIs('/usuarios')
+                ->assertSee('Horario inconsistente')
                 ->screenshot('test_crear_horario_inconsistente_como_admin_4');
         });
-        // $this->assertDatabaseHas('horarios', ['dia' => '0', 'tm_activo' => '1']);
+        // Verifica que en el DB no se registro el cambio
+        $this->assertDatabaseMissing('horarios', ['dia' => '0']);
     }
 }

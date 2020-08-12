@@ -226,10 +226,10 @@
 <script>
     document.addEventListener('DOMContentLoaded', ()=>{
     $("#especialidades").select2({
-            allowClear: true,
-            placeholder: 'Seleccionar especialidad'
+                allowClear: true,
+                placeholder: 'Seleccionar especialidad'
+        });
     });
-});
 </script>
 
 @endsection

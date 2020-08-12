@@ -40,3 +40,9 @@ Route::resource('/perfil','PerfilController')->only(['show','edit','update'])->n
 
 Route::get('/horarios/{id}','HorarioController@edit')->name('horarios.edit');
 Route::put('/horarios/{id}','HorarioController@update')->name('horarios.update');
+
+Route::get('/medicos','MedicoController@index')->name('medicos.index');
+
+Route::get('/pacientes','PacienteController@index')->name('pacientes.index');
+
+
