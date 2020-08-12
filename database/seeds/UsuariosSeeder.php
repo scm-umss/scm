@@ -1,9 +1,11 @@
 <?php
 
-use App\Especialidad;
 use App\Rol;
-use App\Sucursal;
+use App\Cita;
 use App\User;
+use App\Sucursal;
+use Carbon\Carbon;
+use App\Especialidad;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\Hash;
 
@@ -28,7 +30,7 @@ class UsuariosSeeder extends Seeder
             'email' => 'admin@admin.com',
             'password' => Hash::make('12345678'),
             'estado' => 'a',
-        //    'imagen'=>$faker->imageUrl(400, 400, 'cats'),
+            //    'imagen'=>$faker->imageUrl(400, 400, 'cats'),
         ]);
 
         $medico = User::create([
@@ -100,6 +102,18 @@ class UsuariosSeeder extends Seeder
             'descripcion' => '',
             'direccion' => 'America esquina Beijing S/N',
             'telefonos' => '4441234',
+        ]);
+
+        $cita = Cita::create([
+
+            'estado' => 'Reservada',
+            'fecha_hora' => Carbon::now(),
+            'numero_ficha' => 1,
+            'paciente_id' => $paciente->id,
+            'medico_id' => $medico->id,
+            'especialidad_id' => $traumatologia->id,
+
+
         ]);
     }
 }

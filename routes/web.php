@@ -23,26 +23,26 @@ Auth::routes();
 Route::get('/home', 'HomeController@index')->name('home');
 
 // Rutas para especialidades
-Route::resource('/especialidad','EspecialidadController')->names('especialidad');
+Route::resource('/especialidad', 'EspecialidadController')->names('especialidad');
 
 // Rutas para usuarios
-Route::get('/usuarios/inactivos','UsuariosController@inactivos')->name('usuarios.inactivos');
-Route::get('/usuarios/restore/{id}','UsuariosController@restore')->name('usuarios.restore');
-Route::get('/usuarios/destroy/{id}','UsuariosController@destroy')->name('usuarios.destroy');
+Route::get('/usuarios/inactivos', 'UsuariosController@inactivos')->name('usuarios.inactivos');
+Route::get('/usuarios/restore/{id}', 'UsuariosController@restore')->name('usuarios.restore');
+Route::get('/usuarios/destroy/{id}', 'UsuariosController@destroy')->name('usuarios.destroy');
 
-Route::resource('/usuarios','UsuariosController')->except('destroy')->names('usuarios');
+Route::resource('/usuarios', 'UsuariosController')->except('destroy')->names('usuarios');
 
-Route::resource('/rol','RolController')->names('rol');
+Route::resource('/rol', 'RolController')->names('rol');
 
-Route::resource('/perfil','PerfilController')->only(['show','edit','update'])->names('perfil');
+Route::resource('/perfil', 'PerfilController')->only(['show', 'edit', 'update'])->names('perfil');
 
 // Route::resource('/horarios', 'HorarioController')->only(['show', 'edit','update'])->names('horarios');
 
-Route::get('/horarios/{id}','HorarioController@edit')->name('horarios.edit');
-Route::put('/horarios/{id}','HorarioController@update')->name('horarios.update');
+Route::get('/horarios/{id}', 'HorarioController@edit')->name('horarios.edit');
+Route::put('/horarios/{id}', 'HorarioController@update')->name('horarios.update');
 
-Route::get('/medicos','MedicoController@index')->name('medicos.index');
+Route::get('/medicos', 'MedicoController@index')->name('medicos.index');
 
-Route::get('/pacientes','PacienteController@index')->name('pacientes.index');
+Route::get('/pacientes', 'PacienteController@index')->name('pacientes.index');
 
-
+Route::resource('/citas', 'CitaController')->names('citas');
