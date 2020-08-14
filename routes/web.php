@@ -30,6 +30,8 @@ Route::get('/usuarios/inactivos', 'UsuariosController@inactivos')->name('usuario
 Route::get('/usuarios/restore/{id}', 'UsuariosController@restore')->name('usuarios.restore');
 Route::get('/usuarios/destroy/{id}', 'UsuariosController@destroy')->name('usuarios.destroy');
 
+Route::get('/usuarios/json', 'UsuariosController@json');
+
 Route::resource('/usuarios', 'UsuariosController')->except('destroy')->names('usuarios');
 
 Route::resource('/rol', 'RolController')->names('rol');
@@ -50,4 +52,3 @@ Route::resource('/citas', 'CitaController')->names('citas');
 Route::get('/medicos/{especialidad}', 'CitaController@medicos')->name('citas.medicos');
 // listar horarios por medico
 Route::get('/horario/{medico}', 'CitaController@horario')->name('citas.horario');
-

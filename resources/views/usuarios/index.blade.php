@@ -65,10 +65,23 @@
                             </td>
                         </tr>
                     @endforeach
+
                 </tbody>
             </table>
+            <button id="button" class="btn btn-sm btn-danger">Eliminar</button>
         </div>
     </div>
 </div>
 @endsection
 
+@section('scripts')
+<script>
+    document.addEventListener('DOMContentLoaded', () => {
+      $.getJSON('/usuarios/json',cargar)
+    });
+    function cargar(data){
+        console.log(data);
+    }
+</script>
+
+@endsection

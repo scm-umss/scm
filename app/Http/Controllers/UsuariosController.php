@@ -68,11 +68,11 @@ class UsuariosController extends Controller
         // $usuario->rol = $request->input('rol');
         // $usuario->estado = $request->input('estado');
 
-        if($request['imagen']){
+        if ($request['imagen']) {
             //obtener imagen
-            $ruta_imagen = $request['imagen']->store('upload-perfiles','public');
+            $ruta_imagen = $request['imagen']->store('upload-perfiles', 'public');
             //Resize de la imagen con intervention image
-            $img = Image::make(public_path("storage/{$ruta_imagen}"))->fit(500,500);
+            $img = Image::make(public_path("storage/{$ruta_imagen}"))->fit(500, 500);
             $img->save();
 
             // Crear un arreglo de imagen
@@ -96,7 +96,7 @@ class UsuariosController extends Controller
     public function show(User $usuario)
     {
         $this->authorize('view', $usuario);
-        $roles = Rol::pluck('slug','id');
+        $roles = Rol::pluck('slug', 'id');
         // dd($roles);
         return view('usuarios.show', compact('usuario', 'roles'));
     }
@@ -135,15 +135,15 @@ class UsuariosController extends Controller
         $usuario->telefono = $request->input('telefono');
         // $usuario->rol = $request->input('rol');
         //$usuario->estado = $request->input('estado');
-        if($request->password){
+        if ($request->password) {
             $usuario->password = Hash::make($request->input('password'));
             // dd($usuario->password);
         }
-        if($request['imagen']){
+        if ($request['imagen']) {
             //obtener imagen
-            $ruta_imagen = $request['imagen']->store('upload-perfiles','public');
+            $ruta_imagen = $request['imagen']->store('upload-perfiles', 'public');
             //Resize de la imagen con intervention image
-            $img = Image::make(public_path("storage/{$ruta_imagen}"))->fit(500,500);
+            $img = Image::make(public_path("storage/{$ruta_imagen}"))->fit(500, 500);
             $img->save();
 
             // Crear un arreglo de imagen
@@ -158,7 +158,8 @@ class UsuariosController extends Controller
         return redirect()->route('usuarios.index')->with('status', 'Usuario actualizado exitosamente!');
     }
 
-    public function estadoUsaurio(Request $request){
+    public function estadoUsaurio(Request $request)
+    {
         $estadoUsuario = $request->estado;
         dd($estadoUsuario);
     }
@@ -176,16 +177,27 @@ class UsuariosController extends Controller
         return redirect()->route('usuarios.index')->with('status', 'Usuario dado de baja exitosamente!.');
     }
 
-    public function inactivos(){
+    public function inactivos()
+    {
         $usuarios = User::onlyTrashed()->get();
 
         return view('usuarios.inactivos', compact('usuarios'));
     }
-    public function restore($id){
+    public function restore($id)
+    {
         // $usuario = User::withTrashed()->where('id', $id)->first();
         // $usuario = User::withTrashed()->findOrFail($id);
         // $usuario->restore();
 
         // return redirect()->route('usuarios.inactivos')->with('status', 'Usuario restaurado exitosamente!');
+    }
+
+    public function json()
+    {
+
+        return response()->json([
+            'name' => 'Abigail',
+            'state' => 'CA',
+        ]);
     }
 }
