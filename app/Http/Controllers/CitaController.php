@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 
 use App\Cita;
+use App\User;
+use App\Especialidad;
 use Illuminate\Http\Request;
 
 class CitaController extends Controller
@@ -26,8 +28,8 @@ class CitaController extends Controller
      */
     public function create()
     {
-        //
-        return view('citas.create', compact('citas'));
+        $especialidades = Especialidad::all();
+        return view('citas.create', compact('especialidades'));
     }
 
     /**
@@ -85,5 +87,16 @@ class CitaController extends Controller
     public function destroy(Cita $cita)
     {
         //
+    }
+
+    public function medicos(Especialidad $especialidad){
+        $medicos = $especialidad->users;
+        return view('citas.medicos', compact('medicos','especialidad'));
+    }
+
+    public function horario(User $medico){
+
+        $horarios = $medico->horarios;
+        return view('citas.horario', compact('horarios','medico'));
     }
 }
