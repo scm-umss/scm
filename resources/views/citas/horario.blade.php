@@ -1,7 +1,10 @@
 @extends('layouts.app')
 
 @section('content')
+@section('styles')
 
+<link href="{{ asset('js/dist/css/bootstrap-datepicker.min.css') }}" rel="stylesheet">
+@endsection
 <div class="container ">
     <div class="row justify-content-center">
         <div class="col-md-8">
@@ -24,6 +27,7 @@
 
                     </div>
                         <hr>
+                        <input data-provide="datepicker" class="datepicker form-control" id="fecha">
                         {{-- <a class="btn btn-success" href="{{ route('usuarios.edit', $usuario->id) }}" role="button">Editar</a>
                         <p class="card-text">Nombre: {{ $usuario->nombre }} {{ $usuario->ap_paterno }} {{ $usuario->ap_materno }}</p>
 
@@ -42,4 +46,15 @@
 </div>
 
 @endsection
+@section('scripts')
+<script src="{{asset('js/dist/js/bootstrap-datepicker.min.js')}}"></script>
 
+<script>
+
+    $('.datepicker').datepicker()
+        .on('changeDate', function(e) {
+            var fecha = $('#fecha').val();
+            alert(fecha);
+    });
+</script>
+@endsection

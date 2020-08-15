@@ -190,12 +190,11 @@ class UsuariosController extends Controller
         // return redirect()->route('usuarios.inactivos')->with('status', 'Usuario restaurado exitosamente!');
     }
 
-    public function json()
+    public function json(Request $request)
     {
 
-        return response()->json([
-            'name' => 'Abigail',
-            'state' => 'CA',
-        ]);
+        $usuarios = User::all();
+        // return $usuarios;
+        return response()->json($usuarios);
     }
 }
