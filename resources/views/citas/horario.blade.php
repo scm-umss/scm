@@ -3,7 +3,7 @@
 @section('content')
 @section('styles')
 
-<link href="{{ asset('js/dist/css/bootstrap-datepicker.min.css') }}" rel="stylesheet">
+{{-- <link href="{{ asset('js/dist/css/bootstrap-datepicker.min.css') }}" rel="stylesheet"> --}}
 @endsection
 <div class="container ">
     <div class="row justify-content-center">
@@ -27,16 +27,8 @@
 
                     </div>
                         <hr>
-                        <input data-provide="datepicker" class="datepicker form-control" id="fecha">
-                        {{-- <a class="btn btn-success" href="{{ route('usuarios.edit', $usuario->id) }}" role="button">Editar</a>
-                        <p class="card-text">Nombre: {{ $usuario->nombre }} {{ $usuario->ap_paterno }} {{ $usuario->ap_materno }}</p>
-
-                        <p class="card-text">Ci: {{ $usuario->ci }}</p>
-                        <p class="card-text">Telefono: {{ $usuario->telefono }}</p>
-                        <p class="card-text">Email: {{ $usuario->email }}</p>
-
-                       --}}
-
+                        {{-- <input type="date" data-provide="datepicker" class="datepicker form-control" id="fecha"> --}}
+                        <fecha-component medico-id="{{ $medico->id }}"></fecha-component>
                     </div>
                 </div>
                 </div>
@@ -47,7 +39,7 @@
 
 @endsection
 @section('scripts')
-<script src="{{asset('js/dist/js/bootstrap-datepicker.min.js')}}"></script>
+{{-- <script src="{{asset('js/dist/js/bootstrap-datepicker.min.js')}}"></script>
 
 <script>
 
@@ -56,5 +48,5 @@
             var fecha = $('#fecha').val();
             alert(fecha);
     });
-</script>
+</script> --}}
 @endsection
