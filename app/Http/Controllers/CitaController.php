@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use App\Cita;
 use App\User;
 use App\Especialidad;
+use App\Horario;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 
 class CitaController extends Controller
@@ -98,5 +100,55 @@ class CitaController extends Controller
 
         $horarios = $medico->horarios;
         return view('citas.horario', compact('horarios','medico'));
+    }
+
+    public function horasMedico(Request $request){
+        // $fecha = $request->fecha;
+        // $medico = $request->id;
+        // $medico = User::where('id', 2)->get(['id','nombre','ap_paterno','ap_materno']);
+        $f_carbon = new Carbon($request->fecha);
+        $dia = $f_carbon->dayOfWeek;
+        // dd($f_carbon->dayOfWeek);
+        // $medico = User::findOrFail($request->id);
+        // $tm_horario = $medico->horarios()->where('tm_activo',1)->where('dia',1)->get();
+        $tm_horario = Horario::where('tm_activo',true)
+                                ->where('dia',$dia)
+                                ->where('user_id', $request->id)
+                                ->first([
+                                    'tm_hora_inicio', 'tm_hora_fin'
+                                ]);
+        $tt_horario = Horario::where('tm_activo',true)
+                                ->where('dia',$dia)
+                                ->where('user_id', $request->id)
+                                ->first([
+                                    'tt_hora_inicio', 'tt_hora_fin'
+                                ]);
+
+        // return $request->all();
+        // dd($tm_horario->tm_hora_inicio);
+        $data =[
+            // 'fecha' => $fecha,
+            // 'medico' => $medico,
+            'tm_horario' => $tm_horario,
+            'tt_horario' => $tt_horario
+        ];
+        return response()->json($data);
+    }
+
+    private function getIntervalos($inicio, $fin){
+        $inicio = new Carbon($inicio);
+        $fin = new Carbon($fin);
+        $intervalos=[];
+        while ($inicio < $fin) {
+            $intervalo = [];
+
+            $intervalo['inicio'] = $inicio->format('H:i');
+            $inicio->addMinutes(30);
+            $intervalo['fin'] = $inicio->format('H:i');
+
+            $intervalos[]=$intervalo;
+        }
+        // dd($intervals);
+        return $intervalos;
     }
 }

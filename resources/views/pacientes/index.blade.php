@@ -39,7 +39,8 @@
                                 {{-- <a href="{{ route('horarios.edit', $paciente->id) }}" class="btn btn-sm btn-info" dusk="ver-horarios-{{ $paciente->id }}">Ver Horarios</a> --}}
                                 <a href="{{ route('usuarios.show', ['usuario' => $paciente->id]) }}" class="btn btn-sm btn-info" dusk="ver-detalles-{{ $paciente->id }}">Detalles</a>
                                 <a href="{{ route('usuarios.edit', ['usuario' => $paciente->id]) }}" class="btn btn-sm btn-secondary" dusk="editar-paciente-{{ $paciente->id }}">Editar</a>
-                                <a id="eliminar-paciente-{{ $paciente->id }}" class="btn btn-sm btn-danger" dusk="eliminar-paciente- $paciente->id  }}" >Eliminar</a>
+                                <eliminar-component paciente-id="{{ $paciente->id }}"></eliminar-component>
+                                {{-- <a id="eliminar-paciente-{{ $paciente->id }}" class="btn btn-sm btn-danger" dusk="eliminar-paciente- $paciente->id  }}" >Eliminar</a> --}}
                             </td>
                         </tr>
                     @endforeach
@@ -50,14 +51,10 @@
 </div>
 @endsection
 
-@section('scripts')
+{{-- @section('scripts')
 <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
 <script>
     document.addEventListener('DOMContentLoaded', (event)=>{
-        // $( "#eliminar-paciente" ).click(function() {
-            
-        //     console.log('Clkick 2');
-        // });
         @foreach ($pacientes as $paciente)
             document.getElementById('eliminar-paciente-{{ $paciente->id }}').onclick = function() {
                 swal({
@@ -69,11 +66,11 @@
                 })
                 .then((quiereBorrar) => {
                 if (quiereBorrar) {
-                    window.location.href = '{{ route("usuarios.destroy", $paciente->id ) }}';    
+                    window.location.href = '{{ route("usuarios.destroy", $paciente->id ) }}';
                 }
                 });
             };
         @endforeach
     });
 </script>
-@endsection
+@endsection --}}

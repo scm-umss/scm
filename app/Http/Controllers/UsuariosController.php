@@ -171,6 +171,7 @@ class UsuariosController extends Controller
      */
     public function destroy($id)
     {
+        // return 'Eliminando-...';
         $usuario = User::findOrFail($id);
         $this->authorize('delete', $usuario);
         $usuario->delete();
