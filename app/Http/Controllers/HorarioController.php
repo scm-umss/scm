@@ -32,11 +32,12 @@ class HorarioController extends Controller
      * @param  \App\Horario  $horario
      * @return \Illuminate\Http\Response
      */
-    public function edit($id)
+    public function edit(User $medico)
     {
-        $usuario = User::findOrfail($id);
-        $this->authorize('update', $usuario);
-        $horarios_medico = Horario::where('user_id', $usuario->id)->get();
+        // $usuario = User::findOrfail($id);
+        $this->authorize('update', $medico);
+        // $medico->load('roles');
+        $horarios_medico = Horario::where('user_id', $medico->id)->get();
         // dd($horarios_medico);
         $dias = $this->dias;
 
@@ -52,12 +53,11 @@ class HorarioController extends Controller
             $horario_tt = $this->getHoras('14:00:00', '18:00:00');
         }
 
+        $sucursales = Sucursal::get(['id','nombre']);
 
-        $sucursales = Sucursal::all();
+        $especialidades = $medico->especialidades()->get(['especialidads.id','especialidads.nombre']);
 
-        $especialidades = Especialidad::find($usuario->especialidadesId());
-
-        return view('horarios.edit', compact('dias', 'usuario', 'horario_tm', 'horario_tt', 'sucursales', 'especialidades', 'horarios_medico'));
+        return view('horarios.edit', compact('dias', 'medico', 'horario_tm', 'horario_tt', 'sucursales', 'especialidades', 'horarios_medico'));
     }
 
     public function getHoras($inicio, $fin)

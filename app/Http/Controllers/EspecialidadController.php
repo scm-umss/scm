@@ -124,6 +124,9 @@ class EspecialidadController extends Controller
      */
     public function destroy(Especialidad $especialidad)
     {
+        // return 'Eliminando-...';
+        // $usuario = User::findOrFail($id);
+        // $this->authorize('delete', $especialidad);
         $especialidad->delete();
         return redirect()->route('especialidad.index')->with('status', 'Especialidad dado de baja!.');
     }

@@ -1,5 +1,6 @@
 <?php
 
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 
 
@@ -45,18 +46,18 @@ Route::get('/pacientes', 'PacienteController@index')->name('pacientes.index');
 
 // Route::resource('/horarios', 'HorarioController')->only(['show', 'edit','update'])->names('horarios');
 
-Route::get('/horarios/{id}', 'HorarioController@edit')->name('horarios.edit');
-Route::put('/horarios/{id}', 'HorarioController@update')->name('horarios.update');
-
+Route::get('/horarios/{medico}', 'HorarioController@edit')->name('horarios.edit');
+Route::put('/horarios/{medico}', 'HorarioController@update')->name('horarios.update');
+/** Gestion de médicos */
 Route::get('/medicos', 'MedicoController@index')->name('medicos.index');
-
+/** Gestion de pacientes  */
 Route::get('/pacientes', 'PacienteController@index')->name('pacientes.index');
+Route::get('/pacientes/create', 'PacienteController@create')->name('pacientes.create');
 
 Route::resource('/citas', 'CitaController')->names('citas');
 // listar medicos por especialidad
 Route::get('/medicos/{especialidad}', 'CitaController@medicos')->name('citas.medicos');
-// listar horarios por medico
+// listar horario por medico
 Route::get('/horario/{medico}', 'CitaController@horario')->name('citas.horario');
 // Horarios de cada medico API JSON
 Route::get('/horasmedico', 'CitaController@horasMedico');
-

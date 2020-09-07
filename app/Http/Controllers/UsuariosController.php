@@ -28,7 +28,8 @@ class UsuariosController extends Controller
     {
         //$this->authorize('view', null);
 
-        $usuarios = User::all();
+        // $usuarios = User::all();
+        $usuarios = User::with('roles')->get();
         return view('usuarios.index', compact('usuarios'));
     }
 
@@ -157,10 +158,6 @@ class UsuariosController extends Controller
         return redirect()->route('usuarios.index')->with('status', 'Usuario actualizado exitosamente!');
     }
 
-    // public function estadoUsaurio(Request $request){
-    //     $estadoUsuario = $request->estado;
-    //     dd($estadoUsuario);
-    // }
     /**
      * Remove the specified resource from storage.
      *
@@ -185,17 +182,9 @@ class UsuariosController extends Controller
     public function restore($id)
     {
         // $usuario = User::withTrashed()->where('id', $id)->first();
-        // $usuario = User::withTrashed()->findOrFail($id);
-        // $usuario->restore();
+        $usuario = User::withTrashed()->findOrFail($id);
+        $usuario->restore();
 
-        // return redirect()->route('usuarios.inactivos')->with('status', 'Usuario restaurado exitosamente!');
-    }
-
-    public function json(Request $request)
-    {
-
-        $usuarios = User::all();
-        // return $usuarios;
-        return response()->json($usuarios);
+        return redirect()->route('usuarios.inactivos')->with('status', 'Usuario restaurado exitosamente!');
     }
 }

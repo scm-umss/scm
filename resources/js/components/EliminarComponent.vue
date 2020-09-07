@@ -2,17 +2,17 @@
     <div>
         <input
         type="submit"
-        class="btn btn-danger"
-        value="Eliminar"
-        @click="eliminarPaciente">
+        class="btn btn-sm btn-danger"
+        value="Dar de baja"
+        @click="darDeBaja">
     </div>
 </template>
 <script>
 export default {
-    props:['pacienteId'],
+    props:['usuarioId'],
     methods: {
-        eliminarPaciente(){
-            // console.log('Diste click '+ this.pacienteId);
+        darDeBaja(){
+            // console.log('Diste click '+ this.usuarioId);
             this.$swal({
                 title: 'Estás seguro de dar de baja?',
                 text: "Una vez de de baja, ya no estará disponible en la lista!",
@@ -25,9 +25,9 @@ export default {
             }).then((result) => {
             if (result.value) {
                 const params = {
-                    id: this.pacienteId
+                    id: this.usuarioId
                 };
-                axios.get(`/usuarios/destroy/${this.pacienteId}`, {params})
+                axios.post(`/usuarios/${this.usuarioId}`, {params, _method:'delete'})
                     .then(respuesta => {
                         // console.log(respuesta);
                         this.$swal({
@@ -44,18 +44,6 @@ export default {
                     });
             }
             })
-            // this.$swal({
-            //         title: "¿Está seguro de dar de baja al Paciente?",
-            //         text: "Una vez dado de baja, ya no estará en la lista de pacientes.",
-            //         icon: "warning",
-            //         dangerMode: true,
-            //         buttons: ["Cancelar", "Dar de baja!"],
-            //     })
-            //     .then((quiereBorrar) => {
-            //     if (quiereBorrar) {
-            //         window.location.href = '{{ route("usuarios.destroy", $paciente->id ) }}';
-            //     }
-            //     });
         }
     }
 }

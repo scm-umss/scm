@@ -6,17 +6,17 @@
 <div class="container">
     <div class="row justify-content-center">
         {{-- <div class="col-md-12"> --}}
-            <form action="{{ route('horarios.update', $usuario->id) }}" method="POST">
+            <form action="{{ route('horarios.update', $medico->id) }}" method="POST">
                 @csrf
                 @method('PUT')
 
                 <div class="card">
                     <div class="card-header d-flex justify-content-between">
                         <div>
-                            <h4>Horario de trabajo de: <span class="badge badge-secondary">{{ $usuario->nombre }} {{ $usuario->ap_paterno }} {{ $usuario->ap_paterno }}</span></h4>
+                            <h4>Horario de trabajo de: <span class="badge badge-secondary">{{ $medico->nombre }} {{ $medico->ap_paterno }} {{ $medico->ap_paterno }}</span></h4>
                         </div>
                         <button type="submit" class="btn btn-primary">Guardar Horario</button>
-                        {{-- <a href="{{ route('usuarios.index') }}" class="btn btn-danger px-4" role="button">Cancelar</a> --}}
+                        {{-- <a href="{{ route('medicos.index') }}" class="btn btn-danger px-4" role="button">Cancelar</a> --}}
                     </div>
 
                     <div class="card-body">

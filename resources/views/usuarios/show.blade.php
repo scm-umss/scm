@@ -17,7 +17,7 @@
                         <h5 class="card-title">Estás registrado como: {{ $usuario->roles->pluck('nombre')->implode(', ') }}</h5>
                         <hr>
                         <a class="btn btn-success" href="{{ route('usuarios.edit', $usuario->id) }}" role="button">Editar</a>
-                        <p class="card-text">Nombre: {{ $usuario->nombre }} {{ $usuario->ap_paterno }} {{ $usuario->ap_materno }}</p>
+                        <p class="card-text">Nombre: {{ $usuario->nombreCompleto }}</p>
 
                         <p class="card-text">Ci: {{ $usuario->ci }}</p>
                         <p class="card-text">Telefono: {{ $usuario->telefono }}</p>
@@ -29,7 +29,7 @@
                                 Inactivo
                             @endif </p>
 
-                        <p class="card-text"><small class="text-muted">registrado desde: {{ $usuario->created_at }}</small></p>
+                        <p class="card-text"><small class="text-muted">registrado desde: {{ $usuario->created_at->isoFormat('LLLL') }}</small></p>
                         {{-- {{ dd($usuario->roles->pluck('id')) }} --}}
                         {{-- @foreach ($roles as $id => $rol) --}}
                         {{-- {{ dd($id) }} --}}
