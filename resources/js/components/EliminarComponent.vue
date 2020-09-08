@@ -4,12 +4,16 @@
         type="submit"
         class="btn btn-sm btn-danger"
         value="Dar de baja"
+        :dusk="dusk"
         @click="darDeBaja">
     </div>
 </template>
 <script>
 export default {
     props:['usuarioId'],
+    data(){
+        return {dusk: 'eliminar-usuario-' + this.usuarioId}
+    },
     methods: {
         darDeBaja(){
             // console.log('Diste click '+ this.usuarioId);

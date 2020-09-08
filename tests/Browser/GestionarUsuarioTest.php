@@ -71,8 +71,13 @@ class GestionarUsuarioTest extends DuskTestCase
                 ->visit('/usuarios')
                 ->screenshot('GestionarUsuario_test_dar_de_baja_restaurar_usuario_1')
                 ->click('@eliminar-usuario-3')
-                ->assertPathIs('/usuarios')
-                ->screenshot('GestionarUsuario_test_dar_de_baja_restaurar_usuario_2');
+                ->pause(500)
+                ->assertSee('seguro de dar de baja')
+                ->screenshot('GestionarUsuario_test_dar_de_baja_restaurar_usuario_2')
+                ->click('.swal2-confirm')
+                ->pause(500)
+                ->assertSee('Paciente dado de baja')
+                ->screenshot('GestionarUsuario_test_dar_de_baja_restaurar_usuario_3');
 
         });
 
@@ -84,10 +89,10 @@ class GestionarUsuarioTest extends DuskTestCase
         $this->browse(function (Browser $browser) {
             $browser->loginAs(User::find(1))
                 ->visit('/usuarios/inactivos')
-                ->screenshot('GestionarUsuario_test_dar_de_baja_restaurar_usuario_3')
+                ->screenshot('GestionarUsuario_test_dar_de_baja_restaurar_usuario_4')
                 ->click('@restaurar-usuario-3')
                 ->assertPathIs('/usuarios/inactivos')
-                ->screenshot('GestionarUsuario_test_dar_de_baja_restaurar_usuario_4');
+                ->screenshot('GestionarUsuario_test_dar_de_baja_restaurar_usuario_5');
 
         });
 
