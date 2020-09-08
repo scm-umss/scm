@@ -51,7 +51,7 @@
                                         <td>{{ $dias[$key] }}</td>
                                         <td><div class="form-check">
                                             <input id="tm_activo" name="tm_activo[{{$key}}]" value="{{$key}}"
-                                            class="form-check-input" type="checkbox"
+                                            class="form-check-input" type="checkbox" dusk="tm_activo[{{$key}}]"
                                             @if ((is_array(old('tm_activo')) && in_array($key, old('tm_activo'))) or
                                                 (!is_array(old('tm_activo')) && $horario_dia->tm_activo))
                                                 checked
@@ -62,7 +62,7 @@
                                         <td>
                                             <div class="row">
                                                 <div class="col">
-                                                    <select name="tm_hora_inicio[]" id="tm_hora_inicio" class="form-control">
+                                                    <select name="tm_hora_inicio[]" id="tm_hora_inicio" class="form-control" dusk="tm_hora_inicio[{{ $key }}]">
                                                         @foreach ($horario_tm as $hora_tm)
                                                         <option value="{{ $hora_tm }}"
                                                         @if ((is_array(old('tm_hora_inicio')) && in_array($hora_tm, old('tm_hora_inicio'))) or
@@ -78,7 +78,7 @@
                                                 </div>
 
                                                 <div class="col">
-                                                    <select name="tm_hora_fin[]" id="tm_hora_fin" class="form-control">
+                                                    <select name="tm_hora_fin[]" id="tm_hora_fin" class="form-control" dusk="tm_hora_fin[{{ $key }}]">
                                                         @foreach ($horario_tm as $hora_tm)
                                                         <option value="{{$hora_tm}}"
                                                         @if ((is_array(old('tm_hora_fin')) && in_array($hora_tm, old('tm_hora_fin'))) or
@@ -124,7 +124,8 @@
                                     <tr>
                                         <td></td>
                                         <td><div class="form-check">
-                                            <input id="tt_activo" name="tt_activo[]" value="{{ $key }}" class="form-check-input" type="checkbox"
+                                            <input id="tt_activo" name="tt_activo[{{ $key }}]" value="{{ $key }}"
+                                            class="form-check-input" type="checkbox" dusk="tt_activo[{{ $key }}]"
                                             @if ((is_array(old('tt_activo')) && in_array($key, old('tt_activo'))) or
                                                 (!is_array(old('tt_activo')) && $horario_dia->tt_activo))
                                                 checked
@@ -135,7 +136,7 @@
                                         <td>
                                             <div class="row">
                                                 <div class="col">
-                                                    <select name="tt_hora_inicio[]" id="tt_hora_inicio" class="form-control">
+                                                    <select name="tt_hora_inicio[]" id="tt_hora_inicio" class="form-control" dusk="tt_hora_inicio[{{ $key }}]">
                                                         @foreach ($horario_tt as $hora_tt)
                                                         <option value="{{$hora_tt}}" @if ((is_array(old('tt_hora_inicio')) && in_array($hora_tt, old('tt_hora_inicio'))) or
                                                         (!is_array(old('tt_hora_inicio')) && ($horario_dia->tt_hora_inicio == $hora_tt.':00')))
@@ -148,7 +149,7 @@
                                                 </div>
 
                                                 <div class="col">
-                                                    <select name="tt_hora_fin[]" id="tt_hora_fin" class="form-control">
+                                                    <select name="tt_hora_fin[]" id="tt_hora_fin" class="form-control" dusk="tt_hora_fin[{{ $key }}]">
                                                         @foreach ($horario_tt as $hora_tt)
                                                         <option value="{{$hora_tt}}"
                                                         @if ((is_array(old('tt_hora_fin')) && in_array($hora_tt, old('tt_hora_fin'))) or
