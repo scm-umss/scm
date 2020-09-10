@@ -115,26 +115,6 @@
                                 </div>
                             </div>
 
-
-                            {{-- <div class="form-group row">
-                                <label for="estado" class="col-md-4 col-form-label text-md-right">Estado</label>
-
-                                <div class="col-md-6">
-                                    <select class="form-control" name="estado" id="estado">
-                                        @foreach(["a" => "Activo", "i" => "Inactivo"] as $estado => $estadoTexto)
-
-                                        <option value="{{ $estado }}">{{ $estadoTexto }}</option>
-                                        @endforeach
-                                    </select>
-
-                                    @error('estado')
-                                        <span class="invalid-feedback" role="alert">
-                                            <strong>{{ $message }}</strong>
-                                        </span>
-                                    @enderror
-                                </div>
-                            </div> --}}
-
                             <div class="form-group row">
                                 <label for="imagen" class="col-md-4 col-form-label text-md-right">Foto:</label>
                                 <div class="content py-4">

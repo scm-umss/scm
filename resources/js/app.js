@@ -24,6 +24,7 @@ Vue.use(VueSweetalert2);
 Vue.component('eliminar-usuario', require('./components/EliminarUsuario.vue').default);
 Vue.component('eliminar-especialidad', require('./components/EliminarEspecialidad.vue').default);
 Vue.component('especialidades-inactivos', require('./components/EspecialidadInactivo.vue').default);
+Vue.component('listar-especialidades', require('./components/Especialidades.vue').default);
 
 /**
  * Next, we will create a fresh Vue application instance and attach it to

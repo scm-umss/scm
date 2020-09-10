@@ -54,10 +54,15 @@ Route::get('/medicos', 'MedicoController@index')->name('medicos.index');
 Route::get('/pacientes', 'PacienteController@index')->name('pacientes.index');
 Route::get('/pacientes/create', 'PacienteController@create')->name('pacientes.create');
 
+/** Gestion de citas Admin */
+Route::get('/citas/especialidades', 'CitaController@getEspecialidades');
+// Route::get('/admin/citas', 'Admin\CitaController@index')->name('admin.citas.index');
+// Route::get('/admin/citas/create', 'Admin\CitaController@create')->name('admin.citas.create');
+/** Gestion de citas cliente */
 Route::resource('/citas', 'CitaController')->names('citas');
 // listar medicos por especialidad
-Route::get('/medicos/{especialidad}', 'CitaController@medicos')->name('citas.medicos');
-// listar horario por medico
+Route::get('/especialidad/{especialidad}/medicos', 'CitaController@getMedicos')->name('citas.medicos');
+// Vista para listar horario por medico
 Route::get('/horario/{medico}', 'CitaController@horario')->name('citas.horario');
 // Horarios de cada medico API JSON
 Route::get('/horasmedico', 'CitaController@horasMedico');

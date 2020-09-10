@@ -6,7 +6,11 @@
     <div class="row justify-content-center">
         <div class="col-md-8">
             <div class="card mb-3 shadow">
-
+                @if (session('status'))
+                    <div class="alert alert-success">
+                        {{ session('status') }}
+                    </div>
+                @endif
                 <div class="row no-gutters">
                 <div class="col-md-4">
                     <img src="/storage/{{$usuario->imagen}}" class="card-img" alt="foto">

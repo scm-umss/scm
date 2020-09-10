@@ -1,7 +1,7 @@
 <template>
     <div>
         <div class="form-group row">
-            <label>Elegir fecha para la cita:</label>
+            <label class="col-md-4 col-form-label text-md-right">Elegir fecha para la cita:</label>
             <div class="col-md-6">
                 <!-- <date-picker v-model="time1"
                     format="YYYY-MM-DD"
@@ -56,7 +56,7 @@ export default {
     methods: {
         cargarHoras: function(date){
             // this.value = [date, new Date(date.getTime() + 30 * 24 * 3600 * 1000)]
-            console.log('la fecha sellecionada es: '+this.fecha)
+            console.log('la fecha sellecionada es: '+this.fecha+ ' Medico: '+this.medicoId)
             let urlHorasMedico = '/horasmedico';
             const params = {fecha: this.fecha, id:this.medicoId}
 

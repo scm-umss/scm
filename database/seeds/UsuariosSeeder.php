@@ -104,12 +104,12 @@ class UsuariosSeeder extends Seeder
         $cita = Cita::create([
 
             'estado' => 'Reservada',
-            'fecha_hora' => Carbon::now(),
             'numero_ficha' => 1,
             'paciente_id' => $paciente->id,
             'medico_id' => $medico->id,
             'especialidad_id' => $traumatologia->id,
-
+            'fecha_programada' => Carbon::now()->format('Y-m-d'),
+            'hora_programada' => '09:00:00',
 
         ]);
     }

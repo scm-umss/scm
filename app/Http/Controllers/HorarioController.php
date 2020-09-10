@@ -41,6 +41,10 @@ class HorarioController extends Controller
         // dd($horarios_medico);
         $dias = $this->dias;
 
+        if ($medico->tieneRol(['paciente'])) {
+            return redirect()->route('usuarios.show',['usuario' => $medico])->with('status','Un paciente no puede registrar su horario.');
+        }
+
         if (count($horarios_medico) > 0) {
             $horario_tm = $this->getHoras('07:00:00', '12:00:00');
             $horario_tt = $this->getHoras('14:00:00', '18:00:00');
