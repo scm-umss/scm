@@ -4,10 +4,12 @@ namespace App\Http\Controllers;
 
 use App\Cita;
 use App\User;
-use App\Especialidad;
 use App\Horario;
 use Carbon\Carbon;
+use App\Especialidad;
 use Illuminate\Http\Request;
+use App\Http\Requests\CitaRequest;
+use Illuminate\Support\Facades\Date;
 
 class CitaController extends Controller
 {
@@ -36,7 +38,14 @@ class CitaController extends Controller
     {
         $especialidades = Especialidad::all();
         if (auth()->user()->isSuperAdmin()) {
-            return view('admin.citas.create', compact('especialidades'));
+            $users = User::with('roles')->get();
+            $pacientes = [];
+            foreach($users as $user){
+                if($user->tieneRol(['paciente'])){
+                    $pacientes[] = $user;
+                }
+            }
+            return view('pacientes.index', compact('pacientes'));
         }
         return view('citas.create', compact('especialidades'));
     }
@@ -47,9 +56,41 @@ class CitaController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(CitaRequest $request)
     {
-        dd($request->all());
+
+        $fecha = new Carbon($request->get('fecha_programada'));
+        // dump($fecha->format('Y-m-d'));
+        $ficha = 1;
+        /** La hora ya esta ocupado por otro paciente  */
+        $citaRegistrada = Cita::where('fecha_programada', $fecha->format('Y-m-d'))
+                        ->where('medico_id', $request->get('medico'))
+                        ->where('hora_programada', $request->get('hora_programada'))
+                        ->count();
+        /** El paciente ya tiene cita registrada para el dia */
+        $tieneCita = Cita::where('fecha_programada', $fecha->format('Y-m-d'))
+                        ->where('paciente_id', $request->get('paciente'))
+                        ->count();
+        // dd($tieneCita);
+        if(!$tieneCita && !$citaRegistrada){
+            $cita = new Cita();
+            $cita->paciente_id = $request->get('paciente');
+            $cita->medico_id = $request->get('medico');
+            $cita->especialidad_id = $request->get('especialidad');
+            $cita->fecha_programada = $fecha->format('Y-m-d');
+            $cita->hora_programada = $request->get('hora_programada');
+            $cita->numero_ficha = $ficha+1;
+            $cita->save();
+            return 'Cita registrada exitosamente!';
+        }else{
+            // return 'Ya tiene cita en el día';
+            $error = [
+                'error' => 'Algo anda mal, creo que ya existe cita con el médico...'
+            ];
+            return response()->json($error);
+        }
+
+        // return redirect()->route('citas.index')->with('status','Registro realizado exitosamente!');
     }
 
     /**
@@ -97,6 +138,9 @@ class CitaController extends Controller
     {
         //
     }
+    public function agendarCita(User $paciente){
+        return view('admin.citas.create', compact('paciente'));
+    }
 
     /** Para gestion Admin */
     public function getEspecialidades(Request $request){
@@ -126,62 +170,77 @@ class CitaController extends Controller
 
     public function horasMedico(Request $request){
         // $fecha = $request->fecha;
-        // $medico = $request->id;
+        $medico = $request->id;
         // $medico = User::where('id', 2)->get(['id','nombre','ap_paterno','ap_materno']);
-        $f_carbon = new Carbon($request->fecha);
-        $dia = $f_carbon->dayOfWeek;
+        $fecha = new Carbon($request->fecha);
+        $dia = $fecha->dayOfWeek;
         // dd($f_carbon->dayOfWeek);
         // $medico = User::findOrFail($request->id);
         // $tm_horario = $medico->horarios()->where('tm_activo',1)->where('dia',1)->get();
         $tm_horario = Horario::where('tm_activo',true)
                                 ->where('dia',$dia)
-                                ->where('user_id', $request->id)
+                                ->where('user_id', $medico)
                                 ->first([
                                     'tm_hora_inicio', 'tm_hora_fin'
                                 ]);
         $tt_horario = Horario::where('tt_activo',true)
                                 ->where('dia',$dia)
-                                ->where('user_id', $request->id)
+                                ->where('user_id', $medico)
                                 ->first([
                                     'tt_hora_inicio', 'tt_hora_fin'
                                 ]);
+        // $data = $this->estaDisponible($tm_horario,$tt_horario,$fecha,$medico);
         $tm_intervalos = [];
         $tt_intervalos = [];
-
         if (!$tm_horario && !$tt_horario) {
             return [];
         }elseif (!$tm_horario) {
-            $tt_intervalos = $this->getIntervalos($tt_horario->tt_hora_inicio, $tt_horario->tt_hora_fin);
+            $tt_intervalos = $this->getIntervalos($tt_horario->tt_hora_inicio, $tt_horario->tt_hora_fin, $fecha, $medico);
         }elseif(!$tt_horario){
-             $tm_intervalos = $this->getIntervalos($tm_horario->tm_hora_inicio, $tm_horario->tm_hora_fin);
+             $tm_intervalos = $this->getIntervalos($tm_horario->tm_hora_inicio, $tm_horario->tm_hora_fin, $fecha, $medico);
         }else{
-             $tm_intervalos = $this->getIntervalos($tm_horario->tm_hora_inicio, $tm_horario->tm_hora_fin);
-             $tt_intervalos = $this->getIntervalos($tt_horario->tt_hora_inicio, $tt_horario->tt_hora_fin);
+             $tm_intervalos = $this->getIntervalos($tm_horario->tm_hora_inicio, $tm_horario->tm_hora_fin, $fecha, $medico);
+             $tt_intervalos = $this->getIntervalos($tt_horario->tt_hora_inicio, $tt_horario->tt_hora_fin, $fecha, $medico);
         }
         // dd($tm_intervalos);
         $data =[
-            // 'fecha' => $fecha,
-            // 'medico' => $medico,
             'tm_horario' => $tm_intervalos,
             'tt_horario' => $tt_intervalos
         ];
+
         return response()->json($data);
 
 
     }
 
-    private function getIntervalos($inicio, $fin){
+    private function estaDisponible($fecha, $medico, $inicio){
+        $existe = Cita::where('medico_id', $medico)
+                    ->where('fecha_programada', $fecha
+                    ->format('Y-m-d'))
+                    ->where('hora_programada',$inicio)
+                    ->exists();
+        // Estará disponible cuando no exista cita reservada para esa fecha y hora con el medico
+        return !$existe;
+    }
+
+    private function getIntervalos($inicio, $fin, $fecha, $medico){
         $inicio = new Carbon($inicio);
         $fin = new Carbon($fin);
+        // dd($fecha->format('Y-m-d'));
         $intervalos=[];
         while ($inicio < $fin) {
             $intervalo = [];
 
             $intervalo['inicio'] = $inicio->format('H:i');
+
+            $disponible = $this->estaDisponible($fecha,$medico,$inicio);
+
+
             $inicio->addMinutes(30);
             $intervalo['fin'] = $inicio->format('H:i');
-
-            $intervalos[]=$intervalo;
+            if($disponible){
+                $intervalos[]=$intervalo;
+            }
         }
         // dd($intervals);
         return $intervalos;

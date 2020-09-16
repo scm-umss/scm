@@ -20,10 +20,11 @@
                 <thead>
                     <tr>
                         <th scope="col">Numero ficha</th>
-                        <th scope="col">Fecha  y Hora</th>
+                        <th scope="col">Fecha</th>
+                        <th scope="col">Hora</th>
                         <th scope="col">Paciente</th>
-                        <th scope="col">Medico</th>
                         <th scope="col">Especialidad</th>
+                        <th scope="col">Medico</th>
                         <th scope="col">Estado</th>
                     </tr>
                 </thead>
@@ -31,10 +32,11 @@
                     @foreach ($citas as $cita)
                         <tr>
                             <td>{{ $cita->numero_ficha }}</td>
-                            <td>{{ $cita->fecha_hora }}</td>
+                            <td>{{ $cita->fecha_programada }}</td>
+                            <td>{{ $cita->hora_programada }}</td>
                             <td>{{ $cita->paciente->nombre }}</td>
-                            <td>{{ $cita->medico->nombre }}</td>
                             <td>{{ $cita->especialidad->nombre }}</td>
+                            <td>{{ $cita->medico->nombre }}</td>
                             <td>{{ $cita->estado }}</td>
                             <td>
 

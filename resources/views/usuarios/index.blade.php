@@ -39,15 +39,10 @@
                             {{ $usuario->roles->pluck('nombre')->implode(', ') }}
                             </td>
                             <td class="d-flex">
-                                {{-- <form action="{{ route('usuarios.destroy', ['usuario' => $usuario->id]) }}"
-                                    method="POST">
-                                    @csrf
-                                    @method('DELETE')
-                                </form> --}}
-                                <a href="{{ route('usuarios.show', ['usuario' => $usuario->id]) }}" class="btn btn-sm btn-info" dusk="ver-detalles-{{ $usuario->id }}">Detalles</a>
-                                <a href="{{ route('usuarios.edit', ['usuario' => $usuario->id]) }}" class="btn btn-sm btn-secondary" dusk="editar-usuario-{{ $usuario->id }}">Editar</a>
-                                <a href="{{ route('usuarios.destroy', $usuario->id) }}" class="btn btn-sm btn-danger" dusk="eliminar-usuario-{{ $usuario->id }}" >Eliminar</a>
-                                {{-- <button type="submit" class="btn btn-sm btn-danger">Eliminar</button> --}}
+                                <a href="{{ route('usuarios.show', ['usuario' => $usuario->id]) }}" class="btn btn-sm btn-info mr-2" dusk="ver-detalles-{{ $usuario->id }}">Detalles</a>
+                                <a href="{{ route('usuarios.edit', ['usuario' => $usuario->id]) }}" class="btn btn-sm btn-secondary mr-2" dusk="editar-usuario-{{ $usuario->id }}">Editar</a>
+
+                                <eliminar-usuario usuario-id="{{ $usuario->id }}"></eliminar-usuario>
                             </td>
                         </tr>
                     @endforeach

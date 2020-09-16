@@ -3,7 +3,6 @@
 @section('content')
 @section('styles')
 
-{{-- <link href="{{ asset('js/dist/css/bootstrap-datepicker.min.css') }}" rel="stylesheet"> --}}
 @endsection
 <div class="container ">
     <div class="row justify-content-center">
@@ -29,6 +28,7 @@
                         <hr>
                         {{-- <input type="date" data-provide="datepicker" class="datepicker form-control" id="fecha"> --}}
                         <fecha-component medico-id="{{ $medico->id }}"></fecha-component>
+                        {{-- <combo-fecha medico-id="{{ $medico->id }}"></combo-fecha> --}}
                     </div>
                 </div>
                 </div>
@@ -37,16 +37,4 @@
     </div>
 </div>
 
-@endsection
-@section('scripts')
-{{-- <script src="{{asset('js/dist/js/bootstrap-datepicker.min.js')}}"></script>
-
-<script>
-
-    $('.datepicker').datepicker()
-        .on('changeDate', function(e) {
-            var fecha = $('#fecha').val();
-            alert(fecha);
-    });
-</script> --}}
 @endsection

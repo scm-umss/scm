@@ -25,19 +25,6 @@
 
                     @endforeach
                     </div>
-
-                    {{-- <form method="POST" action="{{ route('citas.store') }}" enctype="multipart/form-data">
-                        @csrf
-
-
-                        <div class="form-group mt-3 d-flex justify-content-center">
-                            <div class="">
-                                <button type="submit" class="btn btn-primary p3">
-                                    Registrar Usuario
-                                </button>
-                            </div>
-                        </div>
-                    </form> --}}
                 </div>
             </div>
         </div>

@@ -64,7 +64,7 @@ class HorarioController extends Controller
         return view('horarios.edit', compact('dias', 'medico', 'horario_tm', 'horario_tt', 'sucursales', 'especialidades', 'horarios_medico'));
     }
 
-    public function getHoras($inicio, $fin)
+    private function getHoras($inicio, $fin)
     {
         $hora_inicio = Carbon::createFromTimeString($inicio);
         $hora_fin = Carbon::createFromTimeString($fin);
