@@ -29,7 +29,6 @@ class UsuariosSeeder extends Seeder
             'telefono' => '12354678',
             'email' => 'admin@admin.com',
             'password' => Hash::make('12345678'),
-        //    'imagen'=>$faker->imageUrl(400, 400, 'cats'),
         ]);
 
         $medico = User::create([
@@ -40,7 +39,6 @@ class UsuariosSeeder extends Seeder
             'telefono' => '12354678',
             'email' => 'medico@scm.com',
             'password' => Hash::make('12345678'),
-            // 'imagen'=>$faker->imageUrl(400, 400, 'cats'),
         ]);
         $paciente = User::create([
             'nombre' => 'Paciente',
@@ -50,7 +48,6 @@ class UsuariosSeeder extends Seeder
             'telefono' => '12354678',
             'email' => 'paciente@scm.com',
             'password' => Hash::make('12345678'),
-            // 'imagen'=>$faker->imageUrl(400, 400, 'cats'),
         ]);
 
 

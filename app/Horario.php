@@ -13,11 +13,13 @@ class Horario extends Model
         'tm_hora_fin',
         'tm_sucursal',
         'tm_especialidad',
+        'tm_consultorio',
         'tt_activo',
         'tt_hora_inicio',
         'tt_hora_fin',
         'tt_sucursal',
         'tt_especialidad',
+        'tt_consultorio',
         'user_id',
     ];
 

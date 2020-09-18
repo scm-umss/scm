@@ -27,17 +27,17 @@
                         <p class="card-text">Telefono: {{ $usuario->telefono }}</p>
                         <p class="card-text">Email: {{ $usuario->email }}</p>
 
-                        <p class="card-text">Estado: @if ($usuario->estado == 'a')
-                                Activo
+                        <p class="card-text">Estado: @if ($usuario->activo)
+                                <span class="badge badge-success p-1"> Activo</span>
                             @else
-                                Inactivo
+                            <span class="badge badge-danger"> Inactivo</span>
                             @endif </p>
 
                         <p class="card-text"><small class="text-muted">registrado desde: {{ $usuario->created_at->isoFormat('LLLL') }}</small></p>
                         {{-- {{ dd($usuario->roles->pluck('id')) }} --}}
                         {{-- @foreach ($roles as $id => $rol) --}}
                         {{-- {{ dd($id) }} --}}
-                            @if ($usuario->roles->pluck('slug')->contains('medico') or $usuario->roles->pluck('slug')->contains('paciente') )
+                            @if ($usuario->roles->pluck('slug')->contains('medico') or ($usuario->roles->pluck('slug')->contains('medico') && $usuario->roles->pluck('slug')->contains('paciente')))
 
                                 <hr>
                                 <div>
@@ -51,16 +51,19 @@
                                     </ul>
                                     <div class="tab-content" id="myTabContent">
                                         <div class="tab-pane fade show active" id="medico" role="tabpanel" aria-labelledby="home-tab">
-                                            <p class="card-text">Especialidades: {{ $usuario->especialidades->pluck('nombre')->implode(', ') }}</p>
+                                            <p class="card-text">Tus especialidades: {{ $usuario->especialidades->pluck('nombre')->implode(', ') }}</p>
                                             <div>
                                                 <a href="{{ route('horarios.edit', $usuario->id) }}" class="btn btn-info" dusk="crear-horario-{{ $usuario->id }}">Ver Horarios</a>
                                             </div>
                                         </div>
-                                        <div class="tab-pane fade" id="paciente" role="tabpanel" aria-labelledby="profile-tab">Informacion del paciente
+                                        <div class="tab-pane fade" id="paciente" role="tabpanel" aria-labelledby="profile-tab">Tu informacion como paciente
 
                                         </div>
                                     </div>
                                 </div>
+                            @elseif($usuario->roles->pluck('slug')->contains('paciente'))
+                            <hr>
+                            <p>Tus proximas citas se mostrarán aquí</p>
                             @endif
                         {{-- @endforeach --}}
                         {{-- @if ($usuario->roles)

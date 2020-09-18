@@ -18,9 +18,19 @@
       <combo-fecha :medicoId="medico_seleccionado" @fecha-select="fechaSelect"></combo-fecha>
       <!-- <p>{{ fecha_seleccionada }}</p> -->
     </fieldset>
-
     <fieldset class="border p-4">
       <legend class="text-primary">Horas disponibles</legend>
+        <div class="container">
+        <div class="row row-cols-2">
+            <div class="col" v-if="this.tm_sucursal !=''">
+                <div class="shadow p-2 mb-4 bg-white rounded text-center border border-primary">Sucursal: {{ tm_sucursal }}</div>
+            </div>
+            <div class="col" v-if="this.tt_sucursal!=''">
+                <div class="shadow p-2 mb-4 bg-white rounded text-center border border-secondary">Sucursal: {{ tt_sucursal }}</div>
+            </div>
+        </div>
+      </div>
+      <hr>
       <div class="container">
         <div class="row row-cols-4">
           <div v-for="(hora, index) in horas" :key="index">
@@ -100,6 +110,8 @@ export default {
       medico_seleccionado: "",
       fecha_seleccionada: "",
       horas: [],
+      tm_sucursal: '',
+      tt_sucursal: '',
       hora_seleccionada: "",
       //   mostrarHoras: false
     };
@@ -143,7 +155,6 @@ export default {
       axios
         .get(urlHorasMedico, { params })
         .then((response) => {
-          // console.log(response.data.tm_horario)
           if (
             (!response.data.tm_horario && !response.data.tt_horario) ||
             (response.data.tm_horario.length === 0 &&
@@ -151,19 +162,23 @@ export default {
           ) {
             this.mostrarAlerta();
           }
-          if (response.data.tm_horario) {
+          if (response.data.tm_horario && response.data.tm_sucursal !='') {
             response.data.tm_horario.forEach((hora) => {
-              // console.log(hora.inicio);
               this.horas.push(hora.inicio);
             });
-            //   this.horasTM = response.data.tm_horario;
+            this.tm_sucursal = response.data.tm_sucursal.nombre;
+            this.tt_sucursal = '';
           }
-          if (response.data.tt_horario) {
+          if (response.data.tt_horario && response.data.tt_sucursal !='') {
             response.data.tt_horario.forEach((hora) => {
-              // console.log(hora.inicio);
               this.horas.push(hora.inicio);
             });
-            //   this.horasTT = response.data.tt_horario;
+            this.tt_sucursal = response.data.tt_sucursal.nombre;
+            this.tm_sucursal = '';
+          }
+          if (response.data.tm_sucursal !='' && response.data.tt_sucursal !='' ) {
+              this.tt_sucursal = response.data.tt_sucursal.nombre;
+              this.tm_sucursal = response.data.tm_sucursal.nombre;
           }
           // this.especialidades = response.data;
         })

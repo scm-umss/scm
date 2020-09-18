@@ -19,12 +19,14 @@ class CreateHorariosTable extends Migration
             $table->boolean('tm_activo');
             $table->time('tm_hora_inicio');
             $table->time('tm_hora_fin');
+            $table->string('tm_consultorio')->nullable();
             $table->foreignId('tm_sucursal')->constrained('sucursal')->cascadeOnDelete();
             $table->foreignId('tm_especialidad')->constrained('especialidads')->cascadeOnDelete();
             //$table->integer('tm_sucursal');
             $table->boolean('tt_activo');
             $table->time('tt_hora_inicio');
             $table->time('tt_hora_fin');
+            $table->string('tt_consultorio')->nullable();
             $table->foreignId('tt_sucursal')->constrained('sucursal')->cascadeOnDelete();
             $table->foreignId('tt_especialidad')->constrained('especialidads')->cascadeOnDelete();
             //$table->integer('tt_sucursal');

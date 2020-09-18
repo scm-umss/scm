@@ -9,6 +9,7 @@ use Carbon\Carbon;
 use App\Especialidad;
 use Illuminate\Http\Request;
 use App\Http\Requests\CitaRequest;
+use App\Sucursal;
 use Illuminate\Support\Facades\Date;
 
 class CitaController extends Controller
@@ -181,31 +182,48 @@ class CitaController extends Controller
                                 ->where('dia',$dia)
                                 ->where('user_id', $medico)
                                 ->first([
-                                    'tm_hora_inicio', 'tm_hora_fin'
+                                    'tm_hora_inicio', 'tm_hora_fin', 'tm_sucursal'
                                 ]);
         $tt_horario = Horario::where('tt_activo',true)
                                 ->where('dia',$dia)
                                 ->where('user_id', $medico)
                                 ->first([
-                                    'tt_hora_inicio', 'tt_hora_fin'
+                                    'tt_hora_inicio', 'tt_hora_fin','tt_sucursal'
                                 ]);
         // $data = $this->estaDisponible($tm_horario,$tt_horario,$fecha,$medico);
         $tm_intervalos = [];
         $tt_intervalos = [];
+        $tm_sucursal = '';
+        $tt_sucursal = '';
         if (!$tm_horario && !$tt_horario) {
-            return [];
+            $data =[
+                'tm_horario' => $tm_intervalos,
+                'tm_sucursal' => $tm_sucursal,
+                'tt_horario' => $tt_intervalos,
+                'tt_sucursal' => $tt_sucursal,
+            ];
+            return $data;
         }elseif (!$tm_horario) {
             $tt_intervalos = $this->getIntervalos($tt_horario->tt_hora_inicio, $tt_horario->tt_hora_fin, $fecha, $medico);
+            $tt_sucursal = Sucursal::where('id',$tt_horario->tt_sucursal)->first('nombre');
         }elseif(!$tt_horario){
              $tm_intervalos = $this->getIntervalos($tm_horario->tm_hora_inicio, $tm_horario->tm_hora_fin, $fecha, $medico);
+             $tm_sucursal = Sucursal::where('id',$tm_horario->tm_sucursal)->first('nombre');
         }else{
              $tm_intervalos = $this->getIntervalos($tm_horario->tm_hora_inicio, $tm_horario->tm_hora_fin, $fecha, $medico);
              $tt_intervalos = $this->getIntervalos($tt_horario->tt_hora_inicio, $tt_horario->tt_hora_fin, $fecha, $medico);
+             $tt_sucursal = Sucursal::where('id',$tt_horario->tt_sucursal)->first('nombre');
+             $tm_sucursal = Sucursal::where('id',$tm_horario->tm_sucursal)->first('nombre');
         }
         // dd($tm_intervalos);
+        // $tm_sucursal1 = $tm_horario->sucursal();
+
+
         $data =[
             'tm_horario' => $tm_intervalos,
-            'tt_horario' => $tt_intervalos
+            'tm_sucursal' => $tm_sucursal,
+            'tt_horario' => $tt_intervalos,
+            'tt_sucursal' => $tt_sucursal,
         ];
 
         return response()->json($data);

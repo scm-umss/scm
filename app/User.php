@@ -18,7 +18,7 @@ class User extends Authenticatable
      * @var array
      */
     protected $fillable = [
-        'email', 'password', 'ap_paterno', 'ap_materno', 'nombre', 'telefono', 'estado', 'imagen'
+        'email', 'password', 'ap_paterno', 'ap_materno', 'nombre', 'telefono','imagen'
     ];
 
     /**
@@ -39,12 +39,12 @@ class User extends Authenticatable
         'email_verified_at' => 'datetime',
     ];
 
-    protected static function booted()
-    {
-        static::created(function ($user) {
-            $user->perfil()->create();
-        });
-    }
+    // protected static function booted()
+    // {
+    //     static::created(function ($user) {
+    //         $user->perfil()->create();
+    //     });
+    // }
 
     public function roles(){
         return $this->belongsToMany(Rol::class, 'rol_user');
@@ -72,9 +72,9 @@ class User extends Authenticatable
         }
     }
 
-    public function perfil(){
-        return $this->hasOne(Perfil::class);
-    }
+    // public function perfil(){
+    //     return $this->hasOne(Perfil::class);
+    // }
 
     public function getNombreCompletoAttribute(){
 		return "$this->nombre $this->ap_paterno $this->ap_materno";
