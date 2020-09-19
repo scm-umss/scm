@@ -17,7 +17,7 @@ class UsuariosController extends Controller
 {
     public function __construct()
     {
-        $this->middleware(['auth', 'admin'])->except(['show','edit','update']);
+        $this->middleware(['auth', 'admin'])->except(['show','create','edit','update']);
     }
     /**
      * Display a listing of the resource.
@@ -40,7 +40,7 @@ class UsuariosController extends Controller
      */
     public function create()
     {
-        $this->authorize('create', User::class);
+        //$this->authorize('create', User::class);
 
         $roles = Rol::orderBy('nombre', 'ASC')->get();
         $especialidades = Especialidad::orderBy('nombre', 'ASC')->get();
