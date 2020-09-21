@@ -37,8 +37,8 @@ class CitaController extends Controller
         }elseif($rol == 'paciente'){
 
         }
-        $citas = Cita::all();
-        return view('citas.index', compact('citas','citas_pendientes','citas_confirmadas','citas_pasadas'));
+        // $citas = Cita::all();
+        return view('citas.index', compact('citas_pendientes','citas_confirmadas','citas_pasadas'));
     }
 
     /**
