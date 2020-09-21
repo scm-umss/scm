@@ -7,7 +7,7 @@
 
     <div class="card shadow">
         <div class="card-header d-flex justify-content-between">
-            <h4>Citas Medicas</h4>
+            <h4>Citas Pendientes</h4>
             {{-- <a class="btn btn-success" href="{{ route('especialidad.create') }}" role="button" dusk="nueva-especialidad">Nueva Especialidad</a> --}}
         </div>
         <div class="card-body">
@@ -29,7 +29,7 @@
                     </tr>
                 </thead>
                 <tbody>
-                    @foreach ($citas as $cita)
+                    @foreach ($citas_pendientes as $cita)
                         <tr>
                             <td>{{ $cita->numero_ficha }}</td>
                             <td>{{ $cita->fecha_programada }}</td>

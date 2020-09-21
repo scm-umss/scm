@@ -18,7 +18,7 @@
       <combo-fecha :medicoId="medico_seleccionado" @fecha-select="fechaSelect"></combo-fecha>
       <!-- <p>{{ fecha_seleccionada }}</p> -->
     </fieldset>
-    <fieldset class="border p-4">
+    <fieldset class="border p-4" v-if="horas.length">
       <legend class="text-primary">Horas disponibles</legend>
         <div class="container">
         <div class="row row-cols-2">
@@ -161,6 +161,8 @@ export default {
               response.data.tt_horario.length === 0)
           ) {
             this.mostrarAlerta();
+            this.tm_sucursal = '';
+            this.tt_sucursal = '';
           }
           if (response.data.tm_horario && response.data.tm_sucursal !='') {
             response.data.tm_horario.forEach((hora) => {
