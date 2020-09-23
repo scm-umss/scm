@@ -31,10 +31,10 @@
                             <td>
 
                                 <form action="{{ route('rol.destroy', ['rol' => $rol->id]) }}"
-                                    method="POST">
+                                    method="POST" class="d-inline-flex">
                                     @csrf
                                     @method('DELETE')
-                                    <a href="{{ route('rol.edit', ['rol' => $rol->id]) }}" class="btn btn-sm btn-primary">Editar</a>
+                                    <a href="{{ route('rol.edit', ['rol' => $rol->id]) }}" class="btn btn-sm btn-primary mr-2">Editar</a>
                                     <button type="submit" class="btn btn-sm btn-danger">Eliminar</button>
                                     </form>
                             </td>

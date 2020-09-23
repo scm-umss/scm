@@ -2,15 +2,11 @@
 
 namespace App\Http\Controllers;
 
-use App\Rol;
+use App\User;
 use Illuminate\Http\Request;
 
-class RolController extends Controller
+class MedicoController extends Controller
 {
-    public function __construct()
-    {
-        $this->middleware(['auth', 'admin']);
-    }
     /**
      * Display a listing of the resource.
      *
@@ -18,8 +14,18 @@ class RolController extends Controller
      */
     public function index()
     {
-        $roles = Rol::all();
-        return view('rol.index',compact('roles'));
+        // $users = User::all();
+        $users = User::with('roles','especialidades')->get();
+        $medicos = [];
+        foreach($users as $user){
+            if($user->tieneRol(['medico'])){
+                $medicos[] = $user;
+            }
+        }
+
+        // dd($medicos);
+
+        return view('medicos.index', compact('medicos'));
     }
 
     /**
@@ -29,7 +35,7 @@ class RolController extends Controller
      */
     public function create()
     {
-        return view('rol.create');
+        //
     }
 
     /**
@@ -40,23 +46,16 @@ class RolController extends Controller
      */
     public function store(Request $request)
     {
-        $rol = new Rol();
-
-        $rol->nombre = $request->input('nombre');
-        $rol->slug = $request->input('slug');
-        $rol->descripcion = $request->input('descripcion');
-
-        $rol->save();
-        return redirect()->route('rol.index');
+        //
     }
 
     /**
      * Display the specified resource.
      *
-     * @param  \App\Rol  $rol
+     * @param  \App\User  $user
      * @return \Illuminate\Http\Response
      */
-    public function show(Rol $rol)
+    public function show(User $user)
     {
         //
     }
@@ -64,10 +63,10 @@ class RolController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  \App\Rol  $rol
+     * @param  \App\User  $user
      * @return \Illuminate\Http\Response
      */
-    public function edit(Rol $rol)
+    public function edit(User $user)
     {
         //
     }
@@ -76,10 +75,10 @@ class RolController extends Controller
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Rol  $rol
+     * @param  \App\User  $user
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Rol $rol)
+    public function update(Request $request, User $user)
     {
         //
     }
@@ -87,11 +86,11 @@ class RolController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\Rol  $rol
+     * @param  \App\User  $user
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Rol $rol)
+    public function destroy(User $user)
     {
-        return 'Aun falta imlementar la funcionalidad de eliminar';
+        //
     }
 }

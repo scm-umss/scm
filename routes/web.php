@@ -23,16 +23,23 @@ Auth::routes();
 Route::get('/home', 'HomeController@index')->name('home');
 
 // Rutas para especialidades
+Route::get('/especialidad/inactivos', 'EspecialidadController@inactivos')->name('especialidad.inactivos');
+Route::get('/especialidad/restore/{id}', 'EspecialidadController@restore')->name('especialidad.restore');
 Route::resource('/especialidad','EspecialidadController')->names('especialidad');
 
 // Rutas para usuarios
 Route::get('/usuarios/inactivos','UsuariosController@inactivos')->name('usuarios.inactivos');
 Route::get('/usuarios/restore/{id}','UsuariosController@restore')->name('usuarios.restore');
-Route::get('/usuarios/destroy/{id}','UsuariosController@destroy')->name('usuarios.destroy');
+// Route::get('/usuarios/destroy/{id}','UsuariosController@destroy')->name('usuarios.destroy');
 
-Route::resource('/usuarios','UsuariosController')->except('destroy')->names('usuarios');
+Route::resource('/usuarios','UsuariosController')->names('usuarios');
 
 Route::resource('/rol','RolController')->names('rol');
 
 Route::resource('/perfil','PerfilController')->only(['show','edit','update'])->names('perfil');
+
+/** Gestion de médicos */
+Route::get('/medicos', 'MedicoController@index')->name('medicos.index');
+/** Gestion de pacientes  */
+Route::get('/pacientes', 'PacienteController@index')->name('pacientes.index');
 

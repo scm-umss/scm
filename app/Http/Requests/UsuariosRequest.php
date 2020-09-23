@@ -24,15 +24,33 @@ class UsuariosRequest extends FormRequest
     public function rules()
     {
         // dd($this->request);
-        return [
-            'nombre' => 'required|string|max:255',
-            'email' => 'required|string|email|max:255|unique:users,email',
-            'password' => 'required|string|min:8|confirmed',
-            'ap_paterno' => 'required|string|max:255',
-            'ap_materno' => 'nullable|string|max:255',
-            'ci' => 'required|string|max:255',
-            'telefono' => 'required|string|max:255',
-            'imagen' => 'nullable|image',
-        ];
+        switch ($this->method()) {
+            case "POST": {
+                return [
+                    'nombre' => 'required|string|max:255',
+                    'email' => 'required|string|email|max:255|unique:users,email',
+                    'password' => 'required|string|min:8|confirmed',
+                    'ap_paterno' => 'required|string|max:255',
+                    'ap_materno' => 'nullable|string|max:255',
+                    'ci' => 'required|string|max:255',
+                    'telefono' => 'required|string|max:255',
+                    'imagen' => 'nullable|image',
+                ];
+            }
+            case "PUT": {
+                return [
+                    'nombre' => 'required|string|max:255',
+                    'email' => 'required|string|email|max:255|unique:users,email,'.$this->route('usuario.id'),
+                    'ap_paterno' => 'required|string|max:255',
+                    'ap_materno' => 'nullable|string|max:255',
+                    'ci' => 'required|string|max:255',
+                    'telefono' => 'required|string|max:255',
+                    'imagen' => 'nullable|image',
+                ];
+            }
+            default: {
+                return [];
+            }
+        }
     }
 }

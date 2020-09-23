@@ -71,4 +71,12 @@ class User extends Authenticatable
     public function perfil(){
         return $this->hasOne(Perfil::class);
     }
+
+    public function getNombreCompletoAttribute(){
+		return "$this->nombre $this->ap_paterno $this->ap_materno";
+    }
+
+    public function getActivoAttribute(){
+        return $this->where('deleted_at',null);
+    }
 }

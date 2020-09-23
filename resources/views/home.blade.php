@@ -13,8 +13,13 @@
                             {{ session('status') }}
                         </div>
                     @endif
-
-                    You are logged in!
+                    @if ($rol == 'admin')
+                        <h5>Aquí estarán disponibles la sección correspondiente a la gestión <span class="badge badge-info">Administrativa</span> del sistema</h5>
+                    @elseif($rol == 'medico')
+                        <h5>Aquí estarán disponibles la sección correspondiente a la gestión de sus citas del <span class="badge badge-info">médico</span></h5>
+                    @elseif($rol == 'paciente')
+                        <h5>Aquí estarán disponibles la sección correspondiente a la gestión de sus citas del <span class="badge badge-info">paciente</span></h5>
+                    @endif
                 </div>
             </div>
         </div>

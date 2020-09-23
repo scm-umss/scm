@@ -96,9 +96,9 @@ class UsuariosController extends Controller
     public function show(User $usuario)
     {
         $this->authorize('view', $usuario);
-        $roles = Rol::pluck('slug','id');
+        // $roles = Rol::pluck('slug','id');
         // dd($roles);
-        return view('usuarios.show', compact('usuario', 'roles'));
+        return view('usuarios.show', compact('usuario'));
     }
 
     /**
@@ -124,7 +124,7 @@ class UsuariosController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(UsuariosUpdateRequest $request, User $usuario)
+    public function update(UsuariosRequest $request, User $usuario)
     {
         $this->authorize('update', $usuario);
         //dd( $request->all());
@@ -154,14 +154,13 @@ class UsuariosController extends Controller
         $usuario->roles()->sync($request->roles);
         $usuario->especialidades()->sync($request->especialidades);
         // $usuario->update();
-
         return redirect()->route('usuarios.index')->with('status', 'Usuario actualizado exitosamente!');
     }
 
-    public function estadoUsaurio(Request $request){
-        $estadoUsuario = $request->estado;
-        dd($estadoUsuario);
-    }
+    // public function estadoUsaurio(Request $request){
+    //     $estadoUsuario = $request->estado;
+    //     dd($estadoUsuario);
+    // }
     /**
      * Remove the specified resource from storage.
      *

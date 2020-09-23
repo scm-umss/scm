@@ -19,37 +19,34 @@ class UsuariosSeeder extends Seeder
         // User::truncate();
         // Rol::truncate();
         $admin = User::create([
-            'nombre' => 'Jhonny',
-            'ap_paterno' => 'Huanca',
-            'ap_materno' => 'Tadeo',
+            'nombre' => 'Administrador',
+            'ap_paterno' => 'Paterno',
+            'ap_materno' => 'Materno',
             'ci' => '12354678',
             'telefono' => '12354678',
             'email' => 'admin@admin.com',
             'password' => Hash::make('12345678'),
-            'estado' => 'a',
         //    'imagen'=>$faker->imageUrl(400, 400, 'cats'),
         ]);
 
         $medico = User::create([
             'nombre' => 'Medico',
-            'ap_paterno' => 'Huanca',
-            'ap_materno' => 'Tadeo',
+            'ap_paterno' => 'Paterno',
+            'ap_materno' => 'Materno',
             'ci' => '12354698',
             'telefono' => '12354678',
             'email' => 'medico@scm.com',
             'password' => Hash::make('12345678'),
-            'estado' => 'a',
             // 'imagen'=>$faker->imageUrl(400, 400, 'cats'),
         ]);
         $paciente = User::create([
             'nombre' => 'Paciente',
-            'ap_paterno' => 'Huanca',
-            'ap_materno' => 'Tadeo',
+            'ap_paterno' => 'Paterno',
+            'ap_materno' => 'Materno',
             'ci' => '12354678',
             'telefono' => '12354678',
             'email' => 'paciente@scm.com',
             'password' => Hash::make('12345678'),
-            'estado' => 'a',
             // 'imagen'=>$faker->imageUrl(400, 400, 'cats'),
         ]);
 

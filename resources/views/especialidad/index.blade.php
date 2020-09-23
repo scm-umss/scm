@@ -8,7 +8,10 @@
     <div class="card shadow">
         <div class="card-header d-flex justify-content-between">
             <h4>Especialidades</h4>
-            <a class="btn btn-success" href="{{ route('especialidad.create') }}" role="button" dusk="nueva-especialidad">Nueva Especialidad</a>
+            <div class="d-flex align-right">
+                <especialidades-inactivos></especialidades-inactivos>
+                <a class="btn btn-success" href="{{ route('especialidad.create') }}" role="button" dusk="nueva-especialidad">Nueva Especialidad</a>
+            </div>
         </div>
         <div class="card-body">
             @if (session('status'))
@@ -31,15 +34,9 @@
                             <td>{{ $especialidad->id }}</td>
                             <td>{{ $especialidad->nombre }}</td>
                             <td>{{ $especialidad->descripcion }}</td>
-                            <td>
-
-                                <form action="{{ route('especialidad.destroy', ['especialidad' => $especialidad->id]) }}"
-                                    method="POST">
-                                    @csrf
-                                    @method('DELETE')
-                                    <a href="{{ route('especialidad.edit', ['especialidad' => $especialidad->id]) }}" class="btn btn-sm btn-primary" dusk="editar-especialidad-{{ $especialidad->id }}">Editar</a>
-                                    <button type="submit" class="btn btn-sm btn-danger">Eliminar</button>
-                                    </form>
+                            <td class="d-flex justify-content-center">
+                                <a href="{{ route('especialidad.edit', ['especialidad' => $especialidad->id]) }}" class="btn btn-sm btn-primary mr-2" dusk="editar-especialidad-{{ $especialidad->id }}">Editar</a>
+                                <eliminar-especialidad especialidad-id="{{ $especialidad->id }}"></eliminar-especialidad>
                             </td>
                         </tr>
                     @endforeach

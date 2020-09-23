@@ -17,6 +17,8 @@ class CreateEspecialidadsTable extends Migration
             $table->id();
             $table->string('nombre')->unique();
             $table->string('descripcion')->nullable();
+            $table->string('imagen')->default('especialidades.png');
+            $table->softDeletes();
             $table->timestamps();
         });
     }

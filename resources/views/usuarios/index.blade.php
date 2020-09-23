@@ -23,13 +23,9 @@
                 <thead>
                     <tr>
                         <th scope="col">Nombre Completo</th>
-                        {{-- <th scope="col">Apellido Paterno</th>
-                        <th scope="col">Apellido Materno</th> --}}
                         <th scope="col">Teléfono</th>
                         <th scope="col">Roles</th>
-                        {{-- <th scope="col">Email</th> --}}
-                        {{-- <th scope="col">Estado</th> --}}
-                        <th scope="col">Fotos</th>
+                        {{-- <th scope="col">Fotos</th> --}}
                         <th scope="col">Acciones</th>
 
                     </tr>
@@ -37,31 +33,18 @@
                 <tbody>
                     @foreach ($usuarios as $usuario)
                         <tr>
-                            <td>{{ $usuario->nombre }} {{ $usuario->ap_paterno }} {{ $usuario->ap_materno }}</td>
+                            <td>{{ $usuario->nombrecompleto }}</td>
                             <td>{{ $usuario->telefono }}</td>
-                            <td>@foreach ($usuario->roles as $rol)
-                                {{ $rol->nombre }}
-                            @endforeach
-                            </td>
-                            {{-- <td>@if ($usuario->estado == 'a')
-                                    Activo
-                                @else
-                                    Inactivo
-                                @endif
-                            </td> --}}
-
-                            <td><img src="/storage/{{ $usuario->imagen }}" style="width:60px"></td>
                             <td>
+                            {{ $usuario->roles->pluck('nombre')->implode(', ') }}
+                            </td>
 
-                                {{-- <form action="{{ route('usuarios.destroy', ['usuario' => $usuario->id]) }}"
-                                    method="POST">
-                                    @csrf
-                                    @method('DELETE')
-                                </form> --}}
-                                <a href="{{ route('usuarios.show', ['usuario' => $usuario->id]) }}" class="btn btn-sm btn-info">Detalles</a>
-                                <a href="{{ route('usuarios.edit', ['usuario' => $usuario->id]) }}" class="btn btn-sm btn-secondary" dusk="editar-usuario-{{ $usuario->id }}">Editar</a>
-                                <a href="{{ route('usuarios.destroy', $usuario->id) }}" class="btn btn-sm btn-danger" dusk="eliminar-usuario-{{ $usuario->id }}" >Eliminar</a>
-                                {{-- <button type="submit" class="btn btn-sm btn-danger">Eliminar</button> --}}
+                            {{-- <td><img src="/storage/{{ $usuario->imagen }}" style="width:60px"></td> --}}
+                            <td class="d-flex">
+                                <a href="{{ route('usuarios.show', ['usuario' => $usuario->id]) }}" class="btn btn-sm btn-info mr-2">Detalles</a>
+                                <a href="{{ route('usuarios.edit', ['usuario' => $usuario->id]) }}" class="btn btn-sm btn-secondary mr-2" dusk="editar-usuario-{{ $usuario->id }}">Editar</a>
+                                {{-- <a href="{{ route('usuarios.destroy', $usuario->id) }}" class="btn btn-sm btn-danger" dusk="eliminar-usuario-{{ $usuario->id }}" >Eliminar</a> --}}
+                                <eliminar-usuario usuario-id="{{ $usuario->id }}"></eliminar-usuario>
                             </td>
                         </tr>
                     @endforeach
