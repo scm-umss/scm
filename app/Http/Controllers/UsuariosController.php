@@ -7,7 +7,7 @@ use App\User;
 use App\Especialidad;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
-use Intervention\Image\Facades\Image;
+//use Intervention\Image\Facades\Image;
 use App\Http\Requests\UsuariosRequest;
 use App\Http\Requests\UsuariosUpdateRequest;
 
@@ -72,8 +72,8 @@ class UsuariosController extends Controller
             //obtener imagen
             $ruta_imagen = $request['imagen']->store('upload-perfiles','public');
             //Resize de la imagen con intervention image
-            $img = Image::make(public_path("storage/{$ruta_imagen}"))->fit(500,500);
-            $img->save();
+            //$img = Image::make(public_path("storage/{$ruta_imagen}"))->fit(500,500);
+            //$img->save();
 
             // Crear un arreglo de imagen
             //$array_imagen = ['imagen' => $ruta_imagen];
@@ -143,8 +143,8 @@ class UsuariosController extends Controller
             //obtener imagen
             $ruta_imagen = $request['imagen']->store('upload-perfiles','public');
             //Resize de la imagen con intervention image
-            $img = Image::make(public_path("storage/{$ruta_imagen}"))->fit(500,500);
-            $img->save();
+            //$img = Image::make(public_path("storage/{$ruta_imagen}"))->fit(500,500);
+            //$img->save();
 
             // Crear un arreglo de imagen
             //$array_imagen = ['imagen' => $ruta_imagen];
