@@ -5,7 +5,7 @@
     <div class="row justify-content-center mt-5">
         <form action="{{ route('especialidad.update', ['especialidad' => $especialidad->id]) }}"
         class="col-md-9 col-xs-12 card card-body"
-        method="POST">
+        method="POST" enctype="multipart/form-data">
             @csrf
             @method('PUT')
             <fieldset class="border p-4">
@@ -40,6 +40,20 @@
                                 <strong>{{ $message }}</strong>
                             </span>
                         @enderror
+
+                        <label for="imagen">Imagen:</label>
+                        <div class="content py-4">
+                            <input type="file" name="imagen" id="imagen" class="form-control @error('imagen') is-invalid @enderror">
+                        <div>
+                            <p class="pt-4">Imagen Actual</p>
+                            <img src="/storage/{{ $especialidad->imagen }}" style="width:300px"/>
+                        </div>
+                        @error('imagen')
+                            <span class="invalid-feedback" role="alert">
+                                <strong>{{ $message }}</strong>
+                            </span>
+                        @enderror
+                        </div>
                 </div>
 
                 <div class="form-group">

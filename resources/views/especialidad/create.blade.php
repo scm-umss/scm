@@ -3,7 +3,7 @@
 @section('content')
     <div class="container">
         <div class="row justify-content-center mt-5">
-            <form action="{{ route('especialidad.store') }}" method="POST" class="col-md-9 col-xs-12 card card-body">
+            <form action="{{ route('especialidad.store') }}" method="POST" class="col-md-9 col-xs-12 card card-body" enctype="multipart/form-data">
                 @csrf
 
                 <fieldset class="border p-4">
@@ -34,6 +34,17 @@
                                     {{ $message }}
                                 </div>
                             @enderror
+                                <label for="imagen">Imagen:</label>
+                                <input type="file" name="imagen" id="imagen" class="form-control @error('imagen') is-invalid @enderror">
+                                {{-- <div>
+                                    <p>Imagen Actual</p>
+                                    <img src="" style="width:300px"/>
+                                </div> --}}
+                                @error('imagen')
+                                    <span class="invalid-feedback" role="alert">
+                                        <strong>{{ $message }}</strong>
+                                    </span>
+                                @enderror
                         <button type="submit" class="btn btn-primary btn-md">Guardar</button>
                         <a href="{{ route('especialidad.index') }}" class="btn btn-danger px4">Cancelar</a>
                     </div>

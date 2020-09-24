@@ -10,7 +10,7 @@ class Especialidad extends Model
     use SoftDeletes;
 
     protected $fillable = [
-        'nombre', 'descripcion',
+        'nombre', 'descripcion','imagen'
     ];
 
     public function users()

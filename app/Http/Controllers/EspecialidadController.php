@@ -54,6 +54,17 @@ class EspecialidadController extends Controller
         $especialidad = new Especialidad();
         $especialidad->nombre = $request->input('nombre');
         $especialidad->descripcion = $request->input('descripcion');
+        if($request['imagen']){
+            //obtener imagen
+            $ruta_imagen = $request['imagen']->store('upload-especialidad','public');
+            //Resize de la imagen con intervention image
+            //$img = Image::make(public_path("storage/{$ruta_imagen}"))->fit(500,500);
+            //$img->save();
+
+            // Crear un arreglo de imagen
+            //$array_imagen = ['imagen' => $ruta_imagen];
+            $especialidad->imagen = $ruta_imagen;
+        }
 
         $especialidad->save();
 
@@ -89,6 +100,18 @@ class EspecialidadController extends Controller
         $this->validate($request, $rules);
 
         $especialidad->descripcion = $request['descripcion'];
+        if($request['imagen']){
+            //obtener imagen
+            $ruta_imagen = $request['imagen']->store('upload-especialidad','public');
+            //Resize de la imagen con intervention image
+            //$img = Image::make(public_path("storage/{$ruta_imagen}"))->fit(500,500);
+            //$img->save();
+
+            // Crear un arreglo de imagen
+            //$array_imagen = ['imagen' => $ruta_imagen];
+            $especialidad->imagen = $ruta_imagen;
+        }
+
         $especialidad->save();
         return redirect()->route('especialidad.index')->with('status','Especialidad actualizada exitosamente!');
     }
