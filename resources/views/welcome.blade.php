@@ -84,7 +84,7 @@
                 <div class="row h-100 align-items-center">
                     <div class="col-md-2"></div>
                     <div class="col-md-4">
-                        <p class="display-4">Vienbenidos a Sistema de Citas Médicas</p>
+                        <p class="display-4">Bienvenidos a Sistema de Citas Médicas</p>
                     </div>
                     <div class="col-md-4">
                         <img src="{{ asset('/scm.png') }}" alt="scm">
