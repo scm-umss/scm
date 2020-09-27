@@ -16,4 +16,7 @@ class Sucursal extends Model
     public function horarios(){
         return $this->hasMany(Horario::class);
     }
+    public function citas(){
+        return $this->hasMany(Cita::class);
+    }
 }

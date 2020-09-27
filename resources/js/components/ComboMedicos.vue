@@ -5,7 +5,7 @@
             <div class="col-md-6">
                 <select @change="$emit('medico-select', $event.target.value)" class="form-control">
                     <option value="0">--Seleccionar medico--</option>
-                    <option v-for="medico in medicos" :key="medico.id" :value="medico.id">{{ medico.nombre }}</option>
+                    <option v-for="medico in medicos" :key="medico.id" :value="medico.id" :selected="medico.id == medicoId">{{ medico.nombre }}</option>
                 </select>
             </div>
         </div>
@@ -16,12 +16,13 @@
 <script>
 export default {
     props:[
+       'medicoId',
        'especialidadId'
     ],
     data() {
         return {
 
-            medico_seleccionado: '',
+            // medico_seleccionado: '',
             medicos: [],
             // fecha_seleccionada: '',
         }
@@ -44,6 +45,9 @@ export default {
                 this.medicos=[];
             }
         },
-    }
+    },
+    // created: function(){
+    //     this.cargarMedicos(this.especialidadId);
+    // }
 }
 </script>

@@ -5,7 +5,7 @@
             <div class="col-md-6">
                 <select @change="$emit('especialidad-select', $event.target.value)" class="form-control">
                     <option value="0">--Seleccionar especialidad--</option>
-                    <option v-for="especialidad in especialidades" :key="especialidad.id" :value="especialidad.id">{{ especialidad.nombre }}</option>
+                    <option v-for="especialidad in especialidades" :key="especialidad.id" :value="especialidad.id" :selected="especialidad.id == especialidadId">{{ especialidad.nombre }}</option>
                 </select>
             </div>
         </div>
@@ -20,10 +20,7 @@ export default {
     ],
     data() {
         return {
-            // especialidad_seleccionada: '',
-            // medico_seleccionado: '',
-            // medicos: [],
-            especialidades:[]
+            especialidades:[],
         }
     },
     created: function(){

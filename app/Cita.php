@@ -2,6 +2,7 @@
 
 namespace App;
 
+use App\Sucursal;
 use Illuminate\Database\Eloquent\Model;
 
 class Cita extends Model
@@ -16,6 +17,10 @@ class Cita extends Model
         'especialidad_id',
     ];
 
+    protected $casts = [
+        'hora_programada' => 'time:H:i',
+    ];
+
     public function paciente()
     {
         return $this->belongsTo(User::class);
@@ -28,5 +33,9 @@ class Cita extends Model
     public function especialidad()
     {
         return $this->belongsTo(Especialidad::class);
+    }
+
+    public function sucursal(){
+        return $this->belongsTo(Sucursal::class);
     }
 }

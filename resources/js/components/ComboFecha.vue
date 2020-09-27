@@ -5,11 +5,14 @@
             <div class="col-md-6">
                 <date-picker
                     v-model="fecha"
+                    value-type="format"
                     format="DD-MM-YYYY"
-                    :defaul-value="new Date()"
+                    placeholder="Seleccionar fecha"
+                    :defaul-value="fecha"
                     :disabled-date="rangoHabilitado"
                     @change="$emit('fecha-select', fecha)"
                 ></date-picker>
+
             </div>
         </div>
     </div>
@@ -27,15 +30,16 @@ export default {
     },
     props:[
        'medicoId',
-       'value'
     ],
     data() {
         return {
-            fecha: new Date(),
+            fecha: new Date()
         }
     },
     created: function(){
-        console.log('Fecha: '+this.fecha)
+        // const ff = this.$set.fechaSel
+        console.log('FechaSel: '+this.fecha)
+        // this.fecha = this.fechaSel
     },
     methods: {
         rangoHabilitado: function(date){
@@ -44,7 +48,9 @@ export default {
 
             return date < hoy || date > new Date(hoy.getTime() + 30 * 24 * 3600 * 1000);
         },
-
+        setFecha(fecha){
+            this.fecha = fecha;
+        }
     },
 }
 </script>

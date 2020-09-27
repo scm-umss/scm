@@ -105,6 +105,7 @@ class UsuariosSeeder extends Seeder
             'paciente_id' => $paciente->id,
             'medico_id' => $medico->id,
             'especialidad_id' => $traumatologia->id,
+            'sucursal_id' => $sucursal1->id,
             'fecha_programada' => Carbon::now()->format('Y-m-d'),
             'hora_programada' => '09:00:00',
 

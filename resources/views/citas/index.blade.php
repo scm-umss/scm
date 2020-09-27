@@ -3,7 +3,7 @@
 @section('content')
 
 
-<div class="container col-md-6">
+<div class="container col-md-8">
 
     <div class="card shadow">
         <div class="card-header d-flex justify-content-between">
@@ -19,34 +19,32 @@
             <table class="table table-striped">
                 <thead>
                     <tr>
-                        <th scope="col">Numero ficha</th>
+                        {{-- <th scope="col">Numero ficha</th> --}}
                         <th scope="col">Fecha</th>
                         <th scope="col">Hora</th>
                         <th scope="col">Paciente</th>
                         <th scope="col">Especialidad</th>
                         <th scope="col">Medico</th>
+                        <th scope="col">Sucursal</th>
                         <th scope="col">Estado</th>
+                        <th scope="col">Acciones</th>
                     </tr>
                 </thead>
                 <tbody>
                     @foreach ($citas_pendientes as $cita)
                         <tr>
-                            <td>{{ $cita->numero_ficha }}</td>
+                            {{-- <td>{{ $cita->numero_ficha }}</td> --}}
                             <td>{{ $cita->fecha_programada }}</td>
                             <td>{{ $cita->hora_programada }}</td>
                             <td>{{ $cita->paciente->nombre }}</td>
                             <td>{{ $cita->especialidad->nombre }}</td>
                             <td>{{ $cita->medico->nombre }}</td>
+                            <td>{{ $cita->sucursal->nombre }}</td>
                             <td>{{ $cita->estado }}</td>
-                            <td>
+                            <td class="d-flex">
+                                <a href="{{ route('citas.show', ['cita' => $cita->id]) }}" class="btn btn-sm btn-info mr-2" dusk="ver-detalles-{{ $cita->id }}">Ver Cita</a>
+                                <a href="{{ route('citas.edit', ['cita' => $cita->id]) }}" class="btn btn-sm btn-secondary mr-2" dusk="editar-cita-{{ $cita->id }}">Editar</a>
 
-                                {{-- <form action="{{ route('especialidad.destroy', ['especialidad' => $especialidad->id]) }}"
-                                    method="POST">
-                                    @csrf
-                                    @method('DELETE')
-                                    <a href="{{ route('especialidad.edit', ['especialidad' => $especialidad->id]) }}" class="btn btn-sm btn-primary" dusk="editar-especialidad-{{ $especialidad->id }}">Editar</a>
-                                    <button type="submit" class="btn btn-sm btn-danger">Eliminar</button>
-                                </form> --}}
                             </td>
                         </tr>
                     @endforeach

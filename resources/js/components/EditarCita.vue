@@ -1,27 +1,40 @@
 <template>
   <div>
+    <!-- <h1>Hola desde edit{{citaId}}</h1> -->
     <fieldset class="border p-4">
-      <legend class="text-primary">Agendar cita</legend>
-      <!-- <listar-especialidades :mensaje="titulo"></listar-especialidades> -->
+      <legend class="text-primary">Editar cita</legend>
       <combo-especialidad
-        :especialidades="especialidades"
+        :especialidadId="especialidad_seleccionada"
         @especialidad-select="especialidadSelect"
-      ></combo-especialidad>
-      <!-- <p>{{ especialidad_seleccionada }}</p> -->
+      />
       <combo-medicos
         :especialidadId="especialidad_seleccionada"
         :medicoId="medico_seleccionado"
-        @medico-select="medicoSelect"
         ref="especialidadSeleccionada"
-      ></combo-medicos>
-      <!-- <combo-medicos :especialidadId="especialidad_seleccionada" ref="especialidadSeleccionada"></combo-medicos> -->
-      <!-- <combo-fecha :medicoId="medico_seleccionado" v-model="value" @fecha-select="fechaSelect"></combo-fecha> -->
+        @medico-select="medicoSelect"
+      />
       <combo-fecha
         :medicoId="medico_seleccionado"
         @fecha-select="fechaSelect"
         ref="fechaSeleccionada"
-      ></combo-fecha>
-      <!-- <p>{{ fecha_seleccionada }}</p> -->
+      />
+      <div class="container">
+        <div class="row row-cols-2">
+            <div class="col">
+                <div class="alert alert-info" role="alert">
+                    Fecha programada: {{ fecha_programada }}
+                </div>
+            </div>
+            <div class="col">
+                <div class="alert alert-info" role="alert">
+                    Hora Programada: {{ hora_programada.substr(0,5) }}
+                </div>
+            </div>
+        </div>
+        <div class="alert alert-warning" role="alert">
+            <h5>Para cambiar la cita, seleccione lo requerido</h5>
+        </div>
+      </div>
     </fieldset>
     <fieldset class="border p-4" v-if="horas.length">
       <legend class="text-primary">Horas disponibles</legend>
@@ -49,6 +62,7 @@
                       name="hora_inicio"
                       :id="'hora_inicio_'+index"
                       :value="hora"
+                      :checked="hora+':00' == hora_seleccionada"
                       @click="horaSelect"
                     />
                     <label class="form-check-label" :for="'hora_inicio_'+index">{{ hora }}</label>
@@ -66,6 +80,7 @@
                       name="hora_inicio"
                       :id="'hora_inicio'+index"
                       :value="hora"
+                      :checked="hora+':00' == hora_seleccionada"
                       @click="horaSelect"
                     />
                     <label class="form-check-label" :for="'hora_inicio'+index">{{ hora }}</label>
@@ -81,9 +96,9 @@
       <button
         type="submit"
         class="btn btn-primary p3"
-        @click.prevent="registrarCita"
+        @click.prevent="editarCita"
         v-if="datosCorrectos()"
-      >Registrar Cita</button>
+      >Guardar Cita</button>
     </div>
   </div>
 </template>
@@ -104,25 +119,50 @@ export default {
     ComboFecha,
   },
   props: {
-    // titulo: String,
-    especialidades: Array,
-    // medicos: []
-    pacienteId: "",
+    citaId: "",
   },
+
   data() {
     return {
       especialidad_seleccionada: "",
       medico_seleccionado: "",
       fecha_seleccionada: null,
       horas: [],
-      tm_sucursal: '',
-      tt_sucursal: '',
+      tm_sucursal: "",
+      tt_sucursal: "",
       hora_seleccionada: "",
+      paciente_seleccionado:"",
       sucursal_seleccionado:"",
-      //   mostrarHoras: false
+      hora_programada: "",
+      fecha_programada: "",
     };
   },
   methods: {
+    getCita() {
+      console.log("cita id: " + this.citaId);
+      const urlCita = `/citas/${this.citaId}/edit`;
+      axios
+        .get(urlCita)
+        .then((response) => {
+          console.log(response.data);
+          this.especialidad_seleccionada = response.data.especialidad_id;
+          this.medico_seleccionado = response.data.medico_id;
+          this.paciente_seleccionado = response.data.paciente_id;
+          this.sucursal_seleccionado = response.data.sucursal_id;
+          this.fecha_seleccionada = response.data.fecha_programada;
+          this.hora_seleccionada = response.data.hora_programada;
+          this.fecha_programada = response.data.fecha_programada;
+          this.hora_programada = response.data.hora_programada;
+
+          this.$refs.especialidadSeleccionada.cargarMedicos(this.especialidad_seleccionada);
+          this.fechaSelect(this.fecha_seleccionada);
+          // this.especialidades = response.data;
+        //   console.log('La fecha edit '+this.fecha_seleccionada)
+        })
+        .catch((error) => {
+          console.log(error);
+        });
+    },
     especialidadSelect(especialidadId) {
       this.especialidad_seleccionada = especialidadId;
       this.$refs.especialidadSeleccionada.cargarMedicos(especialidadId);
@@ -138,12 +178,13 @@ export default {
       this.cargarHoras();
     },
     fechaSelect(fecha) {
-      console.log("Fecha seleccionada: " + fecha);
+    //   console.log("Fecha seleccionada: " + fecha);
       this.fecha_seleccionada = fecha;
       this.horas = [];
       this.cargarHoras();
     },
     horaSelect(e) {
+    //   console.log("hora select: " + e.target.value);
         this.hora_seleccionada = e.target.value;
         if (this.hora_seleccionada < '12:00') {
             this.sucursal_seleccionado = this.tm_sucursal.id;
@@ -154,13 +195,11 @@ export default {
         }
     },
     cargarHoras() {
-      // this.value = [date, new Date(date.getTime() + 30 * 24 * 3600 * 1000)]
       console.log(
         "la fecha sellecionada es: " +
           this.fecha_seleccionada +
           " Medico: " +
-          this.medico_seleccionado+
-          "especialidad: "+ this.especialidad_seleccionada
+          this.medico_seleccionado
       );
       let urlHorasMedico = "/horasmedico";
       const params = {
@@ -172,7 +211,7 @@ export default {
       axios
         .get(urlHorasMedico, { params })
         .then((response) => {
-            // console.log(response.data);
+            console.log(response);
           if (
             (!response.data.tm_horario && !response.data.tt_horario) ||
             (response.data.tm_horario.length === 0 &&
@@ -213,18 +252,20 @@ export default {
         html: noHorasAlert,
       });
     },
-    registrarCita() {
+    editarCita() {
+        console.log("hora seleccionada: " + this.hora_seleccionada);
       const params = {
         fecha_programada: this.fecha_seleccionada,
         hora_programada: this.hora_seleccionada,
-        paciente: this.pacienteId,
+        paciente: this.paciente_seleccionado,
         medico: this.medico_seleccionado,
         especialidad: this.especialidad_seleccionada,
-        sucursal:this.sucursal_seleccionado,
+        sucursal: this.sucursal_seleccionado,
       };
+      const urlEdit = `/citas/${this.citaId}`
       if (this.datosCorrectos()) {
         axios
-          .post("/citas", params)
+          .post(urlEdit, {params, _method: 'put'})
           .then((response) => {
             console.log(response.data);
             if (!response.data.error) {
@@ -268,8 +309,7 @@ export default {
     },
   },
   created: function () {
-    this.fecha_seleccionada = new Date();
-    // console.log("Fecha en crear " + this.fecha_seleccionada);
+    this.getCita();
   },
 };
 </script>

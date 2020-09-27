@@ -20,6 +20,7 @@ class CreateCitasTable extends Migration
             $table->foreignId('paciente_id')->constrained('users');
             $table->foreignId('medico_id')->constrained('users');
             $table->foreignId('especialidad_id')->constrained();
+            $table->foreignId('sucursal_id')->constrained('sucursal');
             $table->date('fecha_programada');
             $table->time('hora_programada');
             $table->enum('estado', ['Reservada', 'Confirmada', 'Atendida', 'Cancelada'])->default('Reservada');

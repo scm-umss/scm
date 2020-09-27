@@ -37,7 +37,7 @@ Route::resource('/usuarios','UsuariosController')->names('usuarios');
 
 Route::resource('/rol', 'RolController')->names('rol');
 
-Route::resource('/perfil', 'PerfilController')->only(['show', 'edit', 'update'])->names('perfil');
+// Route::resource('/perfil', 'PerfilController')->only(['show', 'edit', 'update'])->names('perfil');
 
 /** Gestion de médicos */
 Route::get('/medicos', 'MedicoController@index')->name('medicos.index');
@@ -57,6 +57,7 @@ Route::get('/pacientes/create', 'PacienteController@create')->name('pacientes.cr
 /** Gestion de citas Admin */
 Route::get('/citas/especialidades', 'CitaController@getEspecialidades');
 Route::get('/citas/{paciente}/agendar', 'CitaController@agendarCita')->name('citas.agendar');
+// Route::get('/citas/{paciente}/edit', 'CitaController@edit')->name('citas.edit');
 // Route::get('/admin/citas', 'Admin\CitaController@index')->name('admin.citas.index');
 // Route::get('/admin/citas/create', 'Admin\CitaController@create')->name('admin.citas.create');
 /** Gestion de citas cliente */
