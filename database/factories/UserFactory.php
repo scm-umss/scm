@@ -2,6 +2,7 @@
 
 /** @var \Illuminate\Database\Eloquent\Factory $factory */
 
+use App\Rol;
 use App\User;
 use Faker\Generator as Faker;
 use Illuminate\Support\Str;
@@ -31,14 +32,14 @@ $factory->define(User::class, function (Faker $faker) {
         'ap_materno' => $faker->lastName,
         'nombre' => $faker->firstName,
         'ci' => $faker->randomNumber(8),
-        'telefono' => $faker->e164PhoneNumber,
+        'telefono' => $faker->phoneNumber,
         'email' => $faker->unique()->safeEmail,
         'email_verified_at' => now(),
         'password' => '$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi', // password
         // 'rol' => $faker->randomElement($array = array ('admin','medico','paciente')),
-        'estado' => $faker->randomElement($array = array ('a','i')),
+        //'estado' => $faker->randomElement($array = array ('a','i')),
         'remember_token' => Str::random(10),
-        'roles' => factory(Rol::class),
+        //'roles' => factory(Rol::class),
     ];
 });
 

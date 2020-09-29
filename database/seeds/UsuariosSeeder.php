@@ -40,6 +40,7 @@ class UsuariosSeeder extends Seeder
             'email' => 'medico@scm.com',
             'password' => Hash::make('12345678'),
         ]);
+
         $paciente = User::create([
             'nombre' => 'Paciente',
             'ap_paterno' => 'Paterno',
@@ -49,7 +50,6 @@ class UsuariosSeeder extends Seeder
             'email' => 'paciente@scm.com',
             'password' => Hash::make('12345678'),
         ]);
-
 
         $rolAdmin = Rol::create([
             'nombre' => 'Administrador',
@@ -70,6 +70,10 @@ class UsuariosSeeder extends Seeder
         $admin->roles()->sync([$rolAdmin->id, $rolMedico->id]);
         $medico->roles()->sync([$rolMedico->id]);
         $paciente->roles()->sync([$rolPaciente->id]);
+
+        factory(App\User::class, 100)->create()->each(function ($user) use ($rolPaciente) {
+            $user->roles()->sync([$rolPaciente->id]);
+        });
 
         $traumatologia = Especialidad::create([
             'nombre' => 'Traumatologia',

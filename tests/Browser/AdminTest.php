@@ -35,7 +35,7 @@ class AdminTest extends DuskTestCase
         $this->browse(function ($first) {
             $first->loginAs(User::find(2))
                 ->visit('/usuarios')
-                ->assertSee('Laravel')
+                ->assertSee('Bienvenidos')
                 ->pause(100)
                 ->screenshot('AdminTest_admin_middleware_2');
         });
