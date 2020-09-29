@@ -35,7 +35,7 @@ Route::get('/usuarios/restore/{id}','UsuariosController@restore')->name('usuario
 
 Route::resource('/usuarios','UsuariosController')->names('usuarios');
 
-Route::resource('/rol', 'RolController')->names('rol');
+Route::get('/roles', 'RolController@index');
 
 // Route::resource('/perfil', 'PerfilController')->only(['show', 'edit', 'update'])->names('perfil');
 

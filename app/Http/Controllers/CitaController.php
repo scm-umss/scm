@@ -32,13 +32,13 @@ class CitaController extends Controller
             $citas_confirmadas = Cita::where('estado', 'Reservada')->paginate(10);
             // $citas_atendidas = Cita::where('estado', 'Atendida')->paginate(10);
             $citas_pasadas = Cita::whereIn('estado', ['Atendida', 'Cancelada'])->paginate(10);
+            return view('citas.index', compact('citas_pendientes','citas_confirmadas','citas_pasadas'));
         }elseif($rol == 'medico'){
-
+            return 'vista para medico   ';
         }elseif($rol == 'paciente'){
-
+            return 'vista para paciente';
         }
         // $citas = Cita::all();
-        return view('citas.index', compact('citas_pendientes','citas_confirmadas','citas_pasadas'));
     }
 
     /**

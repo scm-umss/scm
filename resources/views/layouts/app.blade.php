@@ -46,9 +46,9 @@
                             <li class="nav-item">
                                 <a href="{{ route('pacientes.index') }}" class="nav-link">Pacientes</a>
                             </li>
-                            <li class="nav-item">
-                                <a href="{{ route('rol.index') }}" class="nav-link">Roles</a>
-                            </li>
+                            {{-- <li class="nav-item">
+                                <a href="{{ route('roles') }}" class="nav-link">Roles</a>
+                            </li> --}}
                             <li class="nav-item">
                                 <a href="{{ route('especialidad.index') }}" class="nav-link">Especialidad</a>
                             </li>
