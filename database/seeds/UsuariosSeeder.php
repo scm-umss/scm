@@ -6,6 +6,7 @@ use App\User;
 use App\Sucursal;
 use Carbon\Carbon;
 use App\Especialidad;
+use App\Horario;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\Hash;
 
@@ -26,6 +27,7 @@ class UsuariosSeeder extends Seeder
             'ap_paterno' => 'Paterno',
             'ap_materno' => 'Materno',
             'ci' => '12354678',
+            'fecha_nacimiento' => '2000-01-01',
             'telefono' => '12354678',
             'email' => 'admin@admin.com',
             'password' => Hash::make('12345678'),
@@ -36,6 +38,7 @@ class UsuariosSeeder extends Seeder
             'ap_paterno' => 'Paterno',
             'ap_materno' => 'Materno',
             'ci' => '12354698',
+            'fecha_nacimiento' => '2002-01-01',
             'telefono' => '12354678',
             'email' => 'medico@scm.com',
             'password' => Hash::make('12345678'),
@@ -46,6 +49,7 @@ class UsuariosSeeder extends Seeder
             'ap_paterno' => 'Paterno',
             'ap_materno' => 'Materno',
             'ci' => '12354678',
+            'fecha_nacimiento' => '1990-01-01',
             'telefono' => '12354678',
             'email' => 'paciente@scm.com',
             'password' => Hash::make('12345678'),
@@ -71,7 +75,7 @@ class UsuariosSeeder extends Seeder
         $medico->roles()->sync([$rolMedico->id]);
         $paciente->roles()->sync([$rolPaciente->id]);
 
-        factory(App\User::class, 100)->create()->each(function ($user) use ($rolPaciente) {
+        factory(App\User::class, 20)->create()->each(function ($user) use ($rolPaciente) {
             $user->roles()->sync([$rolPaciente->id]);
         });
 
@@ -102,8 +106,26 @@ class UsuariosSeeder extends Seeder
             'telefonos' => '4441234',
         ]);
 
-        $cita = Cita::create([
+        // for ($i=0; $i<=6; $i+1) {
+        //     $horario = Horario::create([
+        //         'dia' => $i,
+        //         'tm_activo' => true,
+        //         'tm_hora_inicio' => date('H:i:s', 28800),
+        //         'tm_hora_fin' => date('H:i:s', 43200),
+        //         'tm_sucursal' => $sucursal1->id,
+        //         'tm_especialidad' => $traumatologia->id,
+        //         'tm_consultorio' => '101',
+        //         'tt_activo' => true,
+        //         'tt_hora_inicio' => date('H:i:s', 50400),
+        //         'tt_hora_fin' => date('H:i:s', 64800),
+        //         'tt_sucursal' => $sucursal2->id,
+        //         'tt_especialidad' => $psicologia->id,
+        //         'tt_consultorio' => '201',
+        //         'user_id' => $medico->id,
+        //     ]);
+        // }
 
+        $cita = Cita::create([
             'estado' => 'Reservada',
             'numero_ficha' => 1,
             'paciente_id' => $paciente->id,
@@ -112,7 +134,6 @@ class UsuariosSeeder extends Seeder
             'sucursal_id' => $sucursal1->id,
             'fecha_programada' => Carbon::now()->format('Y-m-d'),
             'hora_programada' => '09:00:00',
-
         ]);
     }
 }

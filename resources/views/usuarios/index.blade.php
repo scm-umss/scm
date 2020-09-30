@@ -49,27 +49,8 @@
 
                 </tbody>
             </table>
-            <button id="button" class="btn btn-primary">Eliminar</button>
+            {{ $usuarios->links() }}
         </div>
     </div>
 </div>
-@endsection
-
-@section('scripts')
-<script>
-    document.addEventListener('DOMContentLoaded', ()=>{
-
-        $("#button").click(function(){
-            $.getJSON('/usuarios/json',cargar);
-         });
-    });
-
-    // document.addEventListener('DOMContentLoaded', () => {
-    //   $.getJSON('/usuarios/json',cargar)
-    // });
-    function cargar(data){
-        console.log(data);
-    }
-</script>
-
 @endsection

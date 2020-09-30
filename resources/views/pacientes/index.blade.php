@@ -13,6 +13,7 @@
         <div class="card-header d-flex justify-content-between">
             <h4>Lista de pacientes</h4>
             <div class="d-flex align-right">
+                <a class="btn btn-warning mr-2" href="{{ route('usuarios.inactivos') }}" role="button" dusk="ver-inactivos">Ver Inactivos</a>
                 <a class="btn btn-success" href="{{ route('usuarios.create') }}" role="button" dusk="crear-paciente">Nuevo Paciente</a>
             </div>
         </div>
@@ -34,7 +35,7 @@
                             <td>{{ $paciente->nombreCompleto }}</td>
                             <td>{{ $paciente->telefono }}</td>
 
-                            {{-- <td><img src="/storage/{{ $paciente->imagen }}" style="width:60px"></td> --}}
+                            <td><img src="/storage/{{ $paciente->imagen }}" style="width:60px"></td>
                             <td class="d-flex">
                                 <a href="{{ route('usuarios.show', ['usuario' => $paciente->id]) }}" class="btn btn-sm btn-info mr-2" dusk="ver-detalles-{{ $paciente->id }}">Detalles</a>
                                 <a href="{{ route('usuarios.edit', ['usuario' => $paciente->id]) }}" class="btn btn-sm btn-secondary mr-2" dusk="editar-paciente-{{ $paciente->id }}">Editar</a>
@@ -46,6 +47,7 @@
                     @endforeach
                 </tbody>
             </table>
+            {{ $pacientes->links() }}
         </div>
     </div>
 </div>

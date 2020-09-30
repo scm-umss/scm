@@ -29,7 +29,7 @@ class UsuariosController extends Controller
         //$this->authorize('view', null);
 
         // $usuarios = User::all();
-        $usuarios = User::with('roles')->get();
+        $usuarios = User::with('roles')->paginate(10);
         return view('usuarios.index', compact('usuarios'));
     }
 
@@ -57,7 +57,14 @@ class UsuariosController extends Controller
     {
         $this->authorize('create', User::class);
         //dd($request->all());
-
+        $iNombre = $request->input('nombre');
+        $iPaterno = $request->input('ap_paterno');
+        $iMaterno = $request->input('ap_materno');
+        $iNacimiento = $request->input('fecha_nacimiento');
+        // $fecha = explode("-",$iNacimiento);
+        // dd($iNacimiento);
+        $matricula = strtoupper(substr($iNombre,0,1) . substr($iPaterno,0,1) . substr($iMaterno,0,1) .
+        '-' . str_replace('-','',$iNacimiento));
         $usuario = new User();
         $usuario->nombre = $request->input('nombre');
         $usuario->email = $request->input('email');
@@ -65,6 +72,8 @@ class UsuariosController extends Controller
         $usuario->ap_paterno = $request->input('ap_paterno');
         $usuario->ap_materno = $request->input('ap_materno');
         $usuario->ci = $request->input('ci');
+        $usuario->matricula = $matricula;
+        $usuario->fecha_nacimiento = $request->input('fecha_nacimiento');
         $usuario->telefono = $request->input('telefono');
         // $usuario->rol = $request->input('rol');
         // $usuario->estado = $request->input('estado');

@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Support\Collection;
 use App\User;
 use Illuminate\Http\Request;
 
@@ -18,16 +19,14 @@ class MedicoController extends Controller
      */
     public function index()
     {
-        // $users = User::all();
         $users = User::with('roles','especialidades')->get();
-        $medicos = [];
+        $medicos = new Collection();
         foreach($users as $user){
             if($user->tieneRol(['medico'])){
-                $medicos[] = $user;
+                $medicos->push((object)$user);
             }
         }
-
-        // dd($medicos);
+        $medicos = $medicos->paginate(1);
         return view('medicos.index', compact('medicos'));
     }
 

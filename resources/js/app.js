@@ -27,6 +27,7 @@ Vue.component('especialidades-inactivos', require('./components/EspecialidadInac
 // Vue.component('listar-especialidades', require('./components/Especialidades.vue').default);
 Vue.component('crear-cita', require('./components/CrearCita.vue').default);
 Vue.component('editar-cita', require('./components/EditarCita.vue').default);
+Vue.component('fecha-component', require('./components/FechaComponent.vue').default);
 
 /**
  * Next, we will create a fresh Vue application instance and attach it to

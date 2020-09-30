@@ -13,6 +13,7 @@
         <div class="card-header d-flex justify-content-between">
             <h4>Lista de médicos</h4>
             <div class="d-flex align-right">
+                <a class="btn btn-warning mr-2" href="{{ route('usuarios.inactivos') }}" role="button" dusk="ver-inactivos">Ver Inactivos</a>
                 <a class="btn btn-success" href="{{ route('usuarios.create') }}" role="button" dusk="crear-medico">Nuevo Médico</a>
             </div>
         </div>
@@ -37,7 +38,7 @@
                             <td>{{ $medico->especialidades->pluck('nombre')->implode(', ') }}
                             </td>
 
-                            {{-- <td><img src="/storage/{{ $medico->imagen }}" style="width:60px"></td> --}}
+                            <td><img src="/storage/{{ $medico->imagen }}" style="width:60px"></td>
                             <td class="d-flex">
                                 <a href="{{ route('usuarios.show', ['usuario' => $medico->id]) }}" class="btn btn-sm btn-info mr-2" dusk="ver-detalles-{{ $medico->id }}">Detalles</a>
                                 <a href="{{ route('usuarios.edit', ['usuario' => $medico->id]) }}" class="btn btn-sm btn-secondary mr-2" dusk="editar-medico-{{ $medico->id }}">Editar</a>
@@ -48,6 +49,7 @@
                     @endforeach
                 </tbody>
             </table>
+            {{ $medicos->links() }}
         </div>
     </div>
 </div>

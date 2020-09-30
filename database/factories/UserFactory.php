@@ -32,6 +32,7 @@ $factory->define(User::class, function (Faker $faker) {
         'ap_materno' => $faker->lastName,
         'nombre' => $faker->firstName,
         'ci' => $faker->randomNumber(8),
+        'fecha_nacimiento' => '1980-01-01',
         'telefono' => $faker->phoneNumber,
         'email' => $faker->unique()->safeEmail,
         'email_verified_at' => now(),

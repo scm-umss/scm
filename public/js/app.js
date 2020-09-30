@@ -2908,6 +2908,124 @@ __webpack_require__.r(__webpack_exports__);
 
 /***/ }),
 
+/***/ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/FechaComponent.vue?vue&type=script&lang=js&":
+/*!*************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/babel-loader/lib??ref--4-0!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/FechaComponent.vue?vue&type=script&lang=js& ***!
+  \*************************************************************************************************************************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var vue2_datepicker__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! vue2-datepicker */ "./node_modules/vue2-datepicker/index.esm.js");
+/* harmony import */ var vue2_datepicker_index_css__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! vue2-datepicker/index.css */ "./node_modules/vue2-datepicker/index.css");
+/* harmony import */ var vue2_datepicker_index_css__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(vue2_datepicker_index_css__WEBPACK_IMPORTED_MODULE_1__);
+/* harmony import */ var vue2_datepicker_locale_es__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! vue2-datepicker/locale/es */ "./node_modules/vue2-datepicker/locale/es.js");
+/* harmony import */ var vue2_datepicker_locale_es__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(vue2_datepicker_locale_es__WEBPACK_IMPORTED_MODULE_2__);
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+
+
+
+var noHorasAlert = "<div class=\"alert alert-danger\" role=\"alert\">\n    <strong>Lo sentimos!</strong> No se encontraron horas disponibles para el m\xE9dico y el d\xEDa seleccionado.\n</div>";
+/* harmony default export */ __webpack_exports__["default"] = ({
+  components: {
+    DatePicker: vue2_datepicker__WEBPACK_IMPORTED_MODULE_0__["default"]
+  },
+  props: ['medicoId'],
+  data: function data() {
+    return {
+      // lang: {
+      // formatLocale: {
+      //     firstDayOfWeek: 1,
+      // },
+      // monthBeforeYear: false,
+      // },
+      // time1: null,
+      fecha: '',
+      horasTM: [],
+      horasTT: []
+    };
+  },
+  created: function created() {
+    console.log('Fecha');
+  },
+  methods: {
+    cargarHoras: function cargarHoras(date) {
+      var _this = this;
+
+      // this.value = [date, new Date(date.getTime() + 30 * 24 * 3600 * 1000)]
+      console.log('la fecha sellecionada es: ' + this.fecha + ' Medico: ' + this.medicoId);
+      var urlHorasMedico = '/horasmedico';
+      var params = {
+        fecha: this.fecha,
+        id: this.medicoId
+      }; // this.$emit('fechaSeleccionada', this.fecha);
+
+      axios.get(urlHorasMedico, {
+        params: params
+      }).then(function (response) {
+        // console.log(response.data.tm_horario)
+        if (!response.data.tm_horario && !response.data.tt_horario || response.data.tm_horario.length === 0 && response.data.tt_horario.length === 0) {
+          _this.mostrarAlerta();
+        }
+
+        if (response.data.tm_horario) {
+          response.data.tm_horario.forEach(function (hora) {
+            console.log(hora.inicio);
+          });
+        }
+
+        if (response.data.tt_horario) {
+          response.data.tt_horario.forEach(function (hora) {
+            console.log(hora.inicio);
+          });
+        } // this.especialidades = response.data;
+
+      });
+    },
+    rangoHabilitado: function rangoHabilitado(date) {
+      var hoy = new Date();
+      hoy.setHours(0, 0, 0, 0);
+      return date < hoy || date > new Date(hoy.getTime() + 30 * 24 * 3600 * 1000);
+    },
+    mostrarAlerta: function mostrarAlerta() {
+      this.$swal({
+        icon: 'warning',
+        title: 'Oops...',
+        html: noHorasAlert
+      });
+    }
+  }
+});
+
+/***/ }),
+
 /***/ "./node_modules/bootstrap/dist/js/bootstrap.js":
 /*!*****************************************************!*\
   !*** ./node_modules/bootstrap/dist/js/bootstrap.js ***!
@@ -61273,6 +61391,59 @@ render._withStripped = true
 
 /***/ }),
 
+/***/ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/FechaComponent.vue?vue&type=template&id=32affd2b&":
+/*!*****************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/FechaComponent.vue?vue&type=template&id=32affd2b& ***!
+  \*****************************************************************************************************************************************************************************************************************/
+/*! exports provided: render, staticRenderFns */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "render", function() { return render; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return staticRenderFns; });
+var render = function() {
+  var _vm = this
+  var _h = _vm.$createElement
+  var _c = _vm._self._c || _h
+  return _c("div", [
+    _c("div", { staticClass: "form-group row" }, [
+      _c("label", { staticClass: "col-md-4 col-form-label text-md-right" }, [
+        _vm._v("Elegir fecha para la cita:")
+      ]),
+      _vm._v(" "),
+      _c(
+        "div",
+        { staticClass: "col-md-6" },
+        [
+          _c("date-picker", {
+            attrs: {
+              placeholder: "Seleccionar fecha",
+              valueType: "format",
+              format: "DD-MM-YYYY"
+            },
+            on: { pick: _vm.cargarHoras },
+            model: {
+              value: _vm.fecha,
+              callback: function($$v) {
+                _vm.fecha = $$v
+              },
+              expression: "fecha"
+            }
+          })
+        ],
+        1
+      )
+    ])
+  ])
+}
+var staticRenderFns = []
+render._withStripped = true
+
+
+
+/***/ }),
+
 /***/ "./node_modules/vue-loader/lib/runtime/componentNormalizer.js":
 /*!********************************************************************!*\
   !*** ./node_modules/vue-loader/lib/runtime/componentNormalizer.js ***!
@@ -77927,6 +78098,7 @@ Vue.component('especialidades-inactivos', __webpack_require__(/*! ./components/E
 
 Vue.component('crear-cita', __webpack_require__(/*! ./components/CrearCita.vue */ "./resources/js/components/CrearCita.vue")["default"]);
 Vue.component('editar-cita', __webpack_require__(/*! ./components/EditarCita.vue */ "./resources/js/components/EditarCita.vue")["default"]);
+Vue.component('fecha-component', __webpack_require__(/*! ./components/FechaComponent.vue */ "./resources/js/components/FechaComponent.vue")["default"]);
 /**
  * Next, we will create a fresh Vue application instance and attach it to
  * the page. Then, you may begin adding components to this application
@@ -78554,6 +78726,75 @@ __webpack_require__.r(__webpack_exports__);
 
 /***/ }),
 
+/***/ "./resources/js/components/FechaComponent.vue":
+/*!****************************************************!*\
+  !*** ./resources/js/components/FechaComponent.vue ***!
+  \****************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _FechaComponent_vue_vue_type_template_id_32affd2b___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./FechaComponent.vue?vue&type=template&id=32affd2b& */ "./resources/js/components/FechaComponent.vue?vue&type=template&id=32affd2b&");
+/* harmony import */ var _FechaComponent_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./FechaComponent.vue?vue&type=script&lang=js& */ "./resources/js/components/FechaComponent.vue?vue&type=script&lang=js&");
+/* empty/unused harmony star reexport *//* harmony import */ var _node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../../node_modules/vue-loader/lib/runtime/componentNormalizer.js */ "./node_modules/vue-loader/lib/runtime/componentNormalizer.js");
+
+
+
+
+
+/* normalize component */
+
+var component = Object(_node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__["default"])(
+  _FechaComponent_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__["default"],
+  _FechaComponent_vue_vue_type_template_id_32affd2b___WEBPACK_IMPORTED_MODULE_0__["render"],
+  _FechaComponent_vue_vue_type_template_id_32affd2b___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"],
+  false,
+  null,
+  null,
+  null
+  
+)
+
+/* hot reload */
+if (false) { var api; }
+component.options.__file = "resources/js/components/FechaComponent.vue"
+/* harmony default export */ __webpack_exports__["default"] = (component.exports);
+
+/***/ }),
+
+/***/ "./resources/js/components/FechaComponent.vue?vue&type=script&lang=js&":
+/*!*****************************************************************************!*\
+  !*** ./resources/js/components/FechaComponent.vue?vue&type=script&lang=js& ***!
+  \*****************************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_FechaComponent_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../node_modules/babel-loader/lib??ref--4-0!../../../node_modules/vue-loader/lib??vue-loader-options!./FechaComponent.vue?vue&type=script&lang=js& */ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/FechaComponent.vue?vue&type=script&lang=js&");
+/* empty/unused harmony star reexport */ /* harmony default export */ __webpack_exports__["default"] = (_node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_FechaComponent_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__["default"]); 
+
+/***/ }),
+
+/***/ "./resources/js/components/FechaComponent.vue?vue&type=template&id=32affd2b&":
+/*!***********************************************************************************!*\
+  !*** ./resources/js/components/FechaComponent.vue?vue&type=template&id=32affd2b& ***!
+  \***********************************************************************************/
+/*! exports provided: render, staticRenderFns */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_FechaComponent_vue_vue_type_template_id_32affd2b___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!../../../node_modules/vue-loader/lib??vue-loader-options!./FechaComponent.vue?vue&type=template&id=32affd2b& */ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/FechaComponent.vue?vue&type=template&id=32affd2b&");
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "render", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_FechaComponent_vue_vue_type_template_id_32affd2b___WEBPACK_IMPORTED_MODULE_0__["render"]; });
+
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_FechaComponent_vue_vue_type_template_id_32affd2b___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"]; });
+
+
+
+/***/ }),
+
 /***/ "./resources/sass/app.scss":
 /*!*********************************!*\
   !*** ./resources/sass/app.scss ***!
@@ -78572,8 +78813,8 @@ __webpack_require__.r(__webpack_exports__);
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-__webpack_require__(/*! C:\laragon\www\scm\resources\js\app.js */"./resources/js/app.js");
-module.exports = __webpack_require__(/*! C:\laragon\www\scm\resources\sass\app.scss */"./resources/sass/app.scss");
+__webpack_require__(/*! E:\laragon\www\scm\resources\js\app.js */"./resources/js/app.js");
+module.exports = __webpack_require__(/*! E:\laragon\www\scm\resources\sass\app.scss */"./resources/sass/app.scss");
 
 
 /***/ })

@@ -18,7 +18,8 @@ class User extends Authenticatable
      * @var array
      */
     protected $fillable = [
-        'email', 'password', 'ap_paterno', 'ap_materno', 'nombre', 'telefono','imagen'
+        'email', 'password', 'ap_paterno', 'ap_materno', 'nombre',
+        'telefono', 'imagen', 'matricula', 'fecha_nacimiento'
     ];
 
     /**
@@ -83,7 +84,7 @@ class User extends Authenticatable
     public function getActivoAttribute(){
         return $this->where('deleted_at',null);
     }
-    
+
     public function especialidadesMedico(){
         return $this->especialidades();
     }

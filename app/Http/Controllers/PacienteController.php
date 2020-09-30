@@ -18,16 +18,20 @@ class PacienteController extends Controller
      */
     public function index()
     {
-        // $users = User::all();
-        $users = User::with('roles')->get();
-        $pacientes = [];
-        foreach($users as $user){
-            if($user->tieneRol(['paciente'])){
-                $pacientes[] = $user;
-            }
-        }
+        $pacientes = User::all()->reject(function($user) {
+            return !$user->tieneRol(['paciente']);
+        });
 
-        // dd($medicos);
+        // $users = User::with('roles')->get();
+        // dd($users);
+
+        // $pacientes = new Collection();
+        // foreach($users as $item){
+        //     if($item->tieneRol(['paciente'])){
+        //         $pacientes->push((object)$item);
+        //     }
+        // }
+        $pacientes = $pacientes->paginate(5);
         return view('pacientes.index', compact('pacientes'));
     }
 
