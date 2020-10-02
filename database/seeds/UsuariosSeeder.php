@@ -75,7 +75,7 @@ class UsuariosSeeder extends Seeder
         $medico->roles()->sync([$rolMedico->id]);
         $paciente->roles()->sync([$rolPaciente->id]);
 
-        factory(App\User::class, 20)->create()->each(function ($user) use ($rolPaciente) {
+        $pacientes_ex = factory(App\User::class, 20)->create()->each(function ($user) use ($rolPaciente) {
             $user->roles()->sync([$rolPaciente->id]);
         });
 
@@ -106,18 +106,18 @@ class UsuariosSeeder extends Seeder
             'telefonos' => '4441234',
         ]);
 
-        for ($i=0; $i<=6; $i++) {
+        for ($i=1; $i<=6; $i++) {
             $horario = Horario::create([
                 'dia' => $i,
                 'tm_activo' => true,
-                'tm_hora_inicio' => date('H:i:s', 43200),
-                'tm_hora_fin' => date('H:i:s', 57600),
+                'tm_hora_inicio' => '08:00:00',
+                'tm_hora_fin' => '12:00:00',
                 'tm_sucursal' => $sucursal1->id,
                 'tm_especialidad' => $traumatologia->id,
                 'tm_consultorio' => '101',
                 'tt_activo' => true,
-                'tt_hora_inicio' => date('H:i:s', 64800),
-                'tt_hora_fin' => date('H:i:s', 79200),
+                'tt_hora_inicio' => '14:00:00',
+                'tt_hora_fin' => '18:00:00',
                 'tt_sucursal' => $sucursal2->id,
                 'tt_especialidad' => $psicologia->id,
                 'tt_consultorio' => '201',
@@ -135,5 +135,13 @@ class UsuariosSeeder extends Seeder
             'fecha_programada' => Carbon::now()->format('Y-m-d'),
             'hora_programada' => '09:00:00',
         ]);
+
+        factory(App\Cita::class, 20)->create([
+            'paciente_id' => $pacientes_ex->random()->id,// [random_int(0, $pacientes_ex->count-1)]->id,
+            'medico_id' => $medico->id,
+            'especialidad_id' => $traumatologia->id,
+            'sucursal_id' => $sucursal1->id,
+        ]);
+
     }
 }

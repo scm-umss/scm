@@ -2,6 +2,7 @@
 
 /** @var \Illuminate\Database\Eloquent\Factory $factory */
 
+use App\Cita;
 use App\Rol;
 use App\User;
 use Faker\Generator as Faker;
@@ -44,4 +45,11 @@ $factory->define(User::class, function (Faker $faker) {
     ];
 });
 
-
+$factory->define(Cita::class, function (Faker $faker) {
+    return [
+        'fecha_programada' => $faker->dateTimeBetween('+1 day', '+1 week', 'America/Caracas'),
+        'hora_programada' => '08:00:00',
+        'estado' => $faker->randomElement(['Reservada', 'Confirmada', 'Atendida', 'Cancelada']),
+        'numero_ficha' => $faker->randomNumber(3),
+    ];
+});
