@@ -1899,6 +1899,248 @@ module.exports = {
 
 /***/ }),
 
+/***/ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/CitaPaciente.vue?vue&type=script&lang=js&":
+/*!***********************************************************************************************************************************************************************!*\
+  !*** ./node_modules/babel-loader/lib??ref--4-0!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/CitaPaciente.vue?vue&type=script&lang=js& ***!
+  \***********************************************************************************************************************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _ComboFecha_vue__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./ComboFecha.vue */ "./resources/js/components/ComboFecha.vue");
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+
+var noHorasAlert = "<div class=\"alert alert-danger\" role=\"alert\">\n                    <strong>Lo sentimos!</strong> No se encontraron horas disponibles para el m\xE9dico y el d\xEDa seleccionado.\n                </div>";
+/* harmony default export */ __webpack_exports__["default"] = ({
+  components: {
+    ComboFecha: _ComboFecha_vue__WEBPACK_IMPORTED_MODULE_0__["default"]
+  },
+  props: ["medicoId", "especialidadId", "pacienteId"],
+  data: function data() {
+    return {
+      fecha_seleccionada: "",
+      horas: [],
+      tm_sucursal: "",
+      tt_sucursal: "",
+      hora_seleccionada: "",
+      sucursal_seleccionado: ""
+    };
+  },
+  methods: {
+    fechaSelect: function fechaSelect(fecha) {
+      console.log("Fecha seleccionada: " + fecha);
+      this.fecha_seleccionada = fecha;
+      this.horas = [];
+      this.cargarHoras();
+    },
+    cargarHoras: function cargarHoras() {
+      var _this = this;
+
+      // this.value = [date, new Date(date.getTime() + 30 * 24 * 3600 * 1000)]
+      console.log("la fecha sellecionada es: " + this.fecha_seleccionada + " Medico: " + this.medicoId + " especialidad: " + this.especialidadId);
+      var urlHorasMedico = "/horasmedico";
+      var params = {
+        fecha: this.fecha_seleccionada,
+        id: this.medicoId,
+        especialidad: this.especialidadId
+      };
+      axios.get(urlHorasMedico, {
+        params: params
+      }).then(function (response) {
+        // console.log(response.data);
+        if (!response.data.tm_horario && !response.data.tt_horario || response.data.tm_horario.length === 0 && response.data.tt_horario.length === 0) {
+          _this.mostrarAlerta();
+
+          _this.tm_sucursal = "";
+          _this.tt_sucursal = "";
+        }
+
+        if (response.data.tm_horario && response.data.tm_sucursal != "") {
+          response.data.tm_horario.forEach(function (hora) {
+            _this.horas.push(hora.inicio);
+          });
+          _this.tm_sucursal = response.data.tm_sucursal;
+          _this.tt_sucursal = "";
+        }
+
+        if (response.data.tt_horario && response.data.tt_sucursal != "") {
+          response.data.tt_horario.forEach(function (hora) {
+            _this.horas.push(hora.inicio);
+          });
+          _this.tt_sucursal = response.data.tt_sucursal;
+          _this.tm_sucursal = "";
+        }
+
+        if (response.data.tm_sucursal != "" && response.data.tt_sucursal != "") {
+          _this.tt_sucursal = response.data.tt_sucursal;
+          _this.tm_sucursal = response.data.tm_sucursal;
+        } // this.especialidades = response.data;
+
+      })["catch"](function (error) {
+        console.log(error);
+      });
+    },
+    horaSelect: function horaSelect(e) {
+      this.hora_seleccionada = e.target.value;
+
+      if (this.hora_seleccionada < '12:00') {
+        this.sucursal_seleccionado = this.tm_sucursal.id;
+        console.log("sucursal mañana: " + this.sucursal_seleccionado);
+      } else {
+        this.sucursal_seleccionado = this.tt_sucursal.id;
+        console.log("sucursal tarde: " + this.sucursal_seleccionado);
+      }
+    },
+    registrarCita: function registrarCita() {
+      var _this2 = this;
+
+      var params = {
+        fecha_programada: this.fecha_seleccionada,
+        hora_programada: this.hora_seleccionada,
+        paciente: this.pacienteId,
+        medico: this.medicoId,
+        especialidad: this.especialidadId,
+        sucursal: this.sucursal_seleccionado
+      };
+
+      if (this.datosCorrectos()) {
+        axios.post("/citas", params).then(function (response) {
+          console.log(response.data);
+
+          if (!response.data.error) {
+            _this2.$swal({
+              icon: "success",
+              title: "Registro de cita",
+              text: 'Cita registrada exitosamente!.'
+            }).then(function (result) {
+              window.location.href = "/";
+            });
+          } else {
+            console.log("Corrige primero");
+
+            _this2.$swal({
+              icon: "error",
+              title: "Oops...",
+              text: response.data.error
+            }).then(function (res) {
+              _this2.horas = [];
+
+              _this2.cargarHoras();
+            });
+          }
+        })["catch"](function (error) {
+          console.log(error);
+        });
+      }
+    },
+    datosCorrectos: function datosCorrectos() {
+      if (!this.fecha_seleccionada || !this.hora_seleccionada || this.especialidadId === 0 || this.medicoId === 0) {
+        console.log("datos incompletos");
+        return false;
+      } else {
+        return true;
+      }
+    },
+    mostrarAlerta: function mostrarAlerta() {
+      this.$swal({
+        icon: "warning",
+        title: "Oops...",
+        html: noHorasAlert
+      });
+    }
+  }
+});
+
+/***/ }),
+
 /***/ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/ComboEspecialidad.vue?vue&type=script&lang=js&":
 /*!****************************************************************************************************************************************************************************!*\
   !*** ./node_modules/babel-loader/lib??ref--4-0!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/ComboEspecialidad.vue?vue&type=script&lang=js& ***!
@@ -60479,6 +60721,196 @@ exports.clearImmediate = (typeof self !== "undefined" && self.clearImmediate) ||
 
 /***/ }),
 
+/***/ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/CitaPaciente.vue?vue&type=template&id=532e2062&":
+/*!***************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/CitaPaciente.vue?vue&type=template&id=532e2062& ***!
+  \***************************************************************************************************************************************************************************************************************/
+/*! exports provided: render, staticRenderFns */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "render", function() { return render; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return staticRenderFns; });
+var render = function() {
+  var _vm = this
+  var _h = _vm.$createElement
+  var _c = _vm._self._c || _h
+  return _c(
+    "div",
+    [
+      _c("combo-fecha", {
+        ref: "fechaSeleccionada",
+        attrs: { medicoId: _vm.medicoId },
+        on: { "fecha-select": _vm.fechaSelect }
+      }),
+      _vm._v(" "),
+      _vm.horas.length
+        ? _c("fieldset", { staticClass: "border p-4" }, [
+            _c("legend", { staticClass: "text-primary" }, [
+              _vm._v("Horas disponibles")
+            ]),
+            _vm._v(" "),
+            _c("div", { staticClass: "container" }, [
+              _c("div", { staticClass: "row row-cols-2" }, [
+                this.tm_sucursal
+                  ? _c("div", { staticClass: "col" }, [
+                      _c(
+                        "div",
+                        {
+                          staticClass:
+                            "shadow p-2 mb-4 bg-white rounded text-center border border-primary"
+                        },
+                        [
+                          _vm._v(
+                            "\n            Sucursal Mañana: " +
+                              _vm._s(_vm.tm_sucursal.nombre) +
+                              "\n          "
+                          )
+                        ]
+                      )
+                    ])
+                  : _vm._e(),
+                _vm._v(" "),
+                this.tt_sucursal
+                  ? _c("div", { staticClass: "col" }, [
+                      _c(
+                        "div",
+                        {
+                          staticClass:
+                            "shadow p-2 mb-4 bg-white rounded text-center border border-secondary"
+                        },
+                        [
+                          _vm._v(
+                            "\n            Sucursal Tarde: " +
+                              _vm._s(_vm.tt_sucursal.nombre) +
+                              "\n          "
+                          )
+                        ]
+                      )
+                    ])
+                  : _vm._e()
+              ])
+            ]),
+            _vm._v(" "),
+            _c("hr"),
+            _vm._v(" "),
+            _c("div", { staticClass: "container" }, [
+              _c(
+                "div",
+                { staticClass: "row row-cols-4" },
+                _vm._l(_vm.horas, function(hora, index) {
+                  return _c("div", { key: index }, [
+                    hora < "12:00"
+                      ? _c("div", { staticClass: "col mb-4" }, [
+                          _c(
+                            "div",
+                            {
+                              staticClass:
+                                "card shadow text-white bg-primary mb-3"
+                            },
+                            [
+                              _c("div", { staticClass: "card-header" }, [
+                                _c("div", { staticClass: "form-check" }, [
+                                  _c("input", {
+                                    staticClass: "form-check-input",
+                                    attrs: {
+                                      type: "radio",
+                                      name: "hora_inicio",
+                                      id: "hora_inicio_" + index
+                                    },
+                                    domProps: { value: hora },
+                                    on: { click: _vm.horaSelect }
+                                  }),
+                                  _vm._v(" "),
+                                  _c(
+                                    "label",
+                                    {
+                                      staticClass: "form-check-label",
+                                      attrs: { for: "hora_inicio_" + index }
+                                    },
+                                    [_vm._v(_vm._s(hora))]
+                                  )
+                                ])
+                              ])
+                            ]
+                          )
+                        ])
+                      : _c("div", { staticClass: "col" }, [
+                          _c(
+                            "div",
+                            {
+                              staticClass:
+                                "card shadow text-white bg-secondary mb-3"
+                            },
+                            [
+                              _c("div", { staticClass: "card-header" }, [
+                                _c("div", { staticClass: "form-check" }, [
+                                  _c("input", {
+                                    staticClass: "form-check-input",
+                                    attrs: {
+                                      type: "radio",
+                                      name: "hora_inicio",
+                                      id: "hora_inicio" + index
+                                    },
+                                    domProps: { value: hora },
+                                    on: { click: _vm.horaSelect }
+                                  }),
+                                  _vm._v(" "),
+                                  _c(
+                                    "label",
+                                    {
+                                      staticClass: "form-check-label",
+                                      attrs: { for: "hora_inicio" + index }
+                                    },
+                                    [_vm._v(_vm._s(hora))]
+                                  )
+                                ])
+                              ])
+                            ]
+                          )
+                        ])
+                  ])
+                }),
+                0
+              )
+            ])
+          ])
+        : _vm._e(),
+      _vm._v(" "),
+      _c(
+        "div",
+        { staticClass: "form-group mt-3 d-flex justify-content-center" },
+        [
+          _vm.datosCorrectos()
+            ? _c(
+                "button",
+                {
+                  staticClass: "btn btn-primary p3",
+                  attrs: { type: "submit" },
+                  on: {
+                    click: function($event) {
+                      $event.preventDefault()
+                      return _vm.registrarCita($event)
+                    }
+                  }
+                },
+                [_vm._v("Registrar Cita")]
+              )
+            : _vm._e()
+        ]
+      )
+    ],
+    1
+  )
+}
+var staticRenderFns = []
+render._withStripped = true
+
+
+
+/***/ }),
+
 /***/ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/ComboEspecialidad.vue?vue&type=template&id=2a2b3705&":
 /*!********************************************************************************************************************************************************************************************************************!*\
   !*** ./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/ComboEspecialidad.vue?vue&type=template&id=2a2b3705& ***!
@@ -78099,6 +78531,7 @@ Vue.component('especialidades-inactivos', __webpack_require__(/*! ./components/E
 Vue.component('crear-cita', __webpack_require__(/*! ./components/CrearCita.vue */ "./resources/js/components/CrearCita.vue")["default"]);
 Vue.component('editar-cita', __webpack_require__(/*! ./components/EditarCita.vue */ "./resources/js/components/EditarCita.vue")["default"]);
 Vue.component('fecha-component', __webpack_require__(/*! ./components/FechaComponent.vue */ "./resources/js/components/FechaComponent.vue")["default"]);
+Vue.component('cita-paciente', __webpack_require__(/*! ./components/CitaPaciente.vue */ "./resources/js/components/CitaPaciente.vue")["default"]);
 /**
  * Next, we will create a fresh Vue application instance and attach it to
  * the page. Then, you may begin adding components to this application
@@ -78153,6 +78586,75 @@ window.axios.defaults.headers.common['X-Requested-With'] = 'XMLHttpRequest';
 //     cluster: process.env.MIX_PUSHER_APP_CLUSTER,
 //     forceTLS: true
 // });
+
+/***/ }),
+
+/***/ "./resources/js/components/CitaPaciente.vue":
+/*!**************************************************!*\
+  !*** ./resources/js/components/CitaPaciente.vue ***!
+  \**************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _CitaPaciente_vue_vue_type_template_id_532e2062___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./CitaPaciente.vue?vue&type=template&id=532e2062& */ "./resources/js/components/CitaPaciente.vue?vue&type=template&id=532e2062&");
+/* harmony import */ var _CitaPaciente_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./CitaPaciente.vue?vue&type=script&lang=js& */ "./resources/js/components/CitaPaciente.vue?vue&type=script&lang=js&");
+/* empty/unused harmony star reexport *//* harmony import */ var _node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../../node_modules/vue-loader/lib/runtime/componentNormalizer.js */ "./node_modules/vue-loader/lib/runtime/componentNormalizer.js");
+
+
+
+
+
+/* normalize component */
+
+var component = Object(_node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__["default"])(
+  _CitaPaciente_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__["default"],
+  _CitaPaciente_vue_vue_type_template_id_532e2062___WEBPACK_IMPORTED_MODULE_0__["render"],
+  _CitaPaciente_vue_vue_type_template_id_532e2062___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"],
+  false,
+  null,
+  null,
+  null
+  
+)
+
+/* hot reload */
+if (false) { var api; }
+component.options.__file = "resources/js/components/CitaPaciente.vue"
+/* harmony default export */ __webpack_exports__["default"] = (component.exports);
+
+/***/ }),
+
+/***/ "./resources/js/components/CitaPaciente.vue?vue&type=script&lang=js&":
+/*!***************************************************************************!*\
+  !*** ./resources/js/components/CitaPaciente.vue?vue&type=script&lang=js& ***!
+  \***************************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_CitaPaciente_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../node_modules/babel-loader/lib??ref--4-0!../../../node_modules/vue-loader/lib??vue-loader-options!./CitaPaciente.vue?vue&type=script&lang=js& */ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/CitaPaciente.vue?vue&type=script&lang=js&");
+/* empty/unused harmony star reexport */ /* harmony default export */ __webpack_exports__["default"] = (_node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_CitaPaciente_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__["default"]); 
+
+/***/ }),
+
+/***/ "./resources/js/components/CitaPaciente.vue?vue&type=template&id=532e2062&":
+/*!*********************************************************************************!*\
+  !*** ./resources/js/components/CitaPaciente.vue?vue&type=template&id=532e2062& ***!
+  \*********************************************************************************/
+/*! exports provided: render, staticRenderFns */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_CitaPaciente_vue_vue_type_template_id_532e2062___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!../../../node_modules/vue-loader/lib??vue-loader-options!./CitaPaciente.vue?vue&type=template&id=532e2062& */ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/CitaPaciente.vue?vue&type=template&id=532e2062&");
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "render", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_CitaPaciente_vue_vue_type_template_id_532e2062___WEBPACK_IMPORTED_MODULE_0__["render"]; });
+
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_CitaPaciente_vue_vue_type_template_id_532e2062___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"]; });
+
+
 
 /***/ }),
 

@@ -50,13 +50,9 @@ class CitaController extends Controller
     {
         $especialidades = Especialidad::all();
         if (auth()->user()->isSuperAdmin()) {
-            $users = User::with('roles')->get();
-            $pacientes = [];
-            foreach($users as $user){
-                if($user->tieneRol(['paciente'])){
-                    $pacientes[] = $user;
-                }
-            }
+            $pacientes = User::all()->reject(function($user) {
+                return !$user->tieneRol(['paciente']);
+            })->paginate(5);
             return view('pacientes.index', compact('pacientes'));
         }
         return view('citas.create', compact('especialidades'));
@@ -152,11 +148,15 @@ class CitaController extends Controller
     public function update(Request $request, Cita $cita)
     {
         // dd($request['params']['fecha_programada']);
+        // $fecha = $request['params']['fecha_programada'];
+        // $fecha_p = Carbon::createFromFormat('Y-m-d', $fecha);
+        $fecha = (new Carbon($request['params']['fecha_programada']))->format('Y-m-d');
+        // dd($fecha);
         $cita->paciente_id = $request['params']['paciente'];
         $cita->medico_id = $request['params']['medico'];
         $cita->especialidad_id = $request['params']['especialidad'];
         $cita->sucursal_id = $request['params']['sucursal'];
-        $cita->fecha_programada = $request['params']['fecha_programada'];
+        $cita->fecha_programada = $fecha;
         $cita->hora_programada = $request['params']['hora_programada'];
         $cita->save();
         return "Cita actualizada exitosamente.";
@@ -195,11 +195,11 @@ class CitaController extends Controller
             return view('citas.medicos', compact('medicos','especialidad'));
         }
     }
-
-    public function horario(User $medico){
+    /** Solo para mostrar al paciente */
+    public function horario(User $medico, Especialidad $especialidad){
 
         $horarios = $medico->horarios;
-        return view('citas.horario', compact('horarios','medico'));
+        return view('citas.horario', compact('horarios','medico','especialidad'));
     }
 
     public function horasMedico(Request $request){

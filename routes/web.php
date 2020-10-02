@@ -65,6 +65,6 @@ Route::resource('/citas', 'CitaController')->names('citas');
 // listar medicos por especialidad
 Route::get('/especialidad/{especialidad}/medicos', 'CitaController@getMedicos')->name('citas.medicos');
 // Vista para listar horario por medico
-Route::get('/horario/{medico}', 'CitaController@horario')->name('citas.horario');
+Route::get('/horario/{medico}/medico/{especialidad}', 'CitaController@horario')->name('citas.horario');
 // Horarios de cada medico API JSON
 Route::get('/horasmedico', 'CitaController@horasMedico');

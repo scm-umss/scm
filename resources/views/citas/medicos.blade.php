@@ -19,7 +19,7 @@
                         <div class="card-body">
                           <h5 class="card-title">{{ $medico->nombre }}</h5>
                           <p class="card-text">{{ $medico->ap_paterno }}</p>
-                          <a href="{{ route('citas.horario', $medico->id) }}" class="btn btn-primary">Seleccionar</a>
+                          <a href="{{ route('citas.horario', ['medico' => $medico->id, 'especialidad' => $especialidad->id]) }}" class="btn btn-primary">Seleccionar</a>
                         </div>
                       </div>
 
