@@ -34,7 +34,7 @@ class CitaController extends Controller
             $citas_pasadas = Cita::whereIn('estado', ['Atendida', 'Cancelada'])->paginate(10);
             return view('citas.index', compact('citas_pendientes','citas_confirmadas','citas_pasadas'));
         }elseif($rol == 'medico'){
-            return 'vista para medico   ';
+            return 'vista para medico';
         }elseif($rol == 'paciente'){
             return 'vista para paciente';
         }

@@ -40,6 +40,9 @@ class User extends Authenticatable
         'email_verified_at' => 'datetime',
     ];
 
+    protected $dates = [
+        'fecha_nacimiento'
+    ];
     // protected static function booted()
     // {
     //     static::created(function ($user) {
