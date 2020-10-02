@@ -20,7 +20,7 @@ class PacienteController extends Controller
     {
         $pacientes = User::all()->reject(function($user) {
             return !$user->tieneRol(['paciente']);
-        });
+        })->paginate(5);
 
         // $users = User::with('roles')->get();
         // dd($users);
@@ -31,7 +31,7 @@ class PacienteController extends Controller
         //         $pacientes->push((object)$item);
         //     }
         // }
-        $pacientes = $pacientes->paginate(5);
+        //$pacientes = $pacientes->paginate(5);
         return view('pacientes.index', compact('pacientes'));
     }
 

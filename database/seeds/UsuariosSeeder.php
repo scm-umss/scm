@@ -106,24 +106,24 @@ class UsuariosSeeder extends Seeder
             'telefonos' => '4441234',
         ]);
 
-        // for ($i=0; $i<=6; $i+1) {
-        //     $horario = Horario::create([
-        //         'dia' => $i,
-        //         'tm_activo' => true,
-        //         'tm_hora_inicio' => date('H:i:s', 28800),
-        //         'tm_hora_fin' => date('H:i:s', 43200),
-        //         'tm_sucursal' => $sucursal1->id,
-        //         'tm_especialidad' => $traumatologia->id,
-        //         'tm_consultorio' => '101',
-        //         'tt_activo' => true,
-        //         'tt_hora_inicio' => date('H:i:s', 50400),
-        //         'tt_hora_fin' => date('H:i:s', 64800),
-        //         'tt_sucursal' => $sucursal2->id,
-        //         'tt_especialidad' => $psicologia->id,
-        //         'tt_consultorio' => '201',
-        //         'user_id' => $medico->id,
-        //     ]);
-        // }
+        for ($i=0; $i<=6; $i++) {
+            $horario = Horario::create([
+                'dia' => $i,
+                'tm_activo' => true,
+                'tm_hora_inicio' => date('H:i:s', 43200),
+                'tm_hora_fin' => date('H:i:s', 57600),
+                'tm_sucursal' => $sucursal1->id,
+                'tm_especialidad' => $traumatologia->id,
+                'tm_consultorio' => '101',
+                'tt_activo' => true,
+                'tt_hora_inicio' => date('H:i:s', 64800),
+                'tt_hora_fin' => date('H:i:s', 79200),
+                'tt_sucursal' => $sucursal2->id,
+                'tt_especialidad' => $psicologia->id,
+                'tt_consultorio' => '201',
+                'user_id' => $medico->id,
+            ]);
+        }
 
         $cita = Cita::create([
             'estado' => 'Reservada',
