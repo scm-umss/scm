@@ -50,6 +50,7 @@
                     @endforeach
                 </tbody>
             </table>
+            {{ $citas_pendientes->links() }}
         </div>
     </div>
 </div>

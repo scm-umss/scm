@@ -75,7 +75,8 @@ class UsuariosSeeder extends Seeder
         $medico->roles()->sync([$rolMedico->id]);
         $paciente->roles()->sync([$rolPaciente->id]);
 
-        $pacientes_ex = factory(App\User::class, 20)->create()->each(function ($user) use ($rolPaciente) {
+        $pacientes_ex = factory(App\User::class, 50)->create();
+        $pacientes_ex->each(function ($user) use ($rolPaciente) {
             $user->roles()->sync([$rolPaciente->id]);
         });
 
@@ -132,16 +133,15 @@ class UsuariosSeeder extends Seeder
             'medico_id' => $medico->id,
             'especialidad_id' => $traumatologia->id,
             'sucursal_id' => $sucursal1->id,
-            'fecha_programada' => Carbon::now()->format('Y-m-d'),
+            'fecha_programada' => Carbon::now()->addDay(1)->format('Y-m-d'),
             'hora_programada' => '09:00:00',
         ]);
 
-        factory(App\Cita::class, 20)->create([
-            'paciente_id' => $pacientes_ex->random()->id,// [random_int(0, $pacientes_ex->count-1)]->id,
+        factory(App\Cita::class, 30)->create([
+            'paciente_id' => $pacientes_ex->random()->id,
             'medico_id' => $medico->id,
             'especialidad_id' => $traumatologia->id,
             'sucursal_id' => $sucursal1->id,
         ]);
-
     }
 }
