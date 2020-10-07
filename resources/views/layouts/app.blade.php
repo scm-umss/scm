@@ -59,6 +59,12 @@
                             </li>
                             @endif
 
+                            @if (auth()->user()->tieneRol(['admin']))
+                            <li class="nav-item">
+                                <a href="{{ route('citas.index') }}" class="nav-link">Citas</a>
+                            </li>
+                            @endif
+
                         </ul>
 
                     @endauth
