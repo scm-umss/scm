@@ -200,7 +200,7 @@ export default {
                 text: 'Cita registrada exitosamente!.',
               })
                 .then((result) => {
-                  window.location.href = "/";
+                  window.location.href = "/citas";
                 })
             } else {
               console.log("Corrige primero");

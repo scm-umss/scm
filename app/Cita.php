@@ -3,6 +3,7 @@
 namespace App;
 
 use App\Sucursal;
+use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Model;
 
 class Cita extends Model
@@ -37,5 +38,9 @@ class Cita extends Model
 
     public function sucursal(){
         return $this->belongsTo(Sucursal::class);
+    }
+    public function getHoraProgramadaAttribute($hora){
+        $hora = new Carbon($hora);
+        return $this->hora_programda = $hora->format('H:i');
     }
 }

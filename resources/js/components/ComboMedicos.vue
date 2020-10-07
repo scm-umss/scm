@@ -5,7 +5,7 @@
             <div class="col-md-6">
                 <select @change="$emit('medico-select', $event.target.value)" class="form-control">
                     <option value="0">--Seleccionar medico--</option>
-                    <option v-for="medico in medicos" :key="medico.id" :value="medico.id" :selected="medico.id == medicoId">{{ medico.nombre }}</option>
+                    <option v-for="medico in medicos" :key="medico.id" :value="medico.id" :selected="medico.id == medicoId">{{ medico.nombre }} {{ medico.ap_paterno }} {{ medico.ap_materno }}</option>
                 </select>
             </div>
         </div>
@@ -32,7 +32,7 @@ export default {
             // console.log('Leego '+ id);
             // this.especialidad_seleccionada = this.$refs.especialidad_seleccionada.value;
             if (id != '0') {
-                let urlMedicos = '/especialidad/'+id+'/medicos';
+                let urlMedicos = '/especialidad/'+id+'/medicosjson';
                 axios.get(urlMedicos)
                     .then(response => {
                         // console.log(response)

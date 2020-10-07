@@ -1,58 +1,45 @@
 @extends('layouts.app')
 
 @section('content')
-
-
 <div class="container col-md-8">
 
     <div class="card shadow">
         <div class="card-header d-flex justify-content-between">
-            <h4>Citas Pendientes</h4>
-            {{-- <a class="btn btn-success" href="{{ route('especialidad.create') }}" role="button" dusk="nueva-especialidad">Nueva Especialidad</a> --}}
+            <h4> <a href="#prueba">Prueba</a> Mis citas</h4>
         </div>
         <div class="card-body">
             @if (session('status'))
-                <div class="alert alert-success">
-                    {{ session('status') }}
-                </div>
+            <div class="alert alert-success">
+                {{ session('status') }}
+            </div>
             @endif
-            <table class="table table-striped">
-                <thead>
-                    <tr>
-                        {{-- <th scope="col">Numero ficha</th> --}}
-                        <th scope="col">Fecha</th>
-                        <th scope="col">Hora</th>
-                        <th scope="col">Paciente</th>
-                        <th scope="col">Especialidad</th>
-                        <th scope="col">Medico</th>
-                        <th scope="col">Sucursal</th>
-                        <th scope="col">Estado</th>
-                        <th scope="col">Acciones</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    @foreach ($citas_pendientes as $cita)
-                        <tr>
-                            {{-- <td>{{ $cita->numero_ficha }}</td> --}}
-                            <td>{{ $cita->fecha_programada }}</td>
-                            <td>{{ $cita->hora_programada }}</td>
-                            <td>{{ $cita->paciente->nombre }}</td>
-                            <td>{{ $cita->especialidad->nombre }}</td>
-                            <td>{{ $cita->medico->nombre }}</td>
-                            <td>{{ $cita->sucursal->nombre }}</td>
-                            <td>{{ $cita->estado }}</td>
-                            <td class="d-flex">
-                                <a href="{{ route('citas.show', ['cita' => $cita->id]) }}" class="btn btn-sm btn-info mr-2" dusk="ver-detalles-{{ $cita->id }}">Ver Cita</a>
-                                <a href="{{ route('citas.edit', ['cita' => $cita->id]) }}" class="btn btn-sm btn-secondary mr-2" dusk="editar-cita-{{ $cita->id }}">Editar</a>
 
-                            </td>
-                        </tr>
-                    @endforeach
-                </tbody>
-            </table>
-            {{ $citas_pendientes->links() }}
+            <ul class="nav nav-pills mb-3" id="pills-tab" role="tablist">
+                <li class="nav-item">
+                    <a class="nav-link active" id="pills-profile-tab" data-toggle="pill" href="#citas-pendientes"
+                        aria-selected="true">Citas pendientes</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" id="pills-home-tab" data-toggle="pill" href="#proximas-citas"
+                        aria-selected="false">Próximas citas</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" id="pills-contact-tab" data-toggle="pill" href="#historial-citas"
+                        aria-selected="false">Historial de citas</a>
+                </li>
+            </ul>
+            <div class="tab-content" id="pills-tabContent">
+                <div class="tab-pane fade show active" id="citas-pendientes" role="tabpanel">
+                    @include('citas.tablas.pendiente')
+                </div>
+                <div class="tab-pane fade" id="proximas-citas" role="tabpanel">
+                    @include('citas.tablas.confirmada')
+                </div>
+                <div class="tab-pane fade" id="historial-citas" role="tabpanel">
+                    @include('citas.tablas.historial')
+                </div>
+            </div>
         </div>
     </div>
 </div>
 @endsection
-

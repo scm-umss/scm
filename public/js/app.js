@@ -2101,7 +2101,7 @@ var noHorasAlert = "<div class=\"alert alert-danger\" role=\"alert\">\n         
               title: "Registro de cita",
               text: 'Cita registrada exitosamente!.'
             }).then(function (result) {
-              window.location.href = "/";
+              window.location.href = "/citas";
             });
           } else {
             console.log("Corrige primero");
@@ -2297,7 +2297,7 @@ __webpack_require__.r(__webpack_exports__);
       // console.log('Leego '+ id);
       // this.especialidad_seleccionada = this.$refs.especialidad_seleccionada.value;
       if (id != '0') {
-        var urlMedicos = '/especialidad/' + id + '/medicos';
+        var urlMedicos = '/especialidad/' + id + '/medicosjson';
         axios.get(urlMedicos).then(function (response) {
           // console.log(response)
           _this.medicos = response.data;
@@ -61091,7 +61091,15 @@ var render = function() {
                     selected: medico.id == _vm.medicoId
                   }
                 },
-                [_vm._v(_vm._s(medico.nombre))]
+                [
+                  _vm._v(
+                    _vm._s(medico.nombre) +
+                      " " +
+                      _vm._s(medico.ap_paterno) +
+                      " " +
+                      _vm._s(medico.ap_materno)
+                  )
+                ]
               )
             })
           ],
