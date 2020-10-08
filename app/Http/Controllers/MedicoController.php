@@ -26,7 +26,7 @@ class MedicoController extends Controller
                 $medicos->push((object)$user);
             }
         }
-        $medicos = $medicos->paginate(1);
+        $medicos = $medicos->paginate(5);
         return view('medicos.index', compact('medicos'));
     }
 

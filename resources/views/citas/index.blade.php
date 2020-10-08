@@ -5,7 +5,7 @@
 
     <div class="card shadow">
         <div class="card-header d-flex justify-content-between">
-            <h4> <a href="#prueba">Prueba</a> Mis citas</h4>
+            <h4> Mis citas</h4>
         </div>
         <div class="card-body">
             @if (session('status'))
