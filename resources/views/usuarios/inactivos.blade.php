@@ -15,7 +15,7 @@
             <a class="btn btn-warning mr-2" href="{{ route('usuarios.index') }}" role="button" dusk="ver-activos">Ver Activos</a>
         </div>
         <div class="card-body">
-
+            @forelse ($usuarios as $usuario)
             <table class="table table-striped">
                 <thead>
                     <tr>
@@ -28,7 +28,7 @@
                     </tr>
                 </thead>
                 <tbody>
-                    @foreach ($usuarios as $usuario)
+
                         <tr>
                             <td>{{ $usuario->nombreCompleto }}</td>
                             <td>{{ $usuario->telefono }}</td>
@@ -42,9 +42,16 @@
                                 <a href="{{ route('usuarios.restore', $usuario->id) }}" class="btn btn-sm btn-secondary" dusk="restaurar-usuario-{{ $usuario->id }}"> Restaurar</a>
                             </td>
                         </tr>
-                    @endforeach
+
+
+
                 </tbody>
             </table>
+            @empty
+            <div class="alert alert-info" role="alert">
+                <p class="display-4">Aún no existen usuarios inactivos!.</p>
+              </div>
+        @endforelse
         </div>
     </div>
 </div>
