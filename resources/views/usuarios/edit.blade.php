@@ -66,7 +66,7 @@
                                 <label for="ci" class="col-md-4 col-form-label text-md-right">C.I.:</label>
 
                                 <div class="col-md-6">
-                                    <input id="ci" type="date" class="form-control @error('ci') is-invalid @enderror" name="ci" value="{{ $usuario->ci }}" autocomplete="ci" autofocus>
+                                    <input id="ci" type="text" class="form-control @error('ci') is-invalid @enderror" name="ci" value="{{ $usuario->ci }}" autocomplete="ci" autofocus>
 
                                     @error('ci')
                                         <span class="invalid-feedback" role="alert">
@@ -75,12 +75,12 @@
                                     @enderror
                                 </div>
                             </div>
-
+                            {{-- {{ dd($usuario->fecha_nacimiento) }} --}}
                             <div class="form-group row">
                                 <label for="fecha_nacimiento" class="col-md-4 col-form-label text-md-right">Fecha Nacimiento:</label>
 
                                 <div class="col-md-6">
-                                    <input id="fecha_nacimiento" type="text" class="form-control @error('fecha_nacimiento') is-invalid @enderror" name="fecha_nacimiento" value="{{ $usuario->fecha_nacimiento }}" autocomplete="fecha_nacimiento" autofocus>
+                                    <input id="fecha_nacimiento" type="date" class="form-control @error('fecha_nacimiento') is-invalid @enderror" name="fecha_nacimiento" value="{{ old('fecha_nacimiento',$usuario->fecha_nacimiento->format('Y-m-d')) }}">
 
                                     @error('fecha_nacimiento')
                                         <span class="invalid-feedback" role="alert">
@@ -131,24 +131,6 @@
                                     @enderror
                                 </div>
                             </div>
-
-                            {{-- <div class="form-group row">
-                                <label for="estado" class="col-md-4 col-form-label text-md-right">Estado</label>
-
-                                <div class="col-md-6">
-                                    <select class="form-control" name="estado">
-                                        @foreach(["a" => "Activo", "i" => "Inactivo"] as $estado => $estadoTexto)
-                                        <option value="{{ $estado }}" {{ $usuario->estado == $estado ? 'selected' : '' }}>{{ $estadoTexto }}</option>
-                                        @endforeach
-                                    </select>
-
-                                    @error('estado')
-                                        <span class="invalid-feedback" role="alert">
-                                            <strong>{{ $message }}</strong>
-                                        </span>
-                                    @enderror
-                                </div>
-                            </div> --}}
 
                             <div class="form-group row">
                                 <label for="imagen" class="col-md-4 col-form-label text-md-right">Foto</label>

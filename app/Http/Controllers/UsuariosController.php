@@ -107,7 +107,6 @@ class UsuariosController extends Controller
     {
         $this->authorize('view', $usuario);
         // $roles = Rol::pluck('slug','id');
-        // dd($roles);
         return view('usuarios.show', compact('usuario'));
     }
 
@@ -120,7 +119,7 @@ class UsuariosController extends Controller
     public function edit(User $usuario)
     {
         $this->authorize('update', $usuario);
-
+        // dd($usuario->fecha_nacimiento);
         $roles = Rol::orderBy('nombre', 'ASC')->get();
         $especialidades = Especialidad::orderBy('nombre', 'ASC')->get();
         // dd($usuario->roles[0]->nombre);

@@ -82,7 +82,7 @@ class HorarioController extends Controller
      */
     public function update(Request $request, $id)
     {
-        // dd($id);
+        // dd($request->toArray());
         $usuario = User::findOrfail($id);
         $this->authorize('update', $usuario);
 

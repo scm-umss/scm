@@ -117,18 +117,18 @@ class UsuariosSeeder extends Seeder
             }
         });
 
-        for ($i=1; $i<=6; $i++) {
+        for ($i=0; $i<=6; $i++) {
             $horario = Horario::create([
                 'dia' => $i,
-                'tm_activo' => true,
-                'tm_hora_inicio' => '08:00:00',
-                'tm_hora_fin' => '12:00:00',
+                'tm_activo' => ($i == 1),
+                'tm_hora_inicio' => ($i==1 ? '08:00:00' : '07:00:00'),
+                'tm_hora_fin' => ($i==1 ? '10:30:00' : '07:00:00'),
                 'tm_sucursal' => $sucursal1->id,
                 'tm_especialidad' => $traumatologia->id,
                 'tm_consultorio' => '101',
-                'tt_activo' => true,
-                'tt_hora_inicio' => '14:00:00',
-                'tt_hora_fin' => '18:00:00',
+                'tt_activo' => ($i == 3),
+                'tt_hora_inicio' => ($i == 3 ? '15:00:00' : '14:00:00'),
+                'tt_hora_fin' => ($i == 3 ? '17:00:00' : '14:00:00'),
                 'tt_sucursal' => $sucursal2->id,
                 'tt_especialidad' => $psicologia->id,
                 'tt_consultorio' => '201',

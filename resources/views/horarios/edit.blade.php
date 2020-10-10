@@ -4,7 +4,11 @@
 
 <div class="container">
     <div class="row justify-content-center">
-
+        @if (!auth()->user()->tieneRol(['medico']))
+            <div class="alert alert-info">
+                <h5>No eres médico, si quieres asignar horario a un médico, puedes hacer desde el menu de médicos.</h5>
+            </div>
+        @else
         <form action="{{ route('horarios.update', $medico->id) }}" method="POST">
             @csrf
             @method('PUT')
@@ -15,7 +19,6 @@
                         <h4>Horario de trabajo de: <span class="badge badge-secondary">{{ $medico->nombre }} {{ $medico->ap_paterno }} {{ $medico->ap_paterno }}</span></h4>
                     </div>
                     <button type="submit" class="btn btn-primary">Guardar Horario</button>
-                    {{-- <a href="{{ route('medicos.index') }}" class="btn btn-danger px-4" role="button">Cancelar</a> --}}
                 </div>
 
                 <div class="card-body">
@@ -198,6 +201,8 @@
             </div>
 
         </form>
+        @endif
+
     </div>
 </div>
 @endsection

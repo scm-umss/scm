@@ -25,7 +25,7 @@
                         <th scope="col">Nombre Completo</th>
                         <th scope="col">Teléfono</th>
                         <th scope="col">Roles</th>
-                        {{-- <th scope="col">Fotos</th> --}}
+                        <th scope="col">Fotos</th>
                         <th scope="col">Acciones</th>
 
                     </tr>
@@ -38,6 +38,8 @@
                             <td>
                             {{ $usuario->roles->pluck('nombre')->implode(', ') }}
                             </td>
+                            <td><img src="/storage/{{ $usuario->imagen }}" style="width:60px"></td>
+
                             <td class="d-flex">
                                 <a href="{{ route('usuarios.show', ['usuario' => $usuario->id]) }}" class="btn btn-sm btn-info mr-2" dusk="ver-detalles-{{ $usuario->id }}">Detalles</a>
                                 <a href="{{ route('usuarios.edit', ['usuario' => $usuario->id]) }}" class="btn btn-sm btn-secondary mr-2" dusk="editar-usuario-{{ $usuario->id }}">Editar</a>
