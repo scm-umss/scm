@@ -10,6 +10,11 @@
                 {{ session('status') }}
             </div>
         @endif
+        @if (session('info'))
+            <div class="alert alert-info">
+                {{ session('info') }}
+            </div>
+            @endif
         <div class="card-header d-flex justify-content-between">
             <h4>Lista de médicos</h4>
             <div class="d-flex align-right">
@@ -40,7 +45,8 @@
 
                             <td><img src="/storage/{{ $medico->imagen }}" style="width:60px"></td>
                             <td class="d-flex">
-                                <a href="{{ route('usuarios.show', ['usuario' => $medico->id]) }}" class="btn btn-sm btn-info mr-2" dusk="ver-detalles-{{ $medico->id }}">Detalles</a>
+                                <a href="{{ route('usuarios.show', ['usuario' => $medico->id]) }}" class="btn btn-sm btn-info mr-2" dusk="ver-detalles-{{ $medico->id }}">Perfil</a>
+                                <a href="{{ route('horarios.edit', ['medico' => $medico->id]) }}" class="btn btn-sm btn-dark mr-2" dusk="horario-medico-{{ $medico->id }}">Asignar horario</a>
                                 <a href="{{ route('usuarios.edit', ['usuario' => $medico->id]) }}" class="btn btn-sm btn-secondary mr-2" dusk="editar-medico-{{ $medico->id }}">Editar</a>
 
                                 <eliminar-usuario usuario-id="{{ $medico->id }}"></eliminar-usuario>

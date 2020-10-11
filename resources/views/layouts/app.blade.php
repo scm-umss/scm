@@ -53,7 +53,7 @@
                                 <a href="{{ route('especialidad.index') }}" class="nav-link">Especialidad</a>
                             </li>
                             @endif
-                            @if (auth()->user()->tieneRol(['admin', 'medico']))
+                            @if (auth()->user()->tieneRol(['medico']))
                             <li class="nav-item">
                                 <a href="{{ route('horarios.edit', auth()->user()->id) }}" class="nav-link" dusk="horario-medico-{{ auth()->user()->id }}">Horarios</a>
                             </li>

@@ -11,6 +11,11 @@
                     {{ session('status') }}
                 </div>
                 @endif
+                @if (session('info'))
+                <div class="alert alert-info">
+                    {{ session('info') }}
+                </div>
+                @endif
                 <div class="row no-gutters">
                     <div class="col-md-4">
                         <img src="/storage/{{$usuario->imagen}}" class="card-img rounded-circle" alt="foto">
@@ -21,8 +26,10 @@
                             <h5 class="card-title">Estás registrado como:
                                 {{ $usuario->roles->pluck('nombre')->implode(', ') }}</h5>
                             <hr>
+                            @if (auth()->user()->isSuperAdmin())
                             <a class="btn btn-success" href="{{ route('usuarios.edit', $usuario->id) }}"
                                 role="button">Editar</a>
+                            @endif
                             <p class="card-text"> <strong>Nombre:</strong> {{ $usuario->nombreCompleto }}</p>
 
                             <p class="card-text"><strong>CI:</strong> {{ $usuario->ci }}</p>
@@ -80,11 +87,6 @@
                                     @endif
                                 </div>
                             </div>
-                            {{-- @endif --}}
-                            {{-- @endforeach --}}
-                            {{-- @if ($usuario->roles)
-
-                        @endif --}}
 
                         </div>
                     </div>

@@ -42,7 +42,7 @@ class HorarioController extends Controller
         $dias = $this->dias;
 
         if ($medico->tieneRol(['paciente'])) {
-            return redirect()->route('usuarios.show',['usuario' => $medico])->with('status','Un paciente no puede registrar su horario.');
+            return redirect()->route('usuarios.show',['usuario' => $medico])->with('info','Un paciente no puede registrar su horario.');
         }
 
         $horario_tm = $this->getHoras('07:00:00', '12:00:00');
@@ -58,7 +58,6 @@ class HorarioController extends Controller
         $sucursales = Sucursal::get(['id','nombre']);
 
         $especialidades = $medico->especialidades()->get(['especialidads.id','especialidads.nombre']);
-
         return view('horarios.edit', compact('dias', 'medico', 'horario_tm', 'horario_tt', 'sucursales', 'especialidades', 'horarios_medico'));
     }
 

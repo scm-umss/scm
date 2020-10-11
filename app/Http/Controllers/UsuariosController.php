@@ -17,7 +17,7 @@ class UsuariosController extends Controller
 {
     public function __construct()
     {
-        $this->middleware(['auth', 'admin'])->except(['show','create','edit','update']);
+        $this->middleware(['auth', 'admin'])->except(['show']);
     }
     /**
      * Display a listing of the resource.

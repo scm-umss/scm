@@ -28,18 +28,27 @@ $factory->define(Rol::class, function (Faker $faker) {
 });
 
 $factory->define(User::class, function (Faker $faker) {
+    $fecha = $faker->dateTimeBetween('-30 years', 'now');
+    $fecha_nacimiento = $fecha->format('Y-m-d');
     return [
         'ap_paterno' => $faker->lastName,
         'ap_materno' => $faker->lastName,
         'nombre' => $faker->firstName,
         'ci' => $faker->randomNumber(8),
-        'fecha_nacimiento' => '1980-01-01',
+        'fecha_nacimiento' => $fecha_nacimiento,
         'telefono' => $faker->phoneNumber,
         'email' => $faker->unique()->safeEmail,
         'email_verified_at' => now(),
         'password' => '$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi', // password
         // 'rol' => $faker->randomElement($array = array ('admin','medico','paciente')),
-        //'estado' => $faker->randomElement($array = array ('a','i')),
+        'matricula' => function (array $user) {
+            $iNombre = Str::slug($user['nombre']);
+            $iPaterno = Str::slug($user['ap_paterno']);
+            $iMaterno = Str::slug($user['ap_materno']);
+            $fNacimiento = str_replace('-','',$user['fecha_nacimiento']);
+            return strtoupper(substr($iNombre,0,1) . substr($iPaterno,0,1) . substr($iMaterno,0,1)).'-'.$fNacimiento;
+            // return $user['nombre'].$user['ap_paterno'].$user['ap_materno'];
+        },
         'remember_token' => Str::random(10),
         //'roles' => factory(Rol::class),
     ];
