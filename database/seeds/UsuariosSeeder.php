@@ -103,7 +103,7 @@ class UsuariosSeeder extends Seeder
         $admin->especialidades()->sync([$traumatologia->id, $psicologia->id]);
         $medico->especialidades()->sync([$traumatologia->id, $psicologia->id]);
 
-        $medicos_ex = factory(App\User::class, 60)->create();
+        $medicos_ex = factory(App\User::class, 20)->create();
         $medicos_ex->each(function ($user) use ($rolMedico, $traumatologia, $psicologia) {
             $user->roles()->sync([$rolMedico->id]);
             if (mt_rand(1,100) > 50) {
@@ -113,11 +113,12 @@ class UsuariosSeeder extends Seeder
             }
         });
 
-        $pacientes_ex = factory(App\User::class, 20)->create();
+        $pacientes_ex = factory(App\User::class, 60)->create();
         $pacientes_ex->each(function ($user) use ($rolPaciente) {
             $user->roles()->sync([$rolPaciente->id]);
         });
 
+        // Horario por default
         for ($i = 0; $i < 7; $i++) {
             $tm_activo = ($i < 6);  // Lun-Vie
             $tt_activo = ($i < 5);
@@ -139,6 +140,30 @@ class UsuariosSeeder extends Seeder
                 'user_id' => $medico->id,
             ]);
         }
+
+        $medicos_ex->each(function ($medico_ex) use ($sucursal1, $sucursal2, $traumatologia, $psicologia) {
+            for ($i = 0; $i < 7; $i++) {
+                $tm_activo = ($i < 6);  // Lun-Vie
+                $tt_activo = ($i < 5);
+    
+                $horario = Horario::create([
+                    'dia' => $i,
+                    'tm_activo' => $tm_activo,
+                    'tm_hora_inicio' => ($tm_activo ? '08:00:00' : '07:00:00'),
+                    'tm_hora_fin' => ($tm_activo ? '11:00:00' : '12:00:00'),
+                    'tm_sucursal' => $sucursal1->id,
+                    'tm_especialidad' => $traumatologia->id,
+                    'tm_consultorio' => '101',
+                    'tt_activo' => $tt_activo,
+                    'tt_hora_inicio' => ($tt_activo ? '15:00:00' : '14:00:00'),
+                    'tt_hora_fin' => ($tt_activo ? '17:00:00' : '18:00:00'),
+                    'tt_sucursal' => $sucursal2->id,
+                    'tt_especialidad' => $psicologia->id,
+                    'tt_consultorio' => '201',
+                    'user_id' => $medico_ex->id,
+                ]);
+            }
+        });
 
         $cita = Cita::create([
             'estado' => 'Reservada',
