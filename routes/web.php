@@ -26,14 +26,14 @@ Route::get('/home', 'HomeController@index')->name('home');
 // Rutas para especialidades
 Route::get('/especialidad/inactivos', 'EspecialidadController@inactivos')->name('especialidad.inactivos');
 Route::get('/especialidad/restore/{id}', 'EspecialidadController@restore')->name('especialidad.restore');
-Route::resource('/especialidad','EspecialidadController')->names('especialidad');
+Route::resource('/especialidad', 'EspecialidadController')->names('especialidad');
 
 // Rutas para usuarios
-Route::get('/usuarios/inactivos','UsuariosController@inactivos')->name('usuarios.inactivos');
-Route::get('/usuarios/restore/{id}','UsuariosController@restore')->name('usuarios.restore');
+Route::get('/usuarios/inactivos', 'UsuariosController@inactivos')->name('usuarios.inactivos');
+Route::get('/usuarios/restore/{id}', 'UsuariosController@restore')->name('usuarios.restore');
 // Route::get('/usuarios/destroy/{id}','UsuariosController@destroy')->name('usuarios.destroy');
 
-Route::resource('/usuarios','UsuariosController')->names('usuarios');
+Route::resource('/usuarios', 'UsuariosController')->names('usuarios');
 
 Route::get('/roles', 'RolController@index');
 
@@ -63,9 +63,11 @@ Route::get('/especialidad/{especialidad}/medicosjson', 'DatosController@getMedic
 Route::get('/horasmedico', 'DatosController@horasMedico');
 
 Route::get('/citas/{paciente}/agendar', 'CitaController@agendarCita')->name('citas.agendar');
-// Route::get('/citas/{paciente}/edit', 'CitaController@edit')->name('citas.edit');
-// Route::get('/admin/citas', 'Admin\CitaController@index')->name('admin.citas.index');
+
+//Route::get('/citas/{paciente}/edit', 'CitaController@edit')->name('citas.edit');
+Route::get('/admin/citas', 'Admin\CitaController@index')->name('admin.citas.index');
 // Route::get('/admin/citas/create', 'Admin\CitaController@create')->name('admin.citas.create');
+
 /** Gestion de citas cliente */
 Route::post('/citas/{cita}/confirmar', 'CitaController@postConfirmar')->name('citas.confirmar');
 Route::post('/citas/{cita}/cancelar', 'CitaController@postCancelar')->name('citas.cancelar');
@@ -74,7 +76,3 @@ Route::resource('/citas', 'CitaController')->names('citas');
 Route::get('/especialidad/{especialidad}/medicos', 'CitaController@getMedicos')->name('citas.medicos');
 // Vista para listar horario por medico
 Route::get('/horario/{medico}/medico/{especialidad}', 'CitaController@horario')->name('citas.horario');
-
-
-
-
