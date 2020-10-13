@@ -176,11 +176,18 @@ class UsuariosSeeder extends Seeder
             'hora_programada' => '09:00:00',
         ]);
 
-        factory(App\Cita::class, 30)->create([
-            'paciente_id' => $pacientes_ex->random()->id,
-            'medico_id' => $medicos_ex->random()->id,
+        $citas_ex = factory(App\Cita::class, 30)->create([
+            'paciente_id' => $paciente->id,
+            'medico_id' => $medico->id,
             'especialidad_id' => $traumatologia->id,
             'sucursal_id' => $sucursal1->id,
         ]);
+
+        $citas_ex->each(function($cita_ex) use ($pacientes_ex, $medicos_ex, $traumatologia, $sucursal1) {
+            $cita_ex->paciente_id = $pacientes_ex->random()->id;
+            $cita_ex->medico_id = $medicos_ex->random()->id;
+            //$cita_ex->especialidad_id = $traumatologia->id;
+            //$cita_ex->sucursal_id = $sucursal1->id;
+        });
     }
 }
