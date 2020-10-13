@@ -103,32 +103,36 @@ class UsuariosSeeder extends Seeder
         $admin->especialidades()->sync([$traumatologia->id, $psicologia->id]);
         $medico->especialidades()->sync([$traumatologia->id, $psicologia->id]);
 
-        $pacientes_ex = factory(App\User::class, 50)->create();
-        $pacientes_ex->each(function ($user) use ($rolMedico, $rolPaciente, $traumatologia, $psicologia) {
-            if (mt_rand(1,100) > 80) {
-                $user->roles()->sync([$rolMedico->id]);
-                if (mt_rand(1,100) > 50) {
-                    $user->especialidades()->sync([$traumatologia->id]);
-                } else {
-                    $user->especialidades()->sync([$psicologia->id]);
-                }
+        $medicos_ex = factory(App\User::class, 60)->create();
+        $medicos_ex->each(function ($user) use ($rolMedico, $traumatologia, $psicologia) {
+            $user->roles()->sync([$rolMedico->id]);
+            if (mt_rand(1,100) > 50) {
+                $user->especialidades()->sync([$traumatologia->id]);
             } else {
-                $user->roles()->sync([$rolPaciente->id]);
+                $user->especialidades()->sync([$psicologia->id]);
             }
         });
 
-        for ($i=0; $i<=6; $i++) {
+        $pacientes_ex = factory(App\User::class, 20)->create();
+        $pacientes_ex->each(function ($user) use ($rolPaciente) {
+            $user->roles()->sync([$rolPaciente->id]);
+        });
+
+        for ($i = 0; $i < 7; $i++) {
+            $tm_activo = ($i < 6);  // Lun-Vie
+            $tt_activo = ($i < 5);
+
             $horario = Horario::create([
                 'dia' => $i,
-                'tm_activo' => ($i == 1),
-                'tm_hora_inicio' => ($i==1 ? '08:00:00' : '07:00:00'),
-                'tm_hora_fin' => ($i==1 ? '10:30:00' : '07:00:00'),
+                'tm_activo' => $tm_activo,
+                'tm_hora_inicio' => ($tm_activo ? '08:00:00' : '07:00:00'),
+                'tm_hora_fin' => ($tm_activo ? '10:30:00' : '12:00:00'),
                 'tm_sucursal' => $sucursal1->id,
                 'tm_especialidad' => $traumatologia->id,
                 'tm_consultorio' => '101',
-                'tt_activo' => ($i == 3),
-                'tt_hora_inicio' => ($i == 3 ? '15:00:00' : '14:00:00'),
-                'tt_hora_fin' => ($i == 3 ? '17:00:00' : '14:00:00'),
+                'tt_activo' => $tt_activo,
+                'tt_hora_inicio' => ($tt_activo ? '15:00:00' : '14:00:00'),
+                'tt_hora_fin' => ($tt_activo ? '17:00:00' : '18:00:00'),
                 'tt_sucursal' => $sucursal2->id,
                 'tt_especialidad' => $psicologia->id,
                 'tt_consultorio' => '201',
@@ -149,7 +153,7 @@ class UsuariosSeeder extends Seeder
 
         factory(App\Cita::class, 30)->create([
             'paciente_id' => $pacientes_ex->random()->id,
-            'medico_id' => $medico->id,
+            'medico_id' => $medicos_ex->random()->id,
             'especialidad_id' => $traumatologia->id,
             'sucursal_id' => $sucursal1->id,
         ]);

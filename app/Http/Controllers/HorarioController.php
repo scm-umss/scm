@@ -13,13 +13,13 @@ use Monolog\Handler\PushoverHandler;
 class HorarioController extends Controller
 {
     private $dias = [
-        0 => 'Domingo',
-        1 => 'Lunes',
-        2 => 'Martes',
-        3 => 'Miércoles',
-        4 => 'Jueves',
-        5 => 'Viernes',
-        6 => 'Sábado',
+        0 => 'Lunes',
+        1 => 'Martes',
+        2 => 'Miércoles',
+        3 => 'Jueves',
+        4 => 'Viernes',
+        5 => 'Sábado',
+        6 => 'Domingo',
     ];
 
     public function __construct()
@@ -54,6 +54,14 @@ class HorarioController extends Controller
                 $horarios_medico->push(new Horario());
             }
         }
+
+        // for ($i=0; $i < 7; $i++) { 
+        //     if(!isset($i, $horarios_medico)) {
+        //         $horarios_medico[$i] = new Horario();
+        //     }
+        // }
+
+        //dd($horarios_medico);
 
         $sucursales = Sucursal::get(['id','nombre']);
 
