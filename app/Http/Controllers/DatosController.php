@@ -40,7 +40,12 @@ class DatosController extends Controller
         $medico = $request->id;
         // $medico = User::where('id', 2)->get(['id','nombre','ap_paterno','ap_materno']);
         $fecha = new Carbon($request->fecha);
-        $dia = $fecha->dayOfWeek;
+        // for ($i=0; $i <7 ; $i++) {
+        //     if($i == 0){
+
+        //     }
+        // }
+        $dia = ($fecha->dayOfWeek+6)%7;
         // dd($f_carbon->dayOfWeek);
         // $medico = User::findOrFail($request->id);
         // $tm_horario = $medico->horarios()->where('tm_activo',1)->where('dia',1)->get();

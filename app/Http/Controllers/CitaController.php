@@ -28,29 +28,49 @@ class CitaController extends Controller
         $rol = auth()->user()->roles[0]->slug;
         // dd($rol);
         if($rol == 'admin'){
-            $citas_pendientes = Cita::where('estado', 'Reservada')->paginate(10);
-            $citas_confirmadas = Cita::where('estado', 'Confirmada')->paginate(10);
+            $citas_pendientes = Cita::where('estado', 'Reservada')
+                                ->orderBy('fecha_programada','ASC')
+                                ->orderBy('hora_programada','ASC')
+                                ->paginate(10);
+            $citas_confirmadas = Cita::where('estado', 'Confirmada')
+                                ->orderBy('fecha_programada','ASC')
+                                ->orderBy('hora_programada','ASC')
+                                ->paginate(10);
             // $citas_atendidas = Cita::where('estado', 'Atendida')->paginate(10);
-            $historial_citas = Cita::whereIn('estado', ['Atendida', 'Cancelada'])->paginate(10);
+            $historial_citas = Cita::whereIn('estado', ['Atendida', 'Cancelada'])
+                                ->orderBy('fecha_programada','DESC')
+                                ->orderBy('hora_programada','DESC')
+                                ->paginate(10);
         }elseif($rol == 'medico'){
             $citas_pendientes = Cita::where('estado', 'Reservada')
                                 ->where('medico_id', auth()->id())
+                                ->orderBy('fecha_programada','ASC')
+                                ->orderBy('hora_programada','ASC')
                                 ->paginate(10);
             $citas_confirmadas = Cita::where('estado', 'Confirmada')
                                 ->where('medico_id', auth()->id())
+                                ->orderBy('fecha_programada','ASC')
+                                ->orderBy('hora_programada','ASC')
                                 ->paginate(10);
             $historial_citas = Cita::whereIn('estado', ['Atendida', 'Cancelada'])
                             ->where('medico_id', auth()->id())
+                            ->orderBy('fecha_programada','DESC')
+                            ->orderBy('hora_programada','DESC')
                             ->paginate(10);
         }elseif($rol == 'paciente'){
             $citas_pendientes = Cita::where('estado', 'Reservada')
                                 ->where('paciente_id', auth()->id())
+                                ->orderBy('fecha_programada','ASC')
                                 ->paginate(10);
             $citas_confirmadas = Cita::where('estado', 'Confirmada')
                                 ->where('paciente_id', auth()->id())
+                                ->orderBy('fecha_programada','ASC')
+                                ->orderBy('hora_programada','ASC')
                                 ->paginate(10);
             $historial_citas = Cita::whereIn('estado', ['Atendida', 'Cancelada'])
                             ->where('paciente_id', auth()->id())
+                            ->orderBy('fecha_programada','DESC')
+                            ->orderBy('hora_programada','DESC')
                             ->paginate(10);
             // return view('citas.index', compact('citas_pendientes','citas_confirmadas','historial_citas','rol'));
         }
@@ -107,6 +127,11 @@ class CitaController extends Controller
             $cita->hora_programada = $request->get('hora_programada');
             $cita->numero_ficha = $ficha+1;
             $cita->save();
+            $cita->citaHistorials()->create([
+                'cita_id' => $cita->id,
+                'user_id' => auth()->user()->id,
+                'evento' => 'Creado'
+            ]);
             return 'Cita registrada exitosamente!';
         }else{
             // return 'Ya tiene cita en el día';
@@ -175,6 +200,11 @@ class CitaController extends Controller
         $cita->fecha_programada = $fecha;
         $cita->hora_programada = $request['params']['hora_programada'];
         $cita->save();
+        $cita->citaHistorials()->create([
+            'cita_id' => $cita->id,
+            'user_id' => auth()->user()->id,
+            'evento' => 'Modificado'
+        ]);
         return "Cita actualizada exitosamente.";
     }
     // todos
@@ -182,6 +212,11 @@ class CitaController extends Controller
         // dd($cita);
         $cita->estado = 'Cancelada';
         $cita->save();
+        $cita->citaHistorials()->create([
+            'cita_id' => $cita->id,
+            'user_id' => auth()->user()->id,
+            'evento' => 'Cancelado'
+        ]);
         return redirect('citas');
     }
     // admin o medico
@@ -189,6 +224,11 @@ class CitaController extends Controller
         // dd($cita);
         $cita->estado = 'Confirmada';
         $cita->save();
+        $cita->citaHistorials()->create([
+            'cita_id' => $cita->id,
+            'user_id' => auth()->user()->id,
+            'evento' => 'Confirmado'
+        ]);
         return redirect('citas');
     }
 

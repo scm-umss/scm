@@ -2247,7 +2247,7 @@ __webpack_require__.r(__webpack_exports__);
     rangoHabilitado: function rangoHabilitado(date) {
       var hoy = new Date();
       hoy.setHours(0, 0, 0, 0);
-      return date < hoy || date > new Date(hoy.getTime() + 30 * 24 * 3600 * 1000);
+      return date < hoy || date > new Date(hoy.getTime() + 7 * 24 * 3600 * 1000);
     },
     setFecha: function setFecha(fecha) {
       this.fecha = fecha;

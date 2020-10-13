@@ -43,4 +43,7 @@ class Cita extends Model
         $hora = new Carbon($hora);
         return $this->hora_programda = $hora->format('H:i');
     }
+    public function citaHistorials(){
+        return $this->hasMany(CitaHistorial::class);
+    }
 }

@@ -46,7 +46,7 @@ export default {
             const hoy = new Date();
             hoy.setHours(0, 0, 0, 0);
 
-            return date < hoy || date > new Date(hoy.getTime() + 30 * 24 * 3600 * 1000);
+            return date < hoy || date > new Date(hoy.getTime() + 7 * 24 * 3600 * 1000);
         },
         setFecha(fecha){
             this.fecha = fecha;
