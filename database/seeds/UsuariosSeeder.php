@@ -2,11 +2,14 @@
 
 use App\Rol;
 use App\Cita;
+use App\CitaHistorial;
 use App\User;
 use App\Sucursal;
 use Carbon\Carbon;
 use App\Especialidad;
 use App\Horario;
+use Faker\Generator;
+use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\Hash;
 
@@ -19,7 +22,7 @@ class UsuariosSeeder extends Seeder
      */
     public function run()
     {
-        //$faker = Faker\Factory::create();
+        $faker = Faker\Factory::create();
         // User::truncate();
         // Rol::truncate();
 
@@ -176,18 +179,47 @@ class UsuariosSeeder extends Seeder
             'hora_programada' => '09:00:00',
         ]);
 
-        $citas_ex = factory(App\Cita::class, 30)->create([
-            'paciente_id' => $paciente->id,
-            'medico_id' => $medico->id,
-            'especialidad_id' => $traumatologia->id,
-            'sucursal_id' => $sucursal1->id,
-        ]);
+        // Crear 10 citas por dia para pacientes y medicos aleatorios
+        // todos con la misma especialidad y sucursal para una semana
+        $fecha = Carbon::now()->addDay(1);
+        $citas_ex = collect();
 
-        $citas_ex->each(function($cita_ex) use ($pacientes_ex, $medicos_ex, $traumatologia, $sucursal1) {
-            $cita_ex->paciente_id = $pacientes_ex->random()->id;
-            $cita_ex->medico_id = $medicos_ex->random()->id;
-            //$cita_ex->especialidad_id = $traumatologia->id;
-            //$cita_ex->sucursal_id = $sucursal1->id;
-        });
+        for ($i = 0; $i < 7; $i++) {
+            $c = factory(App\Cita::class, 4)->create([
+                'paciente_id' => $paciente->id,
+                'medico_id' => $medico->id,
+                'especialidad_id' => $traumatologia->id,
+                'sucursal_id' => $sucursal1->id,
+                'fecha_programada' => $fecha->format('Y-m-d'),
+            ]);
+
+            $c->each(function($cita_ex) use ($pacientes_ex, $admin, $faker) {
+                $cita_ex->paciente_id = $pacientes_ex->random()->id;
+                //$cita_ex->medico_id = $medicos_ex->random()->id;
+                //$cita_ex->especialidad_id = $traumatologia->id;
+                //$cita_ex->sucursal_id = $sucursal1->id;
+                $cita_ex->hora_programada = $faker->unique()->randomElement(['08:00:00','08:30:00','09:00:00','09:30:00','10:00:00','10:30:00']);
+
+                $historialCreado = CitaHistorial::create([
+                    'cita_id' => $cita_ex->id,
+                    'user_id' => $admin->id,
+                    'evento' => 'Creado',
+                ]);
+
+                if ($cita_ex->estado == 'Cancelado') {
+                    $historialCancelado = CitaHistorial::create([
+                        'cita_id' => $cita_ex->id,
+                        'user_id' => $admin->id,
+                        'evento' => 'Cancelado',
+                        'descripcion' => $faker->realText($maxNbChars = 100),
+                    ]);
+                }
+            });
+
+            $citas_ex = $citas_ex->concat($c);
+
+            $faker->unique($reset = true);
+            $fecha->addDay(1);
+        }
     }
 }
