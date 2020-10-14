@@ -1,3 +1,8 @@
+@extends('citas.index')
+
+@section('cabecera','Citas Pendientes')
+
+@section('citas')
 <div class="table-responsive">
     <table class="table table-striped">
         <thead>
@@ -18,7 +23,7 @@
         <tbody>
             @foreach ($citas_pendientes as $cita)
                 <tr>
-                    <td>{{ $cita->fecha_programada }}</td>
+                    <td>{{ $cita->fecha_programada->format('d-m-Y') }}</td>
                     <td>{{ $cita->hora_programada }}</td>
                     <td>{{ $cita->especialidad->nombre }}</td>
                     @if ($rol == 'paciente')
@@ -27,19 +32,19 @@
                         <td>{{ $cita->paciente->nombre }}</td>
                     @endif
                     <td>{{ $cita->sucursal->nombre }}</td>
-                    <td>
+                    <td class="d-flex">
                         @if ($rol == 'admin')
-                          <a class="btn btn-sm btn-primary" href="{{ route('citas.show', $cita->id) }}">
+                          <a class="btn btn-sm btn-primary mr-2" href="{{ route('citas.show', $cita->id) }}">
                               Ver
                           </a>
-                          <a class="btn btn-sm btn-secondary" href="{{ route('citas.edit', $cita->id) }}">
+                          <a class="btn btn-sm btn-secondary mr-2" href="{{ route('citas.edit', $cita->id) }}">
                               Editar
                           </a>
                         @endif
 
                         @if ($rol == 'medico' || $rol == 'admin')
                           <form action="{{ route('citas.confirmar',$cita->id) }}"
-                            method="POST" class="d-inline-block">
+                            method="POST" class="d-inline-block mr-2">
                             @csrf
 
                             <button class="btn btn-sm btn-success" type="submit">
@@ -48,14 +53,7 @@
                           </form>
                         @endif
 
-                        <form action="{{ route('citas.cancelar', $cita->id) }}"
-                          method="POST" class="d-inline-block">
-                          @csrf
-
-                          <button class="btn btn-sm btn-danger" type="submit">
-                            Cancelar
-                          </button>
-                        </form>
+                        <cancelar-cita cita-id="{{ $cita->id }}" />
                       </td>
                 </tr>
             @endforeach
@@ -63,3 +61,4 @@
     </table>
     {{ $citas_pendientes->links() }}
 </div>
+@endsection

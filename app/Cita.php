@@ -18,6 +18,9 @@ class Cita extends Model
         'especialidad_id',
     ];
 
+    protected $dates =[
+        'fecha_programada'
+    ];
     protected $casts = [
         'hora_programada' => 'time:H:i',
     ];

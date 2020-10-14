@@ -69,6 +69,11 @@ Route::get('/admin/citas', 'Admin\CitaController@index')->name('admin.citas.inde
 // Route::get('/admin/citas/create', 'Admin\CitaController@create')->name('admin.citas.create');
 
 /** Gestion de citas cliente */
+
+Route::get('/citas/pendientes', 'CitaController@pendientes')->name('citas.pendientes');
+Route::get('/citas/confirmadas', 'CitaController@confirmadas')->name('citas.confirmadas');
+Route::get('/citas/historial', 'CitaController@historial')->name('citas.historial');
+
 Route::post('/citas/{cita}/confirmar', 'CitaController@postConfirmar')->name('citas.confirmar');
 Route::post('/citas/{cita}/cancelar', 'CitaController@postCancelar')->name('citas.cancelar');
 Route::resource('/citas', 'CitaController')->names('citas');

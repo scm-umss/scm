@@ -1,3 +1,8 @@
+@extends('citas.index')
+
+@section('cabecera','Citas Confirmadas')
+
+@section('citas')
 <div class="table-responsive">
     @if ($citas_confirmadas->count())
 
@@ -19,7 +24,7 @@
         <tbody>
             @foreach ($citas_confirmadas as $cita)
             <tr>
-                <td>{{ $cita->fecha_programada }}</td>
+                <td>{{ $cita->fecha_programada->format('d-m-Y') }}</td>
                 <td>{{ $cita->hora_programada }}</td>
                 <td>{{ $cita->especialidad->nombre }}</td>
                 @if ($rol == 'paciente')
@@ -27,19 +32,13 @@
                 @elseif ($rol == 'medico')
                     <td>{{ $cita->paciente->nombre }}</td>
                 @endif
-                <td>
+                <td class="d-flex">
                     @if ($rol == 'admin')
-                    <a class="btn btn-sm btn-primary" href="{{ route('citas.show', $cita->id) }}">
+                    <a class="btn btn-sm btn-primary mr-2" href="{{ route('citas.show', $cita->id) }}">
                         Ver cita
                     </a>
                     @endif
-                    <form action="{{ route('citas.cancelar', $cita->id) }}" method="POST" class="d-inline-block">
-                        @csrf
-
-                        <button class="btn btn-sm btn-danger" type="submit">
-                            Cancelar
-                        </button>
-                    </form>
+                    <cancelar-cita cita-id="{{ $cita->id }}" />
                 </td>
             </tr>
             @endforeach
@@ -50,3 +49,5 @@
     <p>Aún no tiene citas confirmadas</p>
     @endif
 </div>
+
+@endsection

@@ -61,20 +61,21 @@
                             @endif
 
 
-                            @if (auth()->user()->tieneRol(['paciente']))
-                            <li class="nav-item">
-                                <a href="{{ route('citas.index', auth()->user()->id) }}" class="nav-link" >Citas</a>
-                            </li>
-                            @endif
 
-                            @if (auth()->user()->tieneRol(['admin']))
-                            <li class="nav-item">
-                                <a href="{{ route('citas.index') }}" class="nav-link">Citas</a>
+                            <li class="nav-item dropdown">
+                                <a id="navbarDropdown" class="nav-link dropdown-toggle" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
+                                    Citas <span class="caret"></span>
+                                </a>
+
+                                <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
+                                    <a class="dropdown-item" href="{{ route('citas.pendientes') }}">Citas Pendientes</a>
+                                    <a class="dropdown-item" href="{{ route('citas.confirmadas') }}">Citas próximas</a>
+                                    <a class="dropdown-item" href="{{ route('citas.historial') }}">Historial de citas</a>
+
+                                </div>
                             </li>
-                            @endif
 
                         </ul>
-
                     @endauth
 
 

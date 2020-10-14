@@ -1,3 +1,6 @@
+@extends('citas.index')
+@section('cabecera','Historial de citas')
+@section('citas')
 <div class="table-responsive">
     @if ($historial_citas->count())
     <table class="table table-striped">
@@ -14,7 +17,7 @@
         <tbody>
             @foreach ($historial_citas as $cita)
                 <tr>
-                    <td>{{ $cita->fecha_programada }}</td>
+                    <td>{{ $cita->fecha_programada->format('d-m-Y') }}</td>
                     <td>{{ $cita->hora_programada }}</td>
                     <td>{{ $cita->especialidad->nombre }}</td>
                     <td>{{ $cita->estado }}</td>
@@ -32,3 +35,4 @@
         <p>Aun no tiene historial de citas</p>
     @endif
 </div>
+@endsection

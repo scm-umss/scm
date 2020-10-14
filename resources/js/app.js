@@ -29,6 +29,7 @@ Vue.component('crear-cita', require('./components/CrearCita.vue').default);
 Vue.component('editar-cita', require('./components/EditarCita.vue').default);
 Vue.component('fecha-component', require('./components/FechaComponent.vue').default);
 Vue.component('cita-paciente', require('./components/CitaPaciente.vue').default);
+Vue.component('cancelar-cita', require('./components/CancelarCita.vue').default);
 
 /**
  * Next, we will create a fresh Vue application instance and attach it to

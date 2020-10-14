@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Cita;
+use App\CitaHistorial;
 use App\User;
 use App\Horario;
 use Carbon\Carbon;
@@ -25,56 +26,128 @@ class CitaController extends Controller
      */
     public function index()
     {
+        // $rol = auth()->user()->roles[0]->slug;
+        // // dd($rol);
+        // if($rol == 'admin'){
+        //     $citas_pendientes = Cita::where('estado', 'Reservada')
+        //                         ->orderBy('fecha_programada','ASC')
+        //                         ->orderBy('hora_programada','ASC')
+        //                         ->paginate(10);
+        //     // return view('citas.index', compact('citas_pendientes','citas_confirmadas','historial_citas','rol'));
+        //     $citas_confirmadas = Cita::where('estado', 'Confirmada')
+        //                         ->orderBy('fecha_programada','ASC')
+        //                         ->orderBy('hora_programada','ASC')
+        //                         ->paginate(10);
+        //     // $citas_atendidas = Cita::where('estado', 'Atendida')->paginate(10);
+        //     $historial_citas = Cita::whereIn('estado', ['Atendida', 'Cancelada'])
+        //                         ->orderBy('fecha_programada','DESC')
+        //                         ->orderBy('hora_programada','DESC')
+        //                         ->paginate(10);
+        // }elseif($rol == 'medico'){
+        //     $citas_pendientes = Cita::where('estado', 'Reservada')
+        //                         ->where('medico_id', auth()->id())
+        //                         ->orderBy('fecha_programada','ASC')
+        //                         ->orderBy('hora_programada','ASC')
+        //                         ->paginate(10);
+        //     $citas_confirmadas = Cita::where('estado', 'Confirmada')
+        //                         ->where('medico_id', auth()->id())
+        //                         ->orderBy('fecha_programada','ASC')
+        //                         ->orderBy('hora_programada','ASC')
+        //                         ->paginate(10);
+        //     $historial_citas = Cita::whereIn('estado', ['Atendida', 'Cancelada'])
+        //                     ->where('medico_id', auth()->id())
+        //                     ->orderBy('fecha_programada','DESC')
+        //                     ->orderBy('hora_programada','DESC')
+        //                     ->paginate(10);
+        // }elseif($rol == 'paciente'){
+        //     $citas_pendientes = Cita::where('estado', 'Reservada')
+        //                         ->where('paciente_id', auth()->id())
+        //                         ->orderBy('fecha_programada','ASC')
+        //                         ->paginate(10);
+        //     $citas_confirmadas = Cita::where('estado', 'Confirmada')
+        //                         ->where('paciente_id', auth()->id())
+        //                         ->orderBy('fecha_programada','ASC')
+        //                         ->orderBy('hora_programada','ASC')
+        //                         ->paginate(10);
+        //     $historial_citas = Cita::whereIn('estado', ['Atendida', 'Cancelada'])
+        //                     ->where('paciente_id', auth()->id())
+        //                     ->orderBy('fecha_programada','DESC')
+        //                     ->orderBy('hora_programada','DESC')
+        //                     ->paginate(10);
+        //     // return view('citas.index', compact('citas_pendientes','citas_confirmadas','historial_citas','rol'));
+        // }
+        return view('citas.pendientes');
+    }
+    public function pendientes(){
         $rol = auth()->user()->roles[0]->slug;
-        // dd($rol);
         if($rol == 'admin'){
             $citas_pendientes = Cita::where('estado', 'Reservada')
                                 ->orderBy('fecha_programada','ASC')
                                 ->orderBy('hora_programada','ASC')
                                 ->paginate(10);
-            $citas_confirmadas = Cita::where('estado', 'Confirmada')
-                                ->orderBy('fecha_programada','ASC')
-                                ->orderBy('hora_programada','ASC')
-                                ->paginate(10);
-            // $citas_atendidas = Cita::where('estado', 'Atendida')->paginate(10);
-            $historial_citas = Cita::whereIn('estado', ['Atendida', 'Cancelada'])
-                                ->orderBy('fecha_programada','DESC')
-                                ->orderBy('hora_programada','DESC')
-                                ->paginate(10);
+
         }elseif($rol == 'medico'){
             $citas_pendientes = Cita::where('estado', 'Reservada')
                                 ->where('medico_id', auth()->id())
                                 ->orderBy('fecha_programada','ASC')
                                 ->orderBy('hora_programada','ASC')
                                 ->paginate(10);
+
+        }elseif($rol == 'paciente'){
+            $citas_pendientes = Cita::where('estado', 'Reservada')
+                                ->where('paciente_id', auth()->id())
+                                ->orderBy('fecha_programada','ASC')
+                                ->paginate(10);
+
+            // return view('citas.index', compact('citas_pendientes','citas_confirmadas','historial_citas','rol'));
+        }
+        return view('citas.tablas.pendiente', compact('citas_pendientes','rol'));
+    }
+    public function confirmadas(){
+        $rol = auth()->user()->roles[0]->slug;
+        // dd($rol);
+        if($rol == 'admin'){
+            $citas_confirmadas = Cita::where('estado', 'Confirmada')
+                                ->orderBy('fecha_programada','ASC')
+                                ->orderBy('hora_programada','ASC')
+                                ->paginate(10);
+        }elseif($rol == 'medico'){
             $citas_confirmadas = Cita::where('estado', 'Confirmada')
                                 ->where('medico_id', auth()->id())
                                 ->orderBy('fecha_programada','ASC')
                                 ->orderBy('hora_programada','ASC')
                                 ->paginate(10);
+        }elseif($rol == 'paciente'){
+            $citas_confirmadas = Cita::where('estado', 'Confirmada')
+                                ->where('paciente_id', auth()->id())
+                                ->orderBy('fecha_programada','ASC')
+                                ->orderBy('hora_programada','ASC')
+                                ->paginate(10);
+        }
+        return view('citas.tablas.confirmada', compact('citas_confirmadas','rol'));
+    }
+    public function historial(){
+        $rol = auth()->user()->roles[0]->slug;
+        // dd($rol);
+        if($rol == 'admin'){
+            $historial_citas = Cita::whereIn('estado', ['Atendida', 'Cancelada'])
+                                ->orderBy('fecha_programada','DESC')
+                                ->orderBy('hora_programada','DESC')
+                                ->paginate(10);
+        }elseif($rol == 'medico'){
             $historial_citas = Cita::whereIn('estado', ['Atendida', 'Cancelada'])
                             ->where('medico_id', auth()->id())
                             ->orderBy('fecha_programada','DESC')
                             ->orderBy('hora_programada','DESC')
                             ->paginate(10);
         }elseif($rol == 'paciente'){
-            $citas_pendientes = Cita::where('estado', 'Reservada')
-                                ->where('paciente_id', auth()->id())
-                                ->orderBy('fecha_programada','ASC')
-                                ->paginate(10);
-            $citas_confirmadas = Cita::where('estado', 'Confirmada')
-                                ->where('paciente_id', auth()->id())
-                                ->orderBy('fecha_programada','ASC')
-                                ->orderBy('hora_programada','ASC')
-                                ->paginate(10);
             $historial_citas = Cita::whereIn('estado', ['Atendida', 'Cancelada'])
                             ->where('paciente_id', auth()->id())
                             ->orderBy('fecha_programada','DESC')
                             ->orderBy('hora_programada','DESC')
                             ->paginate(10);
-            // return view('citas.index', compact('citas_pendientes','citas_confirmadas','historial_citas','rol'));
         }
-        return view('citas.index', compact('citas_pendientes','citas_confirmadas','historial_citas','rol'));
+        return view('citas.tablas.historial', compact('historial_citas','rol'));
     }
 
     /**
@@ -152,8 +225,12 @@ class CitaController extends Controller
      */
     public function show(Cita $cita)
     {
+        $hCancelado = CitaHistorial::where('evento', 'Cancelado')
+                                    ->where('cita_id', $cita->id)
+                                    ->first();
+
         $this->authorize('view', $cita);
-        return view('citas.show', compact('cita'));
+        return view('citas.show', compact('cita','hCancelado'));
     }
 
     /**
@@ -208,16 +285,25 @@ class CitaController extends Controller
         return "Cita actualizada exitosamente.";
     }
     // todos
-    public function postCancelar(Cita $cita){
-        // dd($cita);
-        $cita->estado = 'Cancelada';
-        $cita->save();
-        $cita->citaHistorials()->create([
-            'cita_id' => $cita->id,
-            'user_id' => auth()->user()->id,
-            'evento' => 'Cancelado'
-        ]);
-        return redirect('citas');
+    public function postCancelar(Request $request, Cita $cita){
+        if($request->ajax()){
+            if(!$request->descripcion){
+                return 'Debe completar el campo';
+            }
+            $cita->estado = 'Cancelada';
+            $cita->save();
+            $cita->citaHistorials()->create([
+                'cita_id' => $cita->id,
+                'user_id' => auth()->user()->id,
+                'evento' => 'Cancelado',
+                'descripcion' => $request->descripcion
+            ]);
+            return 'Cita cancelada!.';
+        }else{
+            return "Acceso denegado";
+        }
+
+        // return redirect('citas');
     }
     // admin o medico
     public function postConfirmar(Cita $cita){

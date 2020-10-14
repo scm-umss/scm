@@ -148,7 +148,7 @@ class UsuariosSeeder extends Seeder
             for ($i = 0; $i < 7; $i++) {
                 $tm_activo = ($i < 6);  // Lun-Vie
                 $tt_activo = ($i < 5);
-    
+
                 $horario = Horario::create([
                     'dia' => $i,
                     'tm_activo' => $tm_activo,
@@ -206,7 +206,7 @@ class UsuariosSeeder extends Seeder
                     'evento' => 'Creado',
                 ]);
 
-                if ($cita_ex->estado == 'Cancelado') {
+                if ($cita_ex->estado == 'Cancelada') {
                     $historialCancelado = CitaHistorial::create([
                         'cita_id' => $cita_ex->id,
                         'user_id' => $admin->id,

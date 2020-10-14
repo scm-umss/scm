@@ -16,8 +16,8 @@
                     <div class="card-body">
                         <h5 class="card-title"><strong>Cita del paciente:</strong> {{ $cita->paciente->nombreCompleto }}</h5>
                         <hr>
-                        <p class="card-text"><strong>Fecha:</strong> {{ $cita->fecha_programada }} </p>
-                        <p class="card-text"><strong>Hora:</strong> {{ $cita->hora_programada }} </p>
+                        <p class="card-text"><strong>Fecha de la cita:</strong> {{ $cita->fecha_programada->format('d-m-Y') }} </p>
+                        <p class="card-text"><strong>Hora de la cita:</strong> {{ $cita->hora_programada }} </p>
                         <p class="card-text"><strong>Estado:</strong>
                             @if($cita->estado == 'Cancelada')
                                 <span class="badge badge-danger">{{ $cita->estado }}</span>
@@ -35,15 +35,15 @@
                         <div class="alert alert-warning">
                             <h5><strong>Acerca de la cancelación</strong></h5>
                             <hr>
-                            <p><strong>Fecha de cancelación:</strong> XXX</p>
-                            <p><strong>Cancelado por:</strong> XXX</p>
-                            <p><strong>Justificación:</strong> XXX</p>
+                            <p><strong>Fecha de cancelación:</strong> {{ $hCancelado->created_at->format('d-m-Y H:s') }}</p>
+                            <p><strong>Cancelado por:</strong> {{ $hCancelado->user->nombreCompleto }}</p>
+                            <p><strong>Justificación:</strong> {{ $hCancelado->descripcion }}</p>
                         </div>
                         @endif
                     </div>
                 </div>
                 <div class="mb-4 text-center">
-                    <a href="{{ route('citas.index') }}" class="btn btn-danger">
+                    <a href="{{ url()->previous() }}" class="btn btn-danger">
                         Volver
                     </a>
                 </div>
