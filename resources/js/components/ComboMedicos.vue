@@ -3,8 +3,11 @@
         <div class="form-group row">
             <label for="medico" class="col-md-4 col-form-label text-md-right">Medico:</label>
             <div class="col-md-6">
+                <div v-if="medicoId">
+                    <h5><span class="badge badge-info p-2"> {{ nombreMedico}}</span></h5>
+                </div>
                 <select @change="$emit('medico-select', $event.target.value)" class="form-control">
-                    <option value="0">--Seleccionar medico--</option>
+                    <option value="">--Seleccionar medico--</option>
                     <option v-for="medico in medicos" :key="medico.id" :value="medico.id" :selected="medico.id == medicoId">{{ medico.nombre }} {{ medico.ap_paterno }} {{ medico.ap_materno }}</option>
                 </select>
             </div>
@@ -24,19 +27,18 @@ export default {
 
             // medico_seleccionado: '',
             medicos: [],
-            // fecha_seleccionada: '',
+            nombreMedico: '',
         }
     },
     methods: {
         cargarMedicos: function(id) {
-            // console.log('Leego '+ id);
-            // this.especialidad_seleccionada = this.$refs.especialidad_seleccionada.value;
-            if (id != '0') {
+            if (id != '') {
                 let urlMedicos = '/especialidad/'+id+'/medicosjson';
                 axios.get(urlMedicos)
                     .then(response => {
                         // console.log(response)
                         this.medicos = response.data;
+                        this.getNombreMedico(this.medicoId)
                     })
                     .catch(error => {
                         console.log(error);
@@ -45,9 +47,13 @@ export default {
                 this.medicos=[];
             }
         },
+        getNombreMedico: function(id) {
+            console.log('medico id: '+this.medicos);
+            const medicos = this.medicos.find(function(medico){
+                return medico.id == id;
+            });
+            this.nombreMedico = medicos.nombre +' ' + medicos.ap_paterno + ' ' + medicos.ap_materno;
+        },
     },
-    // created: function(){
-    //     this.cargarMedicos(this.especialidadId);
-    // }
 }
 </script>

@@ -76,7 +76,7 @@ class CitaController extends Controller
         //                     ->paginate(10);
         //     // return view('citas.index', compact('citas_pendientes','citas_confirmadas','historial_citas','rol'));
         // }
-        return view('citas.pendientes');
+        // return view('citas.pendientes');
     }
     public function pendientes(){
         $rol = auth()->user()->roles[0]->slug;
@@ -242,9 +242,9 @@ class CitaController extends Controller
     public function edit(Request $request, Cita $cita)
     {
         $this->authorize('update', $cita);
-        $espcialidad = Especialidad::where('id',$cita->especialidad_id)->first(['id','nombre']);
-        $medico = User::where('id',$cita->medico_id)->first(['id','nombre']);
-        $sucursal = Sucursal::where('id',$cita->sucursal_id)->first(['id','nombre']);
+        // $espcialidad = Especialidad::where('id',$cita->especialidad_id)->first(['id','nombre']);
+        // $medico = User::where('id',$cita->medico_id)->first(['id','nombre']);
+        // $sucursal = Sucursal::where('id',$cita->sucursal_id)->first(['id','nombre']);
         // dd($cita);
         // dd($cita);
         if($request->ajax()){
@@ -315,7 +315,7 @@ class CitaController extends Controller
             'user_id' => auth()->user()->id,
             'evento' => 'Confirmado'
         ]);
-        return redirect('citas');
+        return back();
     }
 
     /**

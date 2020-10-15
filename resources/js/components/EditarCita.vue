@@ -125,6 +125,7 @@ export default {
   data() {
     return {
       especialidad_seleccionada: "",
+    //   especialidad_nombre:"",
       medico_seleccionado: "",
       fecha_seleccionada: null,
       horas: [],
@@ -144,8 +145,9 @@ export default {
       axios
         .get(urlCita)
         .then((response) => {
-          console.log(response.data);
+        //   console.log('Citassss '+response.data);
           this.especialidad_seleccionada = response.data.especialidad_id;
+        //   this.especialidad_nombre = response.data.
           this.medico_seleccionado = response.data.medico_id;
           this.paciente_seleccionado = response.data.paciente_id;
           this.sucursal_seleccionado = response.data.sucursal_id;
@@ -153,6 +155,8 @@ export default {
           this.hora_seleccionada = response.data.hora_programada;
           this.fecha_programada = response.data.fecha_programada;
           this.hora_programada = response.data.hora_programada;
+
+        //   this.$refs.especialidadNombre.getNombreEspecialidad(this.especialidad_seleccionada);
 
           this.$refs.especialidadSeleccionada.cargarMedicos(this.especialidad_seleccionada);
           this.fechaSelect(this.fecha_seleccionada);
@@ -165,14 +169,15 @@ export default {
     },
     especialidadSelect(especialidadId) {
       this.especialidad_seleccionada = especialidadId;
+
       this.$refs.especialidadSeleccionada.cargarMedicos(especialidadId);
       this.fecha_seleccionada = null
       this.$refs.fechaSeleccionada.setFecha(this.fecha_seleccionada);
-      this.medico_seleccionado = "0";
+      this.medico_seleccionado = '';
       this.horas = [];
     },
     medicoSelect(medicoId) {
-    //   console.log("Medico id: " + medicoId);
+    //   console.log("Medico iddddd: " + medicoId);
       this.medico_seleccionado = medicoId;
       this.horas = [];
       this.cargarHoras();
@@ -299,7 +304,7 @@ export default {
         !this.fecha_seleccionada ||
         !this.hora_seleccionada ||
         this.especialidad_seleccionada === 0 ||
-        this.medico_seleccionado === 0
+        this.medico_seleccionado === ''
       ) {
         console.log("datos incompletos");
         return false;
