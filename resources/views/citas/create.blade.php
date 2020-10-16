@@ -7,7 +7,7 @@
             <div class="card shadow">
                 <div class="card-header d-flex justify-content-between">
                     <h4>Registrar Cita</h4>
-                    <a class="btn btn-danger text-white" href="#" role="button">Cancelar</a>
+                    <a class="btn btn-danger text-white" href="{{ route('citas.index') }}" role="button">Cancelar</a>
                 </div>
 
                 <div class="card-body">

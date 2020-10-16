@@ -5,11 +5,13 @@
       <legend class="text-primary">Editar cita</legend>
       <combo-especialidad
         :especialidadId="especialidad_seleccionada"
+        :formulario="evento"
         @especialidad-select="especialidadSelect"
       />
       <combo-medicos
         :especialidadId="especialidad_seleccionada"
         :medicoId="medico_seleccionado"
+        :formulario="evento"
         ref="especialidadSeleccionada"
         @medico-select="medicoSelect"
       />
@@ -22,17 +24,17 @@
         <div class="row row-cols-2">
             <div class="col">
                 <div class="alert alert-info" role="alert">
-                    Fecha programada: {{ fecha_programada }}
+                    <strong>Fecha programada:</strong> {{ fecha_programada.substr(0,10) }}
                 </div>
             </div>
             <div class="col">
                 <div class="alert alert-info" role="alert">
-                    Hora Programada: {{ hora_programada.substr(0,5) }}
+                    <strong>Hora Programada:</strong> {{ hora_programada.substr(0,5) }}
                 </div>
             </div>
         </div>
         <div class="alert alert-warning" role="alert">
-            <h5>Para cambiar la cita, seleccione lo requerido</h5>
+            <h5>Para cambiar la cita, seleccione la fecha y hora!.</h5>
         </div>
       </div>
     </fieldset>
@@ -136,6 +138,7 @@ export default {
       sucursal_seleccionado:"",
       hora_programada: "",
       fecha_programada: "",
+      evento:'editar'
     };
   },
   methods: {

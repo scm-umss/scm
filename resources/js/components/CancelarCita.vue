@@ -5,6 +5,7 @@
       class="btn btn-sm btn-danger"
       value="Cancelar"
       @click="cancelarCita"
+      :dusk="dusk"
     />
   </div>
 </template>
@@ -14,6 +15,11 @@ export default {
     props:[
         'citaId'
     ],
+    data() {
+        return {
+            dusk: 'cancelar-cita-' + this.citaId
+        }
+    },
   methods: {
     cancelarCita() {
         // console.log("Cancelarcita");

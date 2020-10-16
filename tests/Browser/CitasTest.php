@@ -92,4 +92,73 @@ class CitasTest extends DuskTestCase
                 ;
         });
     }
+
+    public function test_ver_cita_pendiente_como_admin()
+    {
+        $this->seed();
+
+        $this->browse(function (Browser $browser) {
+            $browser->loginAs(User::find(1))
+                ->visit('/citas/pendientes')
+                ->assertSee('Citas Pendientes')
+                ->assertSee('Ver')
+                ->click('@ver-cita-1')
+                ->assertPathIs('/citas/1')
+                ->assertSee('Detalle de citas')
+                ->screenshot('CitasTest_ver_cita_pendiente_como_admin_1')
+                ;
+        });
+    }
+    public function test_editar_cita_pendiente_como_admin()
+    {
+        $this->seed();
+
+        $this->browse(function (Browser $browser) {
+            $browser->loginAs(User::find(1))
+                ->visit('/citas/pendientes')
+                ->assertSee('Citas Pendientes')
+                ->assertSee('Editar')
+                ->click('@editar-cita-1')
+                ->assertPathIs('/citas/1/edit')
+                ->assertSee('Estás editando la cita de')
+                ->screenshot('CitasTest_editar_cita_pendiente_como_admin_1')
+                ;
+        });
+    }
+    public function test_confirmar_cita_pendiente_como_admin()
+    {
+        $this->seed();
+
+        $this->browse(function (Browser $browser) {
+            $browser->loginAs(User::find(1))
+                ->visit('/citas/pendientes')
+                ->assertSee('Citas Pendientes')
+                ->assertPresent('@confirmar-cita-1')
+                ->screenshot('CitasTest_confirmar_cita_pendiente_como_admin_1')
+                ->press('@confirmar-cita-1')
+                ->assertPathIs('/citas/pendientes')
+                ->assertMissing('@confirmar-cita-1')
+                ->screenshot('CitasTest_confirmar_cita_pendiente_como_admin_2')
+                ;
+        });
+    }
+    public function test_cancelar_cita_pendiente_como_admin()
+    {
+        $this->seed();
+
+        $this->browse(function (Browser $browser) {
+            $browser->loginAs(User::find(1))
+                ->visit('/citas/pendientes')
+                ->assertSee('Citas Pendientes')
+                ->assertPresent('@cancelar-cita-1')
+                ->press('@cancelar-cita-1')
+                ->pause(500)
+                ->type('.swal2-textarea','Cancelando cita nro 1')
+                ->press('.swal2-confirm')
+                ->pause(500)
+                ->assertSee('Cita cancelada!.')
+                ->screenshot('CitasTest_cancelar_cita_pendiente_como_admin_1')
+                ;
+        });
+    }
 }

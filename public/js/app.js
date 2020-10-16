@@ -1919,8 +1919,14 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   props: ['citaId'],
+  data: function data() {
+    return {
+      dusk: 'cancelar-cita-' + this.citaId
+    };
+  },
   methods: {
     cancelarCita: function cancelarCita() {
       var _this = this;
@@ -2241,8 +2247,14 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
-  props: ['especialidadId', 'especialidadNombre'],
+  props: ['especialidadId', 'especialidadNombre', 'formulario'],
   data: function data() {
     return {
       especialidades: [],
@@ -2259,9 +2271,7 @@ __webpack_require__.r(__webpack_exports__);
       // console.log(this.especialidadId+'ididididi');
       var urlEspecialidades = '/citas/especialidades';
       axios.get(urlEspecialidades).then(function (response) {
-        _this.especialidades = response.data;
-
-        _this.getNombreEspecialidad(_this.especialidadId);
+        _this.especialidades = response.data; // this.getNombreEspecialidad(this.especialidadId)
       })["catch"](function (error) {
         console.log(error);
       });
@@ -2368,8 +2378,13 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
-  props: ['medicoId', 'especialidadId'],
+  props: ['medicoId', 'especialidadId', 'formulario'],
   data: function data() {
     return {
       // medico_seleccionado: '',
@@ -2385,9 +2400,7 @@ __webpack_require__.r(__webpack_exports__);
         var urlMedicos = '/especialidad/' + id + '/medicosjson';
         axios.get(urlMedicos).then(function (response) {
           // console.log(response)
-          _this.medicos = response.data;
-
-          _this.getNombreMedico(_this.medicoId);
+          _this.medicos = response.data; // this.getNombreMedico(this.medicoId)
         })["catch"](function (error) {
           console.log(error);
         });
@@ -2509,6 +2522,8 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
 
 
 
@@ -2534,8 +2549,8 @@ var noHorasAlert = "<div class=\"alert alert-danger\" role=\"alert\">\n         
       tm_sucursal: '',
       tt_sucursal: '',
       hora_seleccionada: "",
-      sucursal_seleccionado: "" //   mostrarHoras: false
-
+      sucursal_seleccionado: "",
+      evento: 'crear'
     };
   },
   methods: {
@@ -2800,6 +2815,8 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
 
 
 
@@ -2826,7 +2843,8 @@ var noHorasAlert = "<div class=\"alert alert-danger\" role=\"alert\">\n         
       paciente_seleccionado: "",
       sucursal_seleccionado: "",
       hora_programada: "",
-      fecha_programada: ""
+      fecha_programada: "",
+      evento: 'editar'
     };
   },
   methods: {
@@ -60832,7 +60850,7 @@ var render = function() {
   return _c("div", [
     _c("input", {
       staticClass: "btn btn-sm btn-danger",
-      attrs: { type: "submit", value: "Cancelar" },
+      attrs: { type: "submit", value: "Cancelar", dusk: _vm.dusk },
       on: { click: _vm.cancelarCita }
     })
   ])
@@ -61061,15 +61079,30 @@ var render = function() {
       ),
       _vm._v(" "),
       _c("div", { staticClass: "col-md-6" }, [
-        _vm.especialidadId
-          ? _c("div", [
-              _c("h5", [
-                _c("span", { staticClass: "badge badge-info p-2" }, [
-                  _vm._v(" " + _vm._s(_vm.nombreEspecialidad))
-                ])
-              ])
-            ])
-          : _c(
+        _vm.formulario == "editar"
+          ? _c(
+              "div",
+              _vm._l(_vm.especialidades, function(especialidad) {
+                return _c(
+                  "div",
+                  { key: especialidad.id, attrs: { value: especialidad.id } },
+                  [
+                    _c("h5", [
+                      especialidad.id == _vm.especialidadId
+                        ? _c("span", { staticClass: "badge badge-info p-2" }, [
+                            _vm._v(" " + _vm._s(especialidad.nombre))
+                          ])
+                        : _vm._e()
+                    ])
+                  ]
+                )
+              }),
+              0
+            )
+          : _vm._e(),
+        _vm._v(" "),
+        _vm.formulario == "crear"
+          ? _c(
               "select",
               {
                 staticClass: "form-control",
@@ -61100,6 +61133,7 @@ var render = function() {
               ],
               2
             )
+          : _vm._e()
       ])
     ])
   ])
@@ -61197,55 +61231,76 @@ var render = function() {
       ),
       _vm._v(" "),
       _c("div", { staticClass: "col-md-6" }, [
-        _vm.medicoId
-          ? _c("div", [
-              _c("h5", [
-                _c("span", { staticClass: "badge badge-info p-2" }, [
-                  _vm._v(" " + _vm._s(_vm.nombreMedico))
-                ])
-              ])
-            ])
+        _vm.formulario == "editar"
+          ? _c(
+              "div",
+              _vm._l(_vm.medicos, function(medico) {
+                return _c(
+                  "div",
+                  { key: medico.id, attrs: { value: medico.id } },
+                  [
+                    _c("h5", [
+                      medico.id == _vm.medicoId
+                        ? _c("span", { staticClass: "badge badge-info p-2" }, [
+                            _vm._v(
+                              " " +
+                                _vm._s(medico.nombre) +
+                                " " +
+                                _vm._s(medico.ap_paterno) +
+                                " " +
+                                _vm._s(medico.ap_materno)
+                            )
+                          ])
+                        : _vm._e()
+                    ])
+                  ]
+                )
+              }),
+              0
+            )
           : _vm._e(),
         _vm._v(" "),
-        _c(
-          "select",
-          {
-            staticClass: "form-control",
-            on: {
-              change: function($event) {
-                return _vm.$emit("medico-select", $event.target.value)
-              }
-            }
-          },
-          [
-            _c("option", { attrs: { value: "" } }, [
-              _vm._v("--Seleccionar medico--")
-            ]),
-            _vm._v(" "),
-            _vm._l(_vm.medicos, function(medico) {
-              return _c(
-                "option",
-                {
-                  key: medico.id,
-                  domProps: {
-                    value: medico.id,
-                    selected: medico.id == _vm.medicoId
+        _vm.formulario == "crear"
+          ? _c(
+              "select",
+              {
+                staticClass: "form-control",
+                on: {
+                  change: function($event) {
+                    return _vm.$emit("medico-select", $event.target.value)
                   }
-                },
-                [
-                  _vm._v(
-                    _vm._s(medico.nombre) +
-                      " " +
-                      _vm._s(medico.ap_paterno) +
-                      " " +
-                      _vm._s(medico.ap_materno)
+                }
+              },
+              [
+                _c("option", { attrs: { value: "" } }, [
+                  _vm._v("--Seleccionar medico--")
+                ]),
+                _vm._v(" "),
+                _vm._l(_vm.medicos, function(medico) {
+                  return _c(
+                    "option",
+                    {
+                      key: medico.id,
+                      domProps: {
+                        value: medico.id,
+                        selected: medico.id == _vm.medicoId
+                      }
+                    },
+                    [
+                      _vm._v(
+                        _vm._s(medico.nombre) +
+                          " " +
+                          _vm._s(medico.ap_paterno) +
+                          " " +
+                          _vm._s(medico.ap_materno)
+                      )
+                    ]
                   )
-                ]
-              )
-            })
-          ],
-          2
-        )
+                })
+              ],
+              2
+            )
+          : _vm._e()
       ])
     ])
   ])
@@ -61280,7 +61335,7 @@ var render = function() {
         _c("legend", { staticClass: "text-primary" }, [_vm._v("Agendar cita")]),
         _vm._v(" "),
         _c("combo-especialidad", {
-          attrs: { especialidades: _vm.especialidades },
+          attrs: { especialidades: _vm.especialidades, formulario: _vm.evento },
           on: { "especialidad-select": _vm.especialidadSelect }
         }),
         _vm._v(" "),
@@ -61288,7 +61343,8 @@ var render = function() {
           ref: "especialidadSeleccionada",
           attrs: {
             especialidadId: _vm.especialidad_seleccionada,
-            medicoId: _vm.medico_seleccionado
+            medicoId: _vm.medico_seleccionado,
+            formulario: _vm.evento
           },
           on: { "medico-select": _vm.medicoSelect }
         }),
@@ -61485,7 +61541,10 @@ var render = function() {
         _c("legend", { staticClass: "text-primary" }, [_vm._v("Editar cita")]),
         _vm._v(" "),
         _c("combo-especialidad", {
-          attrs: { especialidadId: _vm.especialidad_seleccionada },
+          attrs: {
+            especialidadId: _vm.especialidad_seleccionada,
+            formulario: _vm.evento
+          },
           on: { "especialidad-select": _vm.especialidadSelect }
         }),
         _vm._v(" "),
@@ -61493,7 +61552,8 @@ var render = function() {
           ref: "especialidadSeleccionada",
           attrs: {
             especialidadId: _vm.especialidad_seleccionada,
-            medicoId: _vm.medico_seleccionado
+            medicoId: _vm.medico_seleccionado,
+            formulario: _vm.evento
           },
           on: { "medico-select": _vm.medicoSelect }
         }),
@@ -61511,9 +61571,10 @@ var render = function() {
                 "div",
                 { staticClass: "alert alert-info", attrs: { role: "alert" } },
                 [
+                  _c("strong", [_vm._v("Fecha programada:")]),
                   _vm._v(
-                    "\n                  Fecha programada: " +
-                      _vm._s(_vm.fecha_programada) +
+                    " " +
+                      _vm._s(_vm.fecha_programada.substr(0, 10)) +
                       "\n              "
                   )
                 ]
@@ -61525,8 +61586,9 @@ var render = function() {
                 "div",
                 { staticClass: "alert alert-info", attrs: { role: "alert" } },
                 [
+                  _c("strong", [_vm._v("Hora Programada:")]),
                   _vm._v(
-                    "\n                  Hora Programada: " +
+                    " " +
                       _vm._s(_vm.hora_programada.substr(0, 5)) +
                       "\n              "
                   )
@@ -61710,7 +61772,7 @@ var staticRenderFns = [
     return _c(
       "div",
       { staticClass: "alert alert-warning", attrs: { role: "alert" } },
-      [_c("h5", [_vm._v("Para cambiar la cita, seleccione lo requerido")])]
+      [_c("h5", [_vm._v("Para cambiar la cita, seleccione la fecha y hora!.")])]
     )
   }
 ]

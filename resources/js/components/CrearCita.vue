@@ -5,12 +5,14 @@
       <!-- <listar-especialidades :mensaje="titulo"></listar-especialidades> -->
       <combo-especialidad
         :especialidades="especialidades"
+        :formulario="evento"
         @especialidad-select="especialidadSelect"
       ></combo-especialidad>
       <!-- <p>{{ especialidad_seleccionada }}</p> -->
       <combo-medicos
         :especialidadId="especialidad_seleccionada"
         :medicoId="medico_seleccionado"
+        :formulario="evento"
         @medico-select="medicoSelect"
         ref="especialidadSeleccionada"
       ></combo-medicos>
@@ -119,7 +121,7 @@ export default {
       tt_sucursal: '',
       hora_seleccionada: "",
       sucursal_seleccionado:"",
-      //   mostrarHoras: false
+      evento:'crear'
     };
   },
   methods: {

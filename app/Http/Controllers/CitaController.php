@@ -76,7 +76,7 @@ class CitaController extends Controller
         //                     ->paginate(10);
         //     // return view('citas.index', compact('citas_pendientes','citas_confirmadas','historial_citas','rol'));
         // }
-        // return view('citas.pendientes');
+        return redirect()->action('CitaController@pendientes');
     }
     public function pendientes(){
         $rol = auth()->user()->roles[0]->slug;

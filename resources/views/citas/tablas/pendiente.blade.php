@@ -34,10 +34,10 @@
                     <td>{{ $cita->sucursal->nombre }}</td>
                     <td class="d-flex">
                         @if ($rol == 'admin')
-                          <a class="btn btn-sm btn-primary mr-2" href="{{ route('citas.show', $cita->id) }}">
+                    <a class="btn btn-sm btn-primary mr-2" href="{{ route('citas.show', $cita->id) }}" dusk="ver-cita-{{ $cita->id }}">
                               Ver
                           </a>
-                          <a class="btn btn-sm btn-secondary mr-2" href="{{ route('citas.edit', $cita->id) }}">
+                          <a class="btn btn-sm btn-secondary mr-2" href="{{ route('citas.edit', $cita->id) }}" dusk="editar-cita-{{ $cita->id }}">
                               Editar
                           </a>
                         @endif
@@ -47,7 +47,7 @@
                             method="POST" class="d-inline-block mr-2">
                             @csrf
 
-                            <button class="btn btn-sm btn-success" type="submit">
+                            <button class="btn btn-sm btn-success" type="submit" dusk="confirmar-cita-{{ $cita->id }}">
                               Confirmar
                             </button>
                           </form>
