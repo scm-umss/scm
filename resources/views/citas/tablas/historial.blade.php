@@ -20,7 +20,12 @@
                     <td>{{ $cita->fecha_programada->format('d-m-Y') }}</td>
                     <td>{{ $cita->hora_programada }}</td>
                     <td>{{ $cita->especialidad->nombre }}</td>
-                    <td>{{ $cita->estado }}</td>
+                    @if ($cita->estado == 'Cancelada')
+                    <td><span class="badge badge-danger">{{ $cita->estado }}</span></td>
+
+                    @else
+                    <td><span class="badge badge-success">{{ $cita->estado }}</span></td>
+                    @endif
                     <td>
                         <a class="btn btn-sm btn-primary" href="{{ route('citas.show', $cita->id) }}">
                             Ver
