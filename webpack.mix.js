@@ -11,5 +11,16 @@ const mix = require('laravel-mix');
  |
  */
 
-mix.js('resources/js/app.js', 'public/js')
-    .sass('resources/sass/app.scss', 'public/css');
+mix.styles([
+        'resources/vendor/css/all.min.css',
+        'resources/vendor/css/adminlte.min.css',
+    ], 'public/css/plantilla.css')
+    .sass('resources/sass/app.scss', 'public/css')
+    .js('resources/js/app.js', 'public/js')
+    .scripts([
+        'resources/vendor/js/adminlte.min.js',
+    ], 'public/js/plantilla.js')
+    .copyDirectory('resources/vendor/fontawesome/webfonts', 'public/webfonts');
+
+// mix.js('resources/js/app.js', 'public/js')
+//     .sass('resources/sass/app.scss', 'public/css');
