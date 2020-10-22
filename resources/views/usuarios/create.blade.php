@@ -221,7 +221,8 @@
     document.addEventListener('DOMContentLoaded', ()=>{
     $("#especialidades").select2({
                 allowClear: true,
-                placeholder: 'Seleccionar especialidad'
+                placeholder: 'Seleccionar especialidad',
+                theme: 'bootstrap4',
         });
     });
 </script>

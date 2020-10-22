@@ -1,7 +1,7 @@
 @extends('layouts.app')
 
 @section('content')
-    <div class="container">
+    <div class="container col-md-8">
         <div class="row justify-content-center mt-5">
             <form action="{{ route('especialidad.store') }}" method="POST" class="col-md-9 col-xs-12 card card-body" enctype="multipart/form-data">
                 @csrf

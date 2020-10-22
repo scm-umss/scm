@@ -208,10 +208,17 @@ class CitaController extends Controller
             return 'Cita registrada exitosamente!';
         }else{
             // return 'Ya tiene cita en el día';
-            $error = [
-                'error' => 'Algo anda mal, creo que ya existe cita con el médico...'
-            ];
-            return response()->json($error);
+            if ($tieneCita) {
+                $error = [
+                    'error' => 'Usted ya tiene una cita, para la fecha seleccionada.'
+                ];
+                return response()->json($error);
+            }elseif($citaRegistrada){
+                $error = [
+                    'error' => 'La hora seleccionada ya fue ocupado por otro paciente.'
+                ];
+                return response()->json($error);
+            }
         }
 
         // return redirect()->route('citas.index')->with('status','Registro realizado exitosamente!');

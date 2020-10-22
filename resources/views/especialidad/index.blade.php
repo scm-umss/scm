@@ -3,7 +3,7 @@
 @section('content')
 
 
-<div class="container col-md-6">
+<div class="container col-md-8">
 
     <div class="card shadow">
         <div class="card-header d-flex justify-content-between">

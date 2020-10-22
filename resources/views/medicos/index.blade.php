@@ -3,7 +3,7 @@
 @section('content')
 {{-- {{ dd($u->roles()->nombre) }} --}}
 
-<div class="container col-md-8">
+<div class="container">
     <div class="card shadow">
         @if (session('status'))
             <div class="alert alert-success">

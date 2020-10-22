@@ -18,6 +18,7 @@
                 @elseif ($rol == 'medico')
                     <th scope="col">Paciente</th>
                 @endif
+                <th scope="col">Sucursal</th>
                 <th scope="col">Acciones</th>
             </tr>
         </thead>
@@ -32,6 +33,7 @@
                 @elseif ($rol == 'medico')
                     <td>{{ $cita->paciente->nombre }}</td>
                 @endif
+                <td>{{ $cita->sucursal->nombre }}</td>
                 <td class="d-flex">
                     @if ($rol == 'admin')
                     <a class="btn btn-sm btn-primary mr-2" href="{{ route('citas.show', $cita->id) }}">

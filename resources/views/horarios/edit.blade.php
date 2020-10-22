@@ -2,7 +2,7 @@
 
 @section('content')
 
-<div class="container">
+<div class="container-fluid">
     <div class="row justify-content-center">
         <form action="{{ route('horarios.update', $medico->id) }}" method="POST">
             @csrf

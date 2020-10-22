@@ -15,6 +15,9 @@
                     <th scope="col">Médico</th>
                 @elseif ($rol == 'medico')
                     <th scope="col">Paciente</th>
+                @else
+                <th scope="col">Médico</th>
+                <th scope="col">Paciente</th>
                 @endif
                 <th scope="col">Sucursal</th>
                 <th scope="col">Acciones</th>
@@ -29,7 +32,10 @@
                     @if ($rol == 'paciente')
                         <td>{{ $cita->medico->nombreCompleto }}</td>
                     @elseif ($rol == 'medico')
-                        <td>{{ $cita->paciente->nombre }}</td>
+                        <td>{{ $cita->paciente->nombreCompleto }}</td>
+                    @else
+                    <td>{{ $cita->medico->nombreCompleto }}</td>
+                    <td>{{ $cita->paciente->nombreCompleto }}</td>
                     @endif
                     <td>{{ $cita->sucursal->nombre }}</td>
                     <td class="d-flex">
