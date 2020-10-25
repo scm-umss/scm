@@ -7,6 +7,7 @@ use App\Horario;
 use App\Sucursal;
 use Carbon\Carbon;
 use App\Especialidad;
+use App\Rol;
 use Illuminate\Http\Request;
 
 class DatosController extends Controller
@@ -28,7 +29,9 @@ class DatosController extends Controller
 
     public function getMedicosJson(Request $request, Especialidad $especialidad){
         if($request->ajax()){
-            return $especialidad->users()->get(['users.id','nombre','ap_paterno','ap_materno']);
+            return $especialidad->users()
+                                ->get(['users.id','nombre','ap_paterno','ap_materno']);
+
         }else{
             return "Acceso denegado";
         }

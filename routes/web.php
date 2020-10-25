@@ -65,7 +65,7 @@ Route::get('/horasmedico', 'DatosController@horasMedico');
 Route::get('/citas/{paciente}/agendar', 'CitaController@agendarCita')->name('citas.agendar');
 
 //Route::get('/citas/{paciente}/edit', 'CitaController@edit')->name('citas.edit');
-Route::get('/admin/citas', 'Admin\CitaController@index')->name('admin.citas.index');
+// Route::get('/admin/citas', 'Admin\CitaController@index')->name('admin.citas.index');
 // Route::get('/admin/citas/create', 'Admin\CitaController@create')->name('admin.citas.create');
 
 /** Gestion de citas cliente */

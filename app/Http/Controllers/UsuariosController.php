@@ -162,6 +162,9 @@ class UsuariosController extends Controller
         $usuario->save();
         $usuario->roles()->sync($request->roles);
         $usuario->especialidades()->sync($request->especialidades);
+        if (!$usuario->tieneRol(['medico'])) {
+            $usuario->especialidades()->detach();
+        }
         // $usuario->update();
         return redirect()->route('usuarios.index')->with('status', 'Usuario actualizado exitosamente!');
     }
