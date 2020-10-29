@@ -2,13 +2,15 @@
 
 namespace App\Http\Controllers;
 
+use App\Rol;
 use App\Cita;
+use App\User;
 use App\Horario;
 use App\Sucursal;
 use Carbon\Carbon;
 use App\Especialidad;
-use App\Rol;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
 class DatosController extends Controller
 {
@@ -136,5 +138,16 @@ class DatosController extends Controller
                     ->exists();
         // Estará disponible cuando no exista cita reservada para esa fecha y hora con el medico
         return !$existe;
+    }
+    public function pacientes(Request $request){
+        // $pacientesMes = User::select('fecha_nacimiento')->where('created_at','>','2020-10-01')->groupBy('fecha_nacimiento')->get();
+        $pacientesMes = DB::table('users')
+                        ->select(DB::raw('count(*) as user_count, fecha_nacimiento'))
+                        ->whereDate('created_at','>=', '2020-10-01')
+                        ->whereDate('created_at','<=', '2020-10-28')
+                        ->groupBy('fecha_nacimiento')
+                        ->get();
+        // dd($pacientesMes);
+        return view('reportes.pacientes');
     }
 }

@@ -61,6 +61,7 @@ Route::get('/citas/especialidades', 'DatosController@getEspecialidades');
 Route::get('/especialidad/{especialidad}/medicosjson', 'DatosController@getMedicosJson');
 // Horarios de cada medico API JSON
 Route::get('/horasmedico', 'DatosController@horasMedico');
+Route::get('/reportes/pacientes', 'DatosController@pacientes')->name('reportes.pacientes');
 
 Route::get('/citas/{paciente}/agendar', 'CitaController@agendarCita')->name('citas.agendar');
 
@@ -81,3 +82,4 @@ Route::resource('/citas', 'CitaController')->names('citas');
 Route::get('/especialidad/{especialidad}/medicos', 'CitaController@getMedicos')->name('citas.medicos');
 // Vista para listar horario por medico
 Route::get('/horario/{medico}/medico/{especialidad}', 'CitaController@horario')->name('citas.horario');
+
