@@ -40,14 +40,16 @@
 @endsection
 
 @section('content')
-<figure class="highcharts-figure">
-    <div id="container"></div>
-    <p class="highcharts-description">
-        Basic line chart showing trends in a dataset. This chart includes the
-        <code>series-label</code> module, which adds a label to each line for
-        enhanced readability.
-    </p>
-</figure>
+<div class="card">
+    <figure class="highcharts-figure">
+        <div id="container"></div>
+        <p class="highcharts-description">
+            Basic line chart showing trends in a dataset. This chart includes the
+            <code>series-label</code> module, which adds a label to each line for
+            enhanced readability.
+        </p>
+    </figure>
+</div>
 @endsection
 
 @section('scripts')
@@ -57,6 +59,16 @@
 <script src="https://code.highcharts.com/modules/export-data.js"></script>
 <script src="https://code.highcharts.com/modules/accessibility.js"></script>
 <script>
+    var objects = @json($pacientesMes);
+
+    var labels = [];
+    var data = [];
+
+    objects.forEach(element => {
+        labels.push(element.anio + '-' + element.mes.toString().padStart(2, '0'));
+        data.push(element.cantidad);    
+    });
+    
     Highcharts.chart('container', {
 
     title: {
@@ -70,9 +82,7 @@
     },
 
     xAxis: {
-        accessibility: {
-            rangeDescription: 'Range: 2010 to 2018'
-        }
+        categories: labels,
     },
 
     legend: {
@@ -86,13 +96,20 @@
             label: {
                 connectorAllowed: false
             },
-            pointStart: 2010
+            //pointStart: 2010,
+            animation: false
+        },
+        line: {
+            dataLabels: {
+                enabled: true
+            },
+            enableMouseTracking: false
         }
     },
 
     series: [{
         name: 'Registros',
-        data: [5, 15, 10, 20, 25, 18, 20, 30]
+        data: data
     }, ],
 
     responsive: {

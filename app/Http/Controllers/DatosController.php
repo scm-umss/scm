@@ -142,12 +142,14 @@ class DatosController extends Controller
     public function pacientes(Request $request){
         // $pacientesMes = User::select('fecha_nacimiento')->where('created_at','>','2020-10-01')->groupBy('fecha_nacimiento')->get();
         $pacientesMes = DB::table('users')
-                        ->select(DB::raw('count(*) as user_count, fecha_nacimiento'))
-                        ->whereDate('created_at','>=', '2020-10-01')
-                        ->whereDate('created_at','<=', '2020-10-28')
-                        ->groupBy('fecha_nacimiento')
+                        ->select(DB::raw('count(*) as cantidad, YEAR(created_at) as anio, MONTH(created_at) as mes'))
+                        ->whereDate('created_at','>=', '2019-01-01')
+                        ->whereDate('created_at','<=', '2020-12-31')
+                        ->groupBy('anio','mes')
+                        ->orderBy('anio','asc')
+                        ->orderBy('mes','asc')
                         ->get();
-        // dd($pacientesMes);
-        return view('reportes.pacientes');
+        //dd($pacientesMes);
+        return view('reportes.pacientes', compact('pacientesMes'));
     }
 }
