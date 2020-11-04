@@ -2,11 +2,12 @@
 
 /** @var \Illuminate\Database\Eloquent\Factory $factory */
 
-use App\Cita;
 use App\Rol;
+use App\Cita;
 use App\User;
-use Faker\Generator as Faker;
+use Carbon\Carbon;
 use Illuminate\Support\Str;
+use Faker\Generator as Faker;
 
 /*
 |--------------------------------------------------------------------------
@@ -50,6 +51,7 @@ $factory->define(User::class, function (Faker $faker) {
             // return $user['nombre'].$user['ap_paterno'].$user['ap_materno'];
         },
         'remember_token' => Str::random(10),
+        'created_at'=> (Carbon::now())->subMonth(mt_rand(0,24)),
         //'roles' => factory(Rol::class),
     ];
 });

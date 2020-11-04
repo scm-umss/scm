@@ -17,7 +17,7 @@ class CreateEspecialidadUserTable extends Migration
             $table->id();
             $table->foreignId('especialidad_id')->constrained()->cascadeOnDelete();
             $table->foreignId('user_id')->constrained()->cascadeOnDelete();
-            $table->timestamps();
+            // $table->timestamps();
         });
     }
 

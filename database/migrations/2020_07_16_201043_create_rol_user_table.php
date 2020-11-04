@@ -17,7 +17,7 @@ class CreateRolUserTable extends Migration
             $table->id();
             $table->foreignId('user_id')->constrained()->cascadeOnDelete();
             $table->foreignId('rol_id')->constrained()->cascadeOnDelete();
-            $table->timestamps();
+            // $table->timestamps();
         });
     }
 
