@@ -13,7 +13,6 @@
       </div>
     <!-- <highcharts :options="chartOptions" :callback="cargar" ref="chart"></highcharts> -->
     <highcharts :options="chartOptions"></highcharts>
-    <!-- <button @click="cargar">Cargar</button> -->
   </div>
 </template>
 
