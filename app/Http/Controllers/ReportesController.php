@@ -68,7 +68,7 @@ class ReportesController extends Controller
             $data['cantidad']=$cantidad;
             return $data;
         }else{
-            return view('reportes.pacientes');
+            return view('reportes.pacientes', compact('f_ini', 'f_fin'));
         }
     }
 

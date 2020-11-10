@@ -7,6 +7,7 @@
                 valueType="format"
                 format="MM-YYYY"
                 range
+                default-value=""
                 placeholder="Seleccionar rango de fechas"
                 @change="rangoFechas"
             ></date-picker>
@@ -22,6 +23,7 @@ import Highcharts from "highcharts";
 import exportingInit from "highcharts/modules/exporting";
 // import ComboFecha from "./ComboFecha.vue";
 import DatePicker from 'vue2-datepicker';
+import moment from 'moment';
 
 exportingInit(Highcharts);
 
@@ -32,10 +34,11 @@ export default {
     // ComboFecha,
     DatePicker
   },
+  props: ['f_ini','f_fin'],
   data() {
     return {
         // value1: [new Date(2019, 9, 8), new Date(2019, 9, 19)],
-        fechas:[],
+        fechas:[moment(new Date(this.f_ini)).format('MM-YYYY'), moment(new Date(this.f_fin)).format('MM-YYYY')],
         fecha_inicio: null,
         fecha_fin: null,
       title: "Pacientes",
