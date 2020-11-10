@@ -44,6 +44,7 @@ export default {
       series: [
         {
             name:'Estado',
+            colorByPoint:true,
           data: [],
         },
       ],
@@ -53,24 +54,49 @@ export default {
   computed: {
     chartOptions:function() {
       return {
+          lang: {
+            downloadCSV:"Descarga CSV",
+            downloadSVG:"Descargar en SVG",
+            printChart: 'Imprimir',
+            downloadPNG: 'Descargar en PNG',
+            downloadJPEG: 'Descargar en JPEG',
+            downloadPDF: 'Descargar en PDF',
+            viewFullscreen:"Ver en pantalla completa"
+        },
+        // exporting: {
+        //     buttons: {
+        //         contextButton: {
+        //             menuItems: ["printChart", "separator", "downloadPNG", "downloadPDF", "downloadCSV", "viewFullscreen"]
+        //         }
+        //     }
+        // },
+
+        // pie: {
+        //     allowPointSelect: true,
+        //     cursor: 'pointer',
+        //     dataLabels: {
+        //         enabled: true,
+        //         format: '<b>{point.name}</b>: {point.percentage:.0f}'
+        //     }
+        // },
         chart: { type: this.modo },
         title: { text: this.title },
         series: this.series,
-        yAxis:{
-            title: {
-                text:'Cantidad de citas',
-            }
-        },
-        xAxis:{
-            categories:this.categorias
-        }
+        // yAxis:{
+        //     title: {
+        //         text:'Cantidad de citas',
+        //     }
+        // },
+        // xAxis:{
+        //     categories:this.categorias
+        // }
       };
     },
   },
   methods: {
     cargar: function () {
 
-        let url = "/reportes/estadocitas";
+        let url = "/reportes/estado/citas";
         const params = {
             fecha_inicio:this.fechas[0],
             fecha_fin:this.fechas[1]
@@ -78,7 +104,7 @@ export default {
         axios.get(url, {params})
             .then(response =>{
                 console.log(response.data)
-                this.categorias = response.data['categoria']
+                // this.categorias = response.data['categoria']
                 this.series[0].data = response.data['cantidad']
             })
             .catch((error) => {

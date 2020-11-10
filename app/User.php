@@ -57,6 +57,16 @@ class User extends Authenticatable
     public function horarios(){
         return $this->hasMany(Horario::class);
     }
+    public function citasMedico(){
+        return $this->hasMany(Cita::class,'medico_id');
+    }
+
+    public function citasAtendidas(){
+        return $this->citasMedico()->where('estado','Atendida');
+    }
+    public function citasCanceladas(){
+        return $this->citasMedico()->where('estado','Cancelada');
+    }
 
     public function isSuperAdmin() {
         return $this->tieneRol(['admin']);

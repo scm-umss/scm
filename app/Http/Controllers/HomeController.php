@@ -2,7 +2,11 @@
 
 namespace App\Http\Controllers;
 
+use App\Cita;
+use App\Especialidad;
+use App\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
 class HomeController extends Controller
 {
@@ -25,6 +29,46 @@ class HomeController extends Controller
     {
         $rol = auth()->user()->roles[0]->slug;
 
-        return view('home', compact('rol'));
+        $pacientes = User::whereExists(function($query){
+                        $query->select(DB::raw(1))
+                        ->from('rol_user')
+                        ->whereRaw('rol_user.user_id = users.id and rol_user.rol_id = 3');
+                    })
+                    ->count();
+        // dd($pacientes);
+        $medicos = User::whereExists(function($query){
+                        $query->select(DB::raw(1))
+                        ->from('rol_user')
+                        ->whereRaw('rol_user.user_id = users.id and rol_user.rol_id = 2');
+                    })
+                    ->count();
+        // dd($medicos);
+        $especialidades = Especialidad::all()->count();
+        $citas = Cita::where('estado','Reservada')->count();
+
+
+        // $rol = auth()->user()->roles[0]->slug;
+        // dd($rol);
+        if($rol == 'admin'){
+            $citas_confirmadas = Cita::where('estado', 'Confirmada')
+                                ->orderBy('fecha_programada','ASC')
+                                ->orderBy('hora_programada','ASC')
+                                ->paginate(10);
+        }elseif($rol == 'medico'){
+            $citas_confirmadas = Cita::where('estado', 'Confirmada')
+                                ->where('medico_id', auth()->id())
+                                ->orderBy('fecha_programada','ASC')
+                                ->orderBy('hora_programada','ASC')
+                                ->paginate(10);
+        }elseif($rol == 'paciente'){
+            $citas_confirmadas = Cita::where('estado', 'Confirmada')
+                                ->where('paciente_id', auth()->id())
+                                ->orderBy('fecha_programada','ASC')
+                                ->orderBy('hora_programada','ASC')
+                                ->paginate(10);
+        }
+
+
+        return view('home', compact('rol','pacientes','medicos','especialidades','citas', 'citas_confirmadas'));
     }
 }

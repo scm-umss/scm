@@ -24,7 +24,7 @@ export default {
     cancelarCita() {
         // console.log("Cancelarcita");
         this.$swal({
-            title: 'Expliquenos el motivo de cancelación.',
+            title: 'Explíquenos el motivo de la cancelación.',
             input: 'textarea',
             inputAttributes: {
                 autocapitalize: 'off'

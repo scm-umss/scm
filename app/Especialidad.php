@@ -17,4 +17,8 @@ class Especialidad extends Model
     {
         return $this->belongsToMany(User::class, 'especialidad_user');
     }
+    public function citas()
+    {
+        return $this->hasMany(Cita::class);
+    }
 }

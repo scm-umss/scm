@@ -63,7 +63,9 @@ Route::get('/especialidad/{especialidad}/medicosjson', 'DatosController@getMedic
 Route::get('/horasmedico', 'DatosController@horasMedico');
 //Reportes
 Route::get('/reportes/pacientes', 'ReportesController@pacientes')->name('reportes.pacientes');
-Route::get('/reportes/estadocitas', 'ReportesController@estadoCitas')->name('reportes.estadocitas');
+Route::get('/reportes/estado/citas', 'ReportesController@estadoCitas')->name('reportes.estadocitas');
+Route::get('/reportes/especialidad/citas', 'ReportesController@especialidadCitas')->name('reportes.especialidadcitas');
+Route::get('/reportes/citas/atendidas', 'ReportesController@citasAtendidas')->name('reportes.citasatendidas');
 
 Route::get('/citas/{paciente}/agendar', 'CitaController@agendarCita')->name('citas.agendar');
 

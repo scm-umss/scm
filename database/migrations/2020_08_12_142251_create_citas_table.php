@@ -24,7 +24,6 @@ class CreateCitasTable extends Migration
             $table->date('fecha_programada');
             $table->time('hora_programada');
             $table->enum('estado', ['Reservada', 'Confirmada', 'Atendida', 'Cancelada'])->default('Reservada');
-            $table->integer('numero_ficha');
 
             $table->timestamps();
         });

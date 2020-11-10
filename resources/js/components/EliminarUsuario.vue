@@ -35,7 +35,7 @@ export default {
                     .then(respuesta => {
                         // console.log(respuesta);
                         this.$swal({
-                            title: 'Paciente dado de baja',
+                            title: 'Usuario dado de baja',
                             text: 'Se procedió con la baja',
                             icon: 'success'
                         });

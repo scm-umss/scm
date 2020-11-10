@@ -170,7 +170,6 @@ class UsuariosSeeder extends Seeder
 
         $cita = Cita::create([
             'estado' => 'Reservada',
-            'numero_ficha' => 1,
             'paciente_id' => $paciente->id,
             'medico_id' => $medico->id,
             'especialidad_id' => $traumatologia->id,
