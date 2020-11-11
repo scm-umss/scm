@@ -50,6 +50,16 @@ class UsuariosSeeder extends Seeder
             'descripcion' => 'Descripcion 2',
         ]);
 
+        $cardiologia = Especialidad::create([
+            'nombre' => 'Cardiologia',
+            'descripcion' => 'Descripcion 3',
+        ]);
+
+        $odontologia = Especialidad::create([
+            'nombre' => 'Odontologia',
+            'descripcion' => 'Descripcion 4',
+        ]);
+
         $rolAdmin = Rol::create([
             'nombre' => 'Administrador',
             'slug' => 'admin',
@@ -107,16 +117,21 @@ class UsuariosSeeder extends Seeder
         $medico->especialidades()->sync([$traumatologia->id, $psicologia->id]);
 
         $medicos_ex = factory(App\User::class, 20)->create();
-        $medicos_ex->each(function ($user) use ($rolMedico, $traumatologia, $psicologia) {
+        $medicos_ex->each(function ($user) use ($rolMedico, $traumatologia, $psicologia, $cardiologia, $odontologia) {
             $user->roles()->sync([$rolMedico->id]);
-            if (mt_rand(1,100) > 50) {
+            $p = mt_rand(1,100);
+            if ($p > 25) {
                 $user->especialidades()->sync([$traumatologia->id]);
+            } else if ($p > 50) {
+                $user->especialidades()->sync([$cardiologia->id]);
+            } else if ($p > 75) {
+                $user->especialidades()->sync([$odontologia->id]);
             } else {
                 $user->especialidades()->sync([$psicologia->id]);
             }
         });
 
-        $pacientes_ex = factory(App\User::class, 60)->create();
+        $pacientes_ex = factory(App\User::class, 100)->create();
         $pacientes_ex->each(function ($user) use ($rolPaciente) {
             $user->roles()->sync([$rolPaciente->id]);
         });
@@ -144,7 +159,7 @@ class UsuariosSeeder extends Seeder
             ]);
         }
 
-        $medicos_ex->each(function ($medico_ex) use ($sucursal1, $sucursal2, $traumatologia, $psicologia) {
+        $medicos_ex->each(function ($medico_ex) use ($sucursal1, $sucursal2, $traumatologia, $psicologia, $cardiologia, $odontologia) {
             for ($i = 0; $i < 7; $i++) {
                 $tm_activo = ($i < 6);  // Lun-Vie
                 $tt_activo = ($i < 5);
@@ -155,13 +170,13 @@ class UsuariosSeeder extends Seeder
                     'tm_hora_inicio' => ($tm_activo ? '08:00:00' : '07:00:00'),
                     'tm_hora_fin' => ($tm_activo ? '11:00:00' : '12:00:00'),
                     'tm_sucursal' => $sucursal1->id,
-                    'tm_especialidad' => $traumatologia->id,
+                    'tm_especialidad' => $medico_ex->especialidades()->first()->id,
                     'tm_consultorio' => '101',
                     'tt_activo' => $tt_activo,
                     'tt_hora_inicio' => ($tt_activo ? '15:00:00' : '14:00:00'),
                     'tt_hora_fin' => ($tt_activo ? '17:00:00' : '18:00:00'),
                     'tt_sucursal' => $sucursal2->id,
-                    'tt_especialidad' => $psicologia->id,
+                    'tt_especialidad' => $medico_ex->especialidades()->first()->id,
                     'tt_consultorio' => '201',
                     'user_id' => $medico_ex->id,
                 ]);
@@ -178,24 +193,28 @@ class UsuariosSeeder extends Seeder
             'hora_programada' => '09:00:00',
         ]);
 
-        // Crear 10 citas por dia para pacientes y medicos aleatorios
-        // todos con la misma especialidad y sucursal para una semana
-        $fecha = Carbon::now()->addDay(1);
+        // Crear 6 citas por dia para pacientes y medicos aleatorios
+        // todos con la misma sucursal para una semana
+        // antes y una semana despues
+        $fecha_hoy = Carbon::now();
+        $fecha_cita = Carbon::now()->subDays(7);
         $citas_ex = collect();
 
-        for ($i = 0; $i < 7; $i++) {
-            $c = factory(App\Cita::class, 4)->create([
+        for ($i = 0; $i < 14; $i++) {
+            $c = factory(App\Cita::class, 6)->create([
                 'paciente_id' => $paciente->id,
                 'medico_id' => $medico->id,
                 'especialidad_id' => $traumatologia->id,
                 'sucursal_id' => $sucursal1->id,
-                'fecha_programada' => $fecha->format('Y-m-d'),
+                'fecha_programada' => $fecha_cita->format('Y-m-d'),
             ]);
 
-            $c->each(function($cita_ex) use ($pacientes_ex, $admin, $faker) {
+            $c->each(function($cita_ex) use ($pacientes_ex, $medicos_ex, $admin, $faker) {
+                $med = $medicos_ex->random();
+                
                 $cita_ex->paciente_id = $pacientes_ex->random()->id;
-                //$cita_ex->medico_id = $medicos_ex->random()->id;
-                //$cita_ex->especialidad_id = $traumatologia->id;
+                $cita_ex->medico_id = $med->id;
+                $cita_ex->especialidad_id = $med->especialidades()->first()->id;
                 //$cita_ex->sucursal_id = $sucursal1->id;
                 $cita_ex->hora_programada = $faker->unique()->randomElement(['08:00:00','08:30:00','09:00:00','09:30:00','10:00:00','10:30:00']);
 
@@ -218,7 +237,7 @@ class UsuariosSeeder extends Seeder
             $citas_ex = $citas_ex->concat($c);
 
             $faker->unique($reset = true);
-            $fecha->addDay(1);
+            $fecha_cita->addDay(1);
         }
     }
 }
