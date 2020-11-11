@@ -65,7 +65,7 @@ Route::get('/horasmedico', 'DatosController@horasMedico');
 Route::get('/reportes/pacientes', 'ReportesController@pacientes')->name('reportes.pacientes');
 Route::get('/reportes/estado/citas', 'ReportesController@estadoCitas')->name('reportes.estadocitas');
 Route::get('/reportes/especialidad/citas', 'ReportesController@especialidadCitas')->name('reportes.especialidadcitas');
-Route::get('/reportes/citas/atendidas', 'ReportesController@citasAtendidas')->name('reportes.citasatendidas');
+Route::get('/reportes/citas/medico', 'ReportesController@citasMedico')->name('reportes.citasmedico');
 
 Route::get('/citas/{paciente}/agendar', 'CitaController@agendarCita')->name('citas.agendar');
 

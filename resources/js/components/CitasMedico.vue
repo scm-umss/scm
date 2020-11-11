@@ -7,6 +7,7 @@
                 valueType="format"
                 format="DD-MM-YYYY"
                 range
+                default-value=""
                 placeholder="Seleccionar rango de fechas"
                 @change="rangoFechas"
             ></date-picker>
@@ -22,6 +23,7 @@ import Highcharts from "highcharts";
 import exportingInit from "highcharts/modules/exporting";
 // import ComboFecha from "./ComboFecha.vue";
 import DatePicker from 'vue2-datepicker';
+import moment from 'moment';
 
 exportingInit(Highcharts);
 
@@ -32,19 +34,23 @@ export default {
     // ComboFecha,
     DatePicker
   },
+  props: ['f_ini','f_fin'],
   data() {
     return {
         // value1: [new Date(2019, 9, 8), new Date(2019, 9, 19)],
         fechas:[],
         fecha_inicio: null,
         fecha_fin: null,
-      title: "Estado de citas",
+      title: "Cantidad de citas por especialidad",
       options: ["spline", "line", "bar", "pie"],
-      modo: "pie",
+      modo: "column",
       series: [
         {
-            name:'Estado',
-            colorByPoint:true,
+            name:'Atendidas',
+            data: [],
+        },
+        {
+            name:'Canceladas',
           data: [],
         },
       ],
@@ -63,49 +69,37 @@ export default {
             downloadPDF: 'Descargar en PDF',
             viewFullscreen:"Ver en pantalla completa"
         },
-        // exporting: {
-        //     buttons: {
-        //         contextButton: {
-        //             menuItems: ["printChart", "separator", "downloadPNG", "downloadPDF", "downloadCSV", "viewFullscreen"]
-        //         }
-        //     }
-        // },
-
-        // pie: {
-        //     allowPointSelect: true,
-        //     cursor: 'pointer',
-        //     dataLabels: {
-        //         enabled: true,
-        //         format: '<b>{point.name}</b>: {point.percentage:.0f}'
-        //     }
-        // },
         chart: { type: this.modo },
         title: { text: this.title },
         series: this.series,
-        // yAxis:{
-        //     title: {
-        //         text:'Cantidad de citas',
-        //     }
-        // },
-        // xAxis:{
-        //     categories:this.categorias
-        // }
+        yAxis:{
+            title: {
+                text:'Cantidad Citas',
+            }
+        },
+        xAxis:{
+            title: {
+                text:'Citas Atendidas',
+            },
+            categories:this.categorias
+        }
       };
     },
   },
   methods: {
     cargar: function () {
 
-        let url = "/reportes/estado/citas";
+        let url = "/reportes/citas/medico";
         const params = {
             fecha_inicio:this.fechas[0],
             fecha_fin:this.fechas[1]
         };
         axios.get(url, {params})
             .then(response =>{
-                console.log(response.data)
-                // this.categorias = response.data['categoria']
-                this.series[0].data = response.data['cantidad']
+                console.log(response.data.series)
+                this.categorias = response.data['categorias']
+                this.series[0].data = response.data.series[0].data
+                this.series[1].data = response.data.series[1].data
             })
             .catch((error) => {
                 console.log(error);

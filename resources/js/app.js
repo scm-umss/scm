@@ -34,6 +34,8 @@ Vue.component('cita-paciente', require('./components/CitaPaciente.vue').default)
 Vue.component('cancelar-cita', require('./components/CancelarCita.vue').default);
 Vue.component('pacientes-registrados', require('./components/PacientesRegistrados.vue').default);
 Vue.component('estado-citas', require('./components/EstadoCitas.vue').default);
+Vue.component('especialidad-citas', require('./components/EspecialidadCitas.vue').default);
+Vue.component('citas-medico', require('./components/CitasMedico.vue').default);
 
 /**
  * Next, we will create a fresh Vue application instance and attach it to

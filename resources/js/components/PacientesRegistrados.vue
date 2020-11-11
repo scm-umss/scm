@@ -1,6 +1,6 @@
 <template>
   <div>
-      <div class="container col-md-8 text-center">
+      <div class="container col-md-8 text-center mb-4">
             <date-picker
                 v-model="fechas"
                 type="month"
@@ -60,6 +60,15 @@ export default {
   computed: {
     chartOptions:function() {
       return {
+          lang: {
+            downloadCSV:"Descarga CSV",
+            downloadSVG:"Descargar en SVG",
+            printChart: 'Imprimir',
+            downloadPNG: 'Descargar en PNG',
+            downloadJPEG: 'Descargar en JPEG',
+            downloadPDF: 'Descargar en PDF',
+            viewFullscreen:"Ver en pantalla completa"
+        },
         chart: { type: this.modo },
         title: { text: this.title },
         series: this.series,

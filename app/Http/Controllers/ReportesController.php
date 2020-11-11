@@ -151,7 +151,7 @@ class ReportesController extends Controller
             $data=[];
             $series = [];
             $data['categorias'] = $especialidadCitas->pluck('nombre');
-            $series['name'] = 'Citas';
+            // $series['name'] = 'Citas';
             $series['data'] = $especialidadCitas->pluck('citas_count');
 
             $data['series'] = $series;
@@ -175,18 +175,18 @@ class ReportesController extends Controller
             // $data=[];
             // $series = [];
             // $data['categorias'] = $especialidadCitas->pluck('nombre');
-            // $series['name'] = 'Citas';
+            // // $series['name'] = 'Citas';
             // $series['data'] = $especialidadCitas->pluck('citas_count');
 
             // $data['series'] = $series;
             // return $data;
 
             // return $especialidadCitas;
-            return view('reportes.pacientes');
+            return view('reportes.especialidadcitas');
         }
     }
 
-    public function citasAtendidas(){
+    public function citasMedico(){
         $hoy = Carbon::now();
     	$end = $hoy->endOfDay()->format('Y-m-d');
         $start = $hoy->startOfDay()->subYear()->format('Y-m-d');
@@ -223,7 +223,8 @@ class ReportesController extends Controller
                                     ->whereRaw('rol_user.user_id = users.id and rol_user.rol_id = 2');
                                 })
                                 // ->groupBy('nombre','ap_paterno','ap_materno')
-                                // ->orderBy('nombre','asc')
+                                ->orderBy('citas_atendidas_count','desc')
+                                ->take(10)
                                 ->get()
                         );
 
@@ -243,62 +244,63 @@ class ReportesController extends Controller
         }else{
 
             // $start = '2020-08-01';
-            // $end = '2020-10-01';
+            // $end = '2020-12-01';
 
-            $citasMedico = (User::query()
-                                    ->selectRaw('CONCAT(nombre, " ", ap_paterno, " ", ap_materno) AS medico')
-                                    ->withCount([
-                                        'citasAtendidas' => function ($query) use ($start, $end) {
-                                            $query->whereBetween('fecha_programada', [$start, $end]);
-                                        },
-                                        'citasCanceladas' => function ($query) use ($start, $end) {
-                                            $query->whereBetween('fecha_programada', [$start, $end]);
-                                        },
-                                    ])
-                                    ->whereExists(function($query){
-                                        $query->select(DB::raw(1))
-                                        ->from('rol_user')
-                                        ->whereRaw('rol_user.user_id = users.id and rol_user.rol_id = 2');
-                                    })
-                                    // ->groupBy('nombre','ap_paterno','ap_materno')
-                                    // ->orderBy('nombre','asc')
-                                    ->get()
-                            );
-            // $citasMed = User::query()->selectRaw('nombre, ap_paterno, ap_materno') //select('nombre, ap_paterno, ap_materno')
-            //                 ->withCount([
-            //                     'citasAtendidas' => function ($query) use ($start, $end) {
-            //                         $query->whereBetween('fecha_programada', [$start, $end]);
-            //                     },
-            //                     'citasCanceladas' => function ($query) use ($start, $end) {
-            //                         $query->whereBetween('fecha_programada', [$start, $end]);
-            //                     },
-            //                 ])
-            //                 ->whereExists(function($query){
-            //                     $query->select(DB::raw(1))
-            //                     ->from('rol_user')
-            //                     ->whereRaw('rol_user.user_id = users.id and rol_user.rol_id = 2');
-            //                 })
-            //                 // ->groupBy('id','nombre','ap_paterno','ap_materno')
-            //                 ->get();
-            // return $citasMedico;
+            // $citasMedico = (User::query()
+            //                         ->selectRaw('CONCAT(nombre, " ", ap_paterno, " ", ap_materno) AS medico')
+            //                         ->withCount([
+            //                             'citasAtendidas' => function ($query) use ($start, $end) {
+            //                                 $query->whereBetween('fecha_programada', [$start, $end]);
+            //                             },
+            //                             'citasCanceladas' => function ($query) use ($start, $end) {
+            //                                 $query->whereBetween('fecha_programada', [$start, $end]);
+            //                             },
+            //                         ])
+            //                         ->whereExists(function($query){
+            //                             $query->select(DB::raw(1))
+            //                             ->from('rol_user')
+            //                             ->whereRaw('rol_user.user_id = users.id and rol_user.rol_id = 2');
+            //                         })
+            //                         // ->groupBy('nombre','ap_paterno','ap_materno')
+            //                         ->orderBy('citas_canceladas_count','asc')
+            //                         ->take(5)
+            //                         ->get()
+            //                 );
+            // // $citasMed = User::query()->selectRaw('nombre, ap_paterno, ap_materno') //select('nombre, ap_paterno, ap_materno')
+            // //                 ->withCount([
+            // //                     'citasAtendidas' => function ($query) use ($start, $end) {
+            // //                         $query->whereBetween('fecha_programada', [$start, $end]);
+            // //                     },
+            // //                     'citasCanceladas' => function ($query) use ($start, $end) {
+            // //                         $query->whereBetween('fecha_programada', [$start, $end]);
+            // //                     },
+            // //                 ])
+            // //                 ->whereExists(function($query){
+            // //                     $query->select(DB::raw(1))
+            // //                     ->from('rol_user')
+            // //                     ->whereRaw('rol_user.user_id = users.id and rol_user.rol_id = 2');
+            // //                 })
+            // //                 // ->groupBy('id','nombre','ap_paterno','ap_materno')
+            // //                 ->get();
+            // // return $citasMedico;
 
 
-            $data=[];
-            $data['categorias'] = $citasMedico->pluck('medico');
+            // $data=[];
+            // $data['categorias'] = $citasMedico->pluck('medico');
 
-            $series = [];
-            $series1['name'] = 'Citas antendidas';
-            $series1['data'] = $citasMedico->pluck('citas_atendidas_count');
-            $series2['name'] = 'Citas canceladas';
-            $series2['data'] = $citasMedico->pluck('citas_canceladas_count');
-            $series[] = $series1;
-            $series[] = $series2;
+            // $series = [];
+            // $series1['name'] = 'Citas antendidas';
+            // $series1['data'] = $citasMedico->pluck('citas_atendidas_count');
+            // $series2['name'] = 'Citas canceladas';
+            // $series2['data'] = $citasMedico->pluck('citas_canceladas_count');
+            // $series[] = $series1;
+            // $series[] = $series2;
 
-            $data['series'] = $series;
-            return $data;
+            // $data['series'] = $series;
+            // return $data;
 
             // return $especialidadCitas;
-            return view('reportes.pacientes');
+            return view('reportes.citasmedico');
         }
     }
 }
