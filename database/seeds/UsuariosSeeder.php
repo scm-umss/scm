@@ -120,11 +120,11 @@ class UsuariosSeeder extends Seeder
         $medicos_ex->each(function ($user) use ($rolMedico, $traumatologia, $psicologia, $cardiologia, $odontologia) {
             $user->roles()->sync([$rolMedico->id]);
             $p = mt_rand(1,100);
-            if ($p > 25) {
+            if ($p < 25) {
                 $user->especialidades()->sync([$traumatologia->id]);
-            } else if ($p > 50) {
+            } else if ($p < 50) {
                 $user->especialidades()->sync([$cardiologia->id]);
-            } else if ($p > 75) {
+            } else if ($p < 75) {
                 $user->especialidades()->sync([$odontologia->id]);
             } else {
                 $user->especialidades()->sync([$psicologia->id]);
@@ -217,6 +217,7 @@ class UsuariosSeeder extends Seeder
                 $cita_ex->especialidad_id = $med->especialidades()->first()->id;
                 //$cita_ex->sucursal_id = $sucursal1->id;
                 $cita_ex->hora_programada = $faker->unique()->randomElement(['08:00:00','08:30:00','09:00:00','09:30:00','10:00:00','10:30:00']);
+                $cita_ex->save();
 
                 $historialCreado = CitaHistorial::create([
                     'cita_id' => $cita_ex->id,
