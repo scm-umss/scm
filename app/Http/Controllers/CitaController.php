@@ -26,56 +26,6 @@ class CitaController extends Controller
      */
     public function index()
     {
-        // $rol = auth()->user()->roles[0]->slug;
-        // // dd($rol);
-        // if($rol == 'admin'){
-        //     $citas_pendientes = Cita::where('estado', 'Reservada')
-        //                         ->orderBy('fecha_programada','ASC')
-        //                         ->orderBy('hora_programada','ASC')
-        //                         ->paginate(10);
-        //     // return view('citas.index', compact('citas_pendientes','citas_confirmadas','historial_citas','rol'));
-        //     $citas_confirmadas = Cita::where('estado', 'Confirmada')
-        //                         ->orderBy('fecha_programada','ASC')
-        //                         ->orderBy('hora_programada','ASC')
-        //                         ->paginate(10);
-        //     // $citas_atendidas = Cita::where('estado', 'Atendida')->paginate(10);
-        //     $historial_citas = Cita::whereIn('estado', ['Atendida', 'Cancelada'])
-        //                         ->orderBy('fecha_programada','DESC')
-        //                         ->orderBy('hora_programada','DESC')
-        //                         ->paginate(10);
-        // }elseif($rol == 'medico'){
-        //     $citas_pendientes = Cita::where('estado', 'Reservada')
-        //                         ->where('medico_id', auth()->id())
-        //                         ->orderBy('fecha_programada','ASC')
-        //                         ->orderBy('hora_programada','ASC')
-        //                         ->paginate(10);
-        //     $citas_confirmadas = Cita::where('estado', 'Confirmada')
-        //                         ->where('medico_id', auth()->id())
-        //                         ->orderBy('fecha_programada','ASC')
-        //                         ->orderBy('hora_programada','ASC')
-        //                         ->paginate(10);
-        //     $historial_citas = Cita::whereIn('estado', ['Atendida', 'Cancelada'])
-        //                     ->where('medico_id', auth()->id())
-        //                     ->orderBy('fecha_programada','DESC')
-        //                     ->orderBy('hora_programada','DESC')
-        //                     ->paginate(10);
-        // }elseif($rol == 'paciente'){
-        //     $citas_pendientes = Cita::where('estado', 'Reservada')
-        //                         ->where('paciente_id', auth()->id())
-        //                         ->orderBy('fecha_programada','ASC')
-        //                         ->paginate(10);
-        //     $citas_confirmadas = Cita::where('estado', 'Confirmada')
-        //                         ->where('paciente_id', auth()->id())
-        //                         ->orderBy('fecha_programada','ASC')
-        //                         ->orderBy('hora_programada','ASC')
-        //                         ->paginate(10);
-        //     $historial_citas = Cita::whereIn('estado', ['Atendida', 'Cancelada'])
-        //                     ->where('paciente_id', auth()->id())
-        //                     ->orderBy('fecha_programada','DESC')
-        //                     ->orderBy('hora_programada','DESC')
-        //                     ->paginate(10);
-        //     // return view('citas.index', compact('citas_pendientes','citas_confirmadas','historial_citas','rol'));
-        // }
         return redirect()->action('CitaController@pendientes');
     }
     public function pendientes(){
@@ -98,8 +48,6 @@ class CitaController extends Controller
                                 ->where('paciente_id', auth()->id())
                                 ->orderBy('fecha_programada','ASC')
                                 ->paginate(10);
-
-            // return view('citas.index', compact('citas_pendientes','citas_confirmadas','historial_citas','rol'));
         }
         return view('citas.tablas.pendiente', compact('citas_pendientes','rol'));
     }
@@ -178,8 +126,6 @@ class CitaController extends Controller
     {
         // dd($request);
         $fecha = new Carbon($request->get('fecha_programada'));
-        // dump($fecha->format('Y-m-d'));
-        $ficha = 1;
         /** La hora ya esta ocupado por otro paciente  */
         $citaRegistrada = Cita::where('fecha_programada', $fecha->format('Y-m-d'))
                         ->where('medico_id', $request->get('medico'))
@@ -198,7 +144,7 @@ class CitaController extends Controller
             $cita->sucursal_id = $request->get('sucursal');
             $cita->fecha_programada = $fecha->format('Y-m-d');
             $cita->hora_programada = $request->get('hora_programada');
-            $cita->numero_ficha = $ficha+1;
+            // $cita->numero_ficha = $ficha+1;
             $cita->save();
             $cita->citaHistorials()->create([
                 'cita_id' => $cita->id,
@@ -220,8 +166,6 @@ class CitaController extends Controller
                 return response()->json($error);
             }
         }
-
-        // return redirect()->route('citas.index')->with('status','Registro realizado exitosamente!');
     }
 
     /**
@@ -249,11 +193,6 @@ class CitaController extends Controller
     public function edit(Request $request, Cita $cita)
     {
         $this->authorize('update', $cita);
-        // $espcialidad = Especialidad::where('id',$cita->especialidad_id)->first(['id','nombre']);
-        // $medico = User::where('id',$cita->medico_id)->first(['id','nombre']);
-        // $sucursal = Sucursal::where('id',$cita->sucursal_id)->first(['id','nombre']);
-        // dd($cita);
-        // dd($cita);
         if($request->ajax()){
             // $data = [];
             return response()->json($cita);
@@ -261,8 +200,6 @@ class CitaController extends Controller
             return view('admin.citas.edit',compact('cita'));
         }
 
-        // $especialidades = Especialidad::all();
-        // return view('admin.citas.edit', compact('cita','especialidades'));
     }
 
     /**

@@ -2255,28 +2255,22 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
-//
-// import Chart from 'highcharts-vue'
 
- // import ComboFecha from "./ComboFecha.vue";
 
 
 
 highcharts_modules_exporting__WEBPACK_IMPORTED_MODULE_1___default()(highcharts__WEBPACK_IMPORTED_MODULE_0___default.a);
 /* harmony default export */ __webpack_exports__["default"] = ({
   components: {
-    // highcharts: Chart,
-    // ComboFecha,
     DatePicker: vue2_datepicker__WEBPACK_IMPORTED_MODULE_2__["default"]
   },
   props: ['f_ini', 'f_fin'],
   data: function data() {
     return {
-      // value1: [new Date(2019, 9, 8), new Date(2019, 9, 19)],
-      fechas: [],
+      fechas: [moment__WEBPACK_IMPORTED_MODULE_3___default()(new Date(this.f_ini)).format('DD-MM-YYYY'), moment__WEBPACK_IMPORTED_MODULE_3___default()(new Date(this.f_fin)).format('DD-MM-YYYY')],
       fecha_inicio: null,
       fecha_fin: null,
-      title: "Cantidad de citas por especialidad",
+      title: "Cantidad de citas por médico",
       options: ["spline", "line", "bar", "pie"],
       modo: "column",
       series: [{
@@ -2334,7 +2328,7 @@ highcharts_modules_exporting__WEBPACK_IMPORTED_MODULE_1___default()(highcharts__
       axios.get(url, {
         params: params
       }).then(function (response) {
-        console.log(response.data.series);
+        // console.log(response.data.series)
         _this.categorias = response.data['categorias'];
         _this.series[0].data = response.data.series[0].data;
         _this.series[1].data = response.data.series[1].data;
@@ -2345,13 +2339,12 @@ highcharts_modules_exporting__WEBPACK_IMPORTED_MODULE_1___default()(highcharts__
     rangoFechas: function rangoFechas() {
       this.fecha_inicio = this.fechas[0];
       this.fecha_fin = this.fechas[1];
-      this.cargar();
-      console.log(this.fechas[0]);
-      console.log(this.fechas[1]);
+      this.cargar(); // console.log(this.fechas[0]);
+      // console.log(this.fechas[1]);
     }
   },
   created: function created() {
-    this.cargar(); //   this.chartOptions()
+    this.cargar();
   }
 });
 
@@ -3327,25 +3320,19 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
-//
-// import Chart from 'highcharts-vue'
 
- // import ComboFecha from "./ComboFecha.vue";
 
 
 
 highcharts_modules_exporting__WEBPACK_IMPORTED_MODULE_1___default()(highcharts__WEBPACK_IMPORTED_MODULE_0___default.a);
 /* harmony default export */ __webpack_exports__["default"] = ({
   components: {
-    // highcharts: Chart,
-    // ComboFecha,
     DatePicker: vue2_datepicker__WEBPACK_IMPORTED_MODULE_2__["default"]
   },
   props: ['f_ini', 'f_fin'],
   data: function data() {
     return {
-      // value1: [new Date(2019, 9, 8), new Date(2019, 9, 19)],
-      fechas: [],
+      fechas: [moment__WEBPACK_IMPORTED_MODULE_3___default()(new Date(this.f_ini)).format('DD-MM-YYYY'), moment__WEBPACK_IMPORTED_MODULE_3___default()(new Date(this.f_fin)).format('DD-MM-YYYY')],
       fecha_inicio: null,
       fecha_fin: null,
       title: "Cantidad de citas por especialidad",
@@ -3354,11 +3341,7 @@ highcharts_modules_exporting__WEBPACK_IMPORTED_MODULE_1___default()(highcharts__
       series: [{
         name: 'Especialidad',
         data: []
-      } // {
-      //     name:'No registrados',
-      //   data: [12, 1, 4, 3, 8, 1, 3, 7],
-      // },
-      ],
+      }],
       categorias: []
     };
   },
@@ -3404,7 +3387,7 @@ highcharts_modules_exporting__WEBPACK_IMPORTED_MODULE_1___default()(highcharts__
       axios.get(url, {
         params: params
       }).then(function (response) {
-        console.log(response.data);
+        // console.log(response.data)
         _this.categorias = response.data['categorias'];
         _this.series[0].data = response.data.series['data'];
       })["catch"](function (error) {
@@ -3420,7 +3403,7 @@ highcharts_modules_exporting__WEBPACK_IMPORTED_MODULE_1___default()(highcharts__
     }
   },
   created: function created() {
-    this.cargar(); //   this.chartOptions()
+    this.cargar();
   }
 });
 
@@ -3544,6 +3527,8 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var highcharts_modules_exporting__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! highcharts/modules/exporting */ "./node_modules/highcharts/modules/exporting.js");
 /* harmony import */ var highcharts_modules_exporting__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(highcharts_modules_exporting__WEBPACK_IMPORTED_MODULE_1__);
 /* harmony import */ var vue2_datepicker__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! vue2-datepicker */ "./node_modules/vue2-datepicker/index.esm.js");
+/* harmony import */ var moment__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! moment */ "./node_modules/moment/moment.js");
+/* harmony import */ var moment__WEBPACK_IMPORTED_MODULE_3___default = /*#__PURE__*/__webpack_require__.n(moment__WEBPACK_IMPORTED_MODULE_3__);
 //
 //
 //
@@ -3561,23 +3546,19 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
-//
-// import Chart from 'highcharts-vue'
 
- // import ComboFecha from "./ComboFecha.vue";
+
 
 
 highcharts_modules_exporting__WEBPACK_IMPORTED_MODULE_1___default()(highcharts__WEBPACK_IMPORTED_MODULE_0___default.a);
 /* harmony default export */ __webpack_exports__["default"] = ({
   components: {
-    // highcharts: Chart,
-    // ComboFecha,
     DatePicker: vue2_datepicker__WEBPACK_IMPORTED_MODULE_2__["default"]
   },
+  props: ['f_ini', 'f_fin'],
   data: function data() {
     return {
-      // value1: [new Date(2019, 9, 8), new Date(2019, 9, 19)],
-      fechas: [],
+      fechas: [moment__WEBPACK_IMPORTED_MODULE_3___default()(new Date(this.f_ini)).format('DD-MM-YYYY'), moment__WEBPACK_IMPORTED_MODULE_3___default()(new Date(this.f_fin)).format('DD-MM-YYYY')],
       fecha_inicio: null,
       fecha_fin: null,
       title: "Estado de citas",
@@ -3603,36 +3584,13 @@ highcharts_modules_exporting__WEBPACK_IMPORTED_MODULE_1___default()(highcharts__
           downloadPDF: 'Descargar en PDF',
           viewFullscreen: "Ver en pantalla completa"
         },
-        // exporting: {
-        //     buttons: {
-        //         contextButton: {
-        //             menuItems: ["printChart", "separator", "downloadPNG", "downloadPDF", "downloadCSV", "viewFullscreen"]
-        //         }
-        //     }
-        // },
-        // pie: {
-        //     allowPointSelect: true,
-        //     cursor: 'pointer',
-        //     dataLabels: {
-        //         enabled: true,
-        //         format: '<b>{point.name}</b>: {point.percentage:.0f}'
-        //     }
-        // },
         chart: {
           type: this.modo
         },
         title: {
           text: this.title
         },
-        series: this.series // yAxis:{
-        //     title: {
-        //         text:'Cantidad de citas',
-        //     }
-        // },
-        // xAxis:{
-        //     categories:this.categorias
-        // }
-
+        series: this.series
       };
     }
   },
@@ -3648,8 +3606,7 @@ highcharts_modules_exporting__WEBPACK_IMPORTED_MODULE_1___default()(highcharts__
       axios.get(url, {
         params: params
       }).then(function (response) {
-        console.log(response.data); // this.categorias = response.data['categoria']
-
+        // console.log(response.data)
         _this.series[0].data = response.data['cantidad'];
       })["catch"](function (error) {
         console.log(error);
@@ -3664,7 +3621,7 @@ highcharts_modules_exporting__WEBPACK_IMPORTED_MODULE_1___default()(highcharts__
     }
   },
   created: function created() {
-    this.cargar(); //   this.chartOptions()
+    this.cargar();
   }
 });
 
@@ -3822,38 +3779,28 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
-//
-// import Chart from 'highcharts-vue'
 
- // import ComboFecha from "./ComboFecha.vue";
 
 
 
 highcharts_modules_exporting__WEBPACK_IMPORTED_MODULE_1___default()(highcharts__WEBPACK_IMPORTED_MODULE_0___default.a);
 /* harmony default export */ __webpack_exports__["default"] = ({
   components: {
-    // highcharts: Chart,
-    // ComboFecha,
     DatePicker: vue2_datepicker__WEBPACK_IMPORTED_MODULE_2__["default"]
   },
   props: ['f_ini', 'f_fin'],
   data: function data() {
     return {
-      // value1: [new Date(2019, 9, 8), new Date(2019, 9, 19)],
       fechas: [moment__WEBPACK_IMPORTED_MODULE_3___default()(new Date(this.f_ini)).format('MM-YYYY'), moment__WEBPACK_IMPORTED_MODULE_3___default()(new Date(this.f_fin)).format('MM-YYYY')],
       fecha_inicio: null,
       fecha_fin: null,
-      title: "Pacientes",
+      title: "Cantidad de pacientes registrados",
       options: ["spline", "line", "bar", "pie"],
       modo: "spline",
       series: [{
         name: 'Registrados',
         data: []
-      } // {
-      //     name:'No registrados',
-      //   data: [12, 1, 4, 3, 8, 1, 3, 7],
-      // },
-      ],
+      }],
       categorias: []
     };
   },
@@ -3899,7 +3846,7 @@ highcharts_modules_exporting__WEBPACK_IMPORTED_MODULE_1___default()(highcharts__
       axios.get(url, {
         params: params
       }).then(function (response) {
-        console.log(response.data);
+        // console.log(response.data)
         _this.categorias = response.data['categoria'];
         _this.series[0].data = response.data['cantidad'];
       })["catch"](function (error) {
@@ -3909,13 +3856,12 @@ highcharts_modules_exporting__WEBPACK_IMPORTED_MODULE_1___default()(highcharts__
     rangoFechas: function rangoFechas() {
       this.fecha_inicio = this.fechas[0];
       this.fecha_fin = this.fechas[1];
-      this.cargar();
-      console.log(this.fechas[0]);
-      console.log(this.fechas[1]);
+      this.cargar(); // console.log(this.fechas[0]);
+      // console.log(this.fechas[1]);
     }
   },
   created: function created() {
-    this.cargar(); //   this.chartOptions()
+    this.cargar();
   }
 });
 
@@ -101737,8 +101683,7 @@ Vue.use(vue_sweetalert2__WEBPACK_IMPORTED_MODULE_0__["default"]);
 Vue.use(highcharts_vue__WEBPACK_IMPORTED_MODULE_1___default.a);
 Vue.component('eliminar-usuario', __webpack_require__(/*! ./components/EliminarUsuario.vue */ "./resources/js/components/EliminarUsuario.vue")["default"]);
 Vue.component('eliminar-especialidad', __webpack_require__(/*! ./components/EliminarEspecialidad.vue */ "./resources/js/components/EliminarEspecialidad.vue")["default"]);
-Vue.component('especialidades-inactivos', __webpack_require__(/*! ./components/EspecialidadInactivo.vue */ "./resources/js/components/EspecialidadInactivo.vue")["default"]); // Vue.component('listar-especialidades', require('./components/Especialidades.vue').default);
-
+Vue.component('especialidades-inactivos', __webpack_require__(/*! ./components/EspecialidadInactivo.vue */ "./resources/js/components/EspecialidadInactivo.vue")["default"]);
 Vue.component('crear-cita', __webpack_require__(/*! ./components/CrearCita.vue */ "./resources/js/components/CrearCita.vue")["default"]);
 Vue.component('editar-cita', __webpack_require__(/*! ./components/EditarCita.vue */ "./resources/js/components/EditarCita.vue")["default"]);
 Vue.component('fecha-component', __webpack_require__(/*! ./components/FechaComponent.vue */ "./resources/js/components/FechaComponent.vue")["default"]);

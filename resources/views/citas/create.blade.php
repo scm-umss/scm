@@ -15,7 +15,7 @@
                     <div class="d-flex justify-content-center flex-wrap">
                         @foreach ($especialidades as $especialidad)
                     <div class="card m-3" style="width: 18rem;">
-                        <img class="card-img-top" src="{{ asset('storage/especialidades.png') }}" alt="Card image cap">
+                        <img class="card-img-top" src="/storage/{{ $especialidad->imagen }}" alt="Card image cap">
                         <div class="card-body">
                           <h5 class="card-title">{{ $especialidad->nombre }}</h5>
                           <p class="card-text">{{ $especialidad->descripcion }}</p>

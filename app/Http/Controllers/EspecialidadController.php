@@ -124,27 +124,19 @@ class EspecialidadController extends Controller
      */
     public function destroy(Especialidad $especialidad)
     {
-        // return 'Eliminando-...';
-        // $usuario = User::findOrFail($id);
-        // $this->authorize('delete', $especialidad);
         $especialidad->delete();
         return redirect()->route('especialidad.index')->with('status', 'Especialidad dado de baja!.');
     }
     public function inactivos()
     {
         $especialidades = Especialidad::onlyTrashed()->get();
-        // dd($especialidades);
-        // return $especialidades;
-        // return view('usuarios.inactivos', compact('usuarios'));
         return response()->json($especialidades);
     }
 
     public function restore($id)
     {
-        // $usuario = User::withTrashed()->where('id', $id)->first();
         $especialidad = Especialidad::withTrashed()->findOrFail($id);
         $especialidad->restore();
         return response()->json('Especialidad '.$especialidad->nombre.' restaurada');
-        // return redirect()->route('especialidad.inactivos')->with('status', 'Usuario restaurado exitosamente!');
     }
 }

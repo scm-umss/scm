@@ -22,7 +22,6 @@ class DatosController extends Controller
     public function getEspecialidades(Request $request){
         if($request->ajax()){
             $especialidades = Especialidad::get(['id','nombre']);
-            // $especialidades = Especialidad::get('nombre','id');
             return response()->json($especialidades);
         }else{
             return 'Acceso denegado';
@@ -40,20 +39,9 @@ class DatosController extends Controller
     }
 
     public function horasMedico(Request $request){
-        // $fecha = $request->fecha;
-        // dd($request->especialidad);
         $medico = $request->id;
-        // $medico = User::where('id', 2)->get(['id','nombre','ap_paterno','ap_materno']);
         $fecha = new Carbon($request->fecha);
-        // for ($i=0; $i <7 ; $i++) {
-        //     if($i == 0){
-
-        //     }
-        // }
         $dia = ($fecha->dayOfWeek+6)%7;
-        // dd($f_carbon->dayOfWeek);
-        // $medico = User::findOrFail($request->id);
-        // $tm_horario = $medico->horarios()->where('tm_activo',1)->where('dia',1)->get();
         $tm_horario = Horario::where('tm_activo',true)
                                 ->where('dia',$dia)
                                 ->where('user_id', $medico)
@@ -68,7 +56,6 @@ class DatosController extends Controller
                                 ->first([
                                     'tt_hora_inicio', 'tt_hora_fin','tt_sucursal'
                                 ]);
-        // $data = $this->estaDisponible($tm_horario,$tt_horario,$fecha,$medico);
         $tm_intervalos = [];
         $tt_intervalos = [];
         $tm_sucursal = [];
@@ -93,8 +80,6 @@ class DatosController extends Controller
              $tt_sucursal = Sucursal::where('id',$tt_horario->tt_sucursal)->first(['id','nombre']);
              $tm_sucursal = Sucursal::where('id',$tm_horario->tm_sucursal)->first(['id','nombre']);
         }
-        // dd($tm_intervalos);
-        // $tm_sucursal1 = $tm_horario->sucursal();
 
 
         $data =[
@@ -140,9 +125,6 @@ class DatosController extends Controller
         return !$existe;
     }
     public function pacientes(Request $request){
-        //dd($request->all());
-        //$fechaInicio = $request;
-        // $pacientesMes = User::select('fecha_nacimiento')->where('created_at','>','2020-10-01')->groupBy('fecha_nacimiento')->get();
         if($request->get('fecha_inicio')) {
             $pacientesMes = DB::table('users')
                         ->select(DB::raw('count(*) as cantidad, YEAR(created_at) as anio, MONTH(created_at) as mes'))

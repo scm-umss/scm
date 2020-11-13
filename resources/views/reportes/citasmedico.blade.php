@@ -2,7 +2,7 @@
 @section('content')
 
 <div class="container">
-    <citas-medico></citas-medico>
+    <citas-medico f_ini="{{ $f_ini }}" f_fin="{{ $f_fin }}"></citas-medico>
 </div>
 
 @endsection

@@ -12,16 +12,13 @@
                 @change="rangoFechas"
             ></date-picker>
       </div>
-    <!-- <highcharts :options="chartOptions" :callback="cargar" ref="chart"></highcharts> -->
     <highcharts :options="chartOptions"></highcharts>
   </div>
 </template>
 
 <script>
-// import Chart from 'highcharts-vue'
 import Highcharts from "highcharts";
 import exportingInit from "highcharts/modules/exporting";
-// import ComboFecha from "./ComboFecha.vue";
 import DatePicker from 'vue2-datepicker';
 import moment from 'moment';
 
@@ -30,15 +27,12 @@ exportingInit(Highcharts);
 
 export default {
   components: {
-    // highcharts: Chart,
-    // ComboFecha,
     DatePicker
   },
   props: ['f_ini','f_fin'],
   data() {
     return {
-        // value1: [new Date(2019, 9, 8), new Date(2019, 9, 19)],
-        fechas:[],
+        fechas:[moment(new Date(this.f_ini)).format('DD-MM-YYYY'), moment(new Date(this.f_fin)).format('DD-MM-YYYY')],
         fecha_inicio: null,
         fecha_fin: null,
       title: "Cantidad de citas por especialidad",
@@ -49,10 +43,6 @@ export default {
             name:'Especialidad',
             data: [],
         },
-        // {
-        //     name:'No registrados',
-        //   data: [12, 1, 4, 3, 8, 1, 3, 7],
-        // },
       ],
       categorias:[],
     };
@@ -93,7 +83,7 @@ export default {
         };
         axios.get(url, {params})
             .then(response =>{
-                console.log(response.data)
+                // console.log(response.data)
                 this.categorias = response.data['categorias']
                 this.series[0].data = response.data.series['data']
             })
@@ -111,7 +101,6 @@ export default {
   },
   created: function() {
       this.cargar();
-    //   this.chartOptions()
   },
 };
 </script>

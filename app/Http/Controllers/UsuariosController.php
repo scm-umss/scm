@@ -75,8 +75,6 @@ class UsuariosController extends Controller
         $usuario->matricula = $matricula;
         $usuario->fecha_nacimiento = $request->input('fecha_nacimiento');
         $usuario->telefono = $request->input('telefono');
-        // $usuario->rol = $request->input('rol');
-        // $usuario->estado = $request->input('estado');
 
         if ($request['imagen']) {
             //obtener imagen
@@ -141,12 +139,11 @@ class UsuariosController extends Controller
         $usuario->email = $request->input('email');
         $usuario->ap_paterno = $request->input('ap_paterno');
         $usuario->ap_materno = $request->input('ap_materno');
+        $usuario->ci = $request->input('ci');
         $usuario->telefono = $request->input('telefono');
-        // $usuario->rol = $request->input('rol');
-        //$usuario->estado = $request->input('estado');
+        $usuario->fecha_nacimiento = $request->input('fecha_nacimiento');
         if ($request->password) {
             $usuario->password = Hash::make($request->input('password'));
-            // dd($usuario->password);
         }
         if ($request['imagen']) {
             //obtener imagen

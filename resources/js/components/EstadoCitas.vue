@@ -11,31 +11,27 @@
                 @change="rangoFechas"
             ></date-picker>
       </div>
-    <!-- <highcharts :options="chartOptions" :callback="cargar" ref="chart"></highcharts> -->
     <highcharts :options="chartOptions"></highcharts>
   </div>
 </template>
 
 <script>
-// import Chart from 'highcharts-vue'
 import Highcharts from "highcharts";
 import exportingInit from "highcharts/modules/exporting";
-// import ComboFecha from "./ComboFecha.vue";
 import DatePicker from 'vue2-datepicker';
+import moment from 'moment';
 
 exportingInit(Highcharts);
 
 
 export default {
   components: {
-    // highcharts: Chart,
-    // ComboFecha,
     DatePicker
   },
+  props: ['f_ini','f_fin'],
   data() {
     return {
-        // value1: [new Date(2019, 9, 8), new Date(2019, 9, 19)],
-        fechas:[],
+        fechas:[moment(new Date(this.f_ini)).format('DD-MM-YYYY'), moment(new Date(this.f_fin)).format('DD-MM-YYYY')],
         fecha_inicio: null,
         fecha_fin: null,
       title: "Estado de citas",
@@ -63,33 +59,9 @@ export default {
             downloadPDF: 'Descargar en PDF',
             viewFullscreen:"Ver en pantalla completa"
         },
-        // exporting: {
-        //     buttons: {
-        //         contextButton: {
-        //             menuItems: ["printChart", "separator", "downloadPNG", "downloadPDF", "downloadCSV", "viewFullscreen"]
-        //         }
-        //     }
-        // },
-
-        // pie: {
-        //     allowPointSelect: true,
-        //     cursor: 'pointer',
-        //     dataLabels: {
-        //         enabled: true,
-        //         format: '<b>{point.name}</b>: {point.percentage:.0f}'
-        //     }
-        // },
         chart: { type: this.modo },
         title: { text: this.title },
         series: this.series,
-        // yAxis:{
-        //     title: {
-        //         text:'Cantidad de citas',
-        //     }
-        // },
-        // xAxis:{
-        //     categories:this.categorias
-        // }
       };
     },
   },
@@ -103,8 +75,7 @@ export default {
         };
         axios.get(url, {params})
             .then(response =>{
-                console.log(response.data)
-                // this.categorias = response.data['categoria']
+                // console.log(response.data)
                 this.series[0].data = response.data['cantidad']
             })
             .catch((error) => {
@@ -121,7 +92,6 @@ export default {
   },
   created: function() {
       this.cargar();
-    //   this.chartOptions()
   },
 };
 </script>

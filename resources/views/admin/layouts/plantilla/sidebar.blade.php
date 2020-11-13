@@ -52,7 +52,7 @@
                 </a>
             </li>
 
-            <li class="nav-item has-treeview">
+            <li class="nav-item has-treeview menu-open">
                 <a href="#" class="nav-link {{ request()->is('reportes*') ? 'active' : '' }}">
                     <i class="nav-icon fas fa-user-clock"></i>
                     <p>
@@ -70,16 +70,23 @@
                     </li>
                     <li class="nav-item">
                         <a href="{{ route('reportes.estadocitas') }}"
-                            class="nav-link {{ request()->is('reportes/estado') ? 'active' : '' }}">
+                            class="nav-link {{ request()->is('reportes/estado/citas') ? 'active' : '' }}">
                             <i class="fas fa-arrow-right nav-icon"></i>
                             <p>Estado de citas</p>
                         </a>
                     </li>
                     <li class="nav-item">
-                        <a href="{{ route('reportes.estadocitas') }}"
-                            class="nav-link {{ request()->is('reportes/estado') ? 'active' : '' }}">
+                        <a href="{{ route('reportes.especialidadcitas') }}"
+                            class="nav-link {{ request()->is('reportes/especialidad/citas') ? 'active' : '' }}">
                             <i class="fas fa-arrow-right nav-icon"></i>
-                            <p>Otro</p>
+                            <p>Citas por especialidad</p>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="{{ route('reportes.citasmedico') }}"
+                            class="nav-link {{ request()->is('reportes/citas/medico') ? 'active' : '' }}">
+                            <i class="fas fa-arrow-right nav-icon"></i>
+                            <p>Citas por Médico</p>
                         </a>
                     </li>
                 </ul>

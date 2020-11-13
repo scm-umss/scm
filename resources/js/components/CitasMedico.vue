@@ -12,16 +12,13 @@
                 @change="rangoFechas"
             ></date-picker>
       </div>
-    <!-- <highcharts :options="chartOptions" :callback="cargar" ref="chart"></highcharts> -->
     <highcharts :options="chartOptions"></highcharts>
   </div>
 </template>
 
 <script>
-// import Chart from 'highcharts-vue'
 import Highcharts from "highcharts";
 import exportingInit from "highcharts/modules/exporting";
-// import ComboFecha from "./ComboFecha.vue";
 import DatePicker from 'vue2-datepicker';
 import moment from 'moment';
 
@@ -30,18 +27,15 @@ exportingInit(Highcharts);
 
 export default {
   components: {
-    // highcharts: Chart,
-    // ComboFecha,
     DatePicker
   },
   props: ['f_ini','f_fin'],
   data() {
     return {
-        // value1: [new Date(2019, 9, 8), new Date(2019, 9, 19)],
-        fechas:[],
+        fechas:[moment(new Date(this.f_ini)).format('DD-MM-YYYY'), moment(new Date(this.f_fin)).format('DD-MM-YYYY')],
         fecha_inicio: null,
         fecha_fin: null,
-      title: "Cantidad de citas por especialidad",
+      title: "Cantidad de citas por médico",
       options: ["spline", "line", "bar", "pie"],
       modo: "column",
       series: [
@@ -96,7 +90,7 @@ export default {
         };
         axios.get(url, {params})
             .then(response =>{
-                console.log(response.data.series)
+                // console.log(response.data.series)
                 this.categorias = response.data['categorias']
                 this.series[0].data = response.data.series[0].data
                 this.series[1].data = response.data.series[1].data
@@ -109,13 +103,12 @@ export default {
         this.fecha_inicio = this.fechas[0];
         this.fecha_fin = this.fechas[1];
         this.cargar();
-        console.log(this.fechas[0]);
-        console.log(this.fechas[1]);
+        // console.log(this.fechas[0]);
+        // console.log(this.fechas[1]);
     }
   },
   created: function() {
       this.cargar();
-    //   this.chartOptions()
   },
 };
 </script>

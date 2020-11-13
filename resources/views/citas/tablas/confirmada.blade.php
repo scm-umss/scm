@@ -9,7 +9,6 @@
     <table class="table table-striped">
         <thead>
             <tr>
-                {{-- <th scope="col">Numero ficha</th> --}}
                 <th scope="col">Fecha</th>
                 <th scope="col">Hora</th>
                 <th scope="col">Especialidad</th>
@@ -17,6 +16,9 @@
                     <th scope="col">Médico</th>
                 @elseif ($rol == 'medico')
                     <th scope="col">Paciente</th>
+                @elseif ($rol == 'admin')
+                    <th scope="col">Paciente</th>
+                    <th scope="col">Médico</th>
                 @endif
                 <th scope="col">Sucursal</th>
                 <th scope="col">Acciones</th>
@@ -32,6 +34,9 @@
                     <td>{{ $cita->medico->nombreCompleto }}</td>
                 @elseif ($rol == 'medico')
                     <td>{{ $cita->paciente->nombre }}</td>
+                @elseif ($rol == 'admin')
+                    <td>{{ $cita->paciente->nombre }}</td>
+                    <td>{{ $cita->medico->nombreCompleto }}</td>
                 @endif
                 <td>{{ $cita->sucursal->nombre }}</td>
                 <td class="d-flex">
@@ -39,6 +44,9 @@
                     <a class="btn btn-sm btn-primary mr-2" href="{{ route('citas.show', $cita->id) }}">
                         Ver cita
                     </a>
+                    @endif
+                    @if ($rol == 'medico')
+                    <a class="btn btn-sm btn-success mr-2" href="#">Atendido</a>
                     @endif
                     <cancelar-cita cita-id="{{ $cita->id }}" />
                 </td>

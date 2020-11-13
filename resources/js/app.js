@@ -26,7 +26,6 @@ Vue.use(HighchartsVue);
 Vue.component('eliminar-usuario', require('./components/EliminarUsuario.vue').default);
 Vue.component('eliminar-especialidad', require('./components/EliminarEspecialidad.vue').default);
 Vue.component('especialidades-inactivos', require('./components/EspecialidadInactivo.vue').default);
-// Vue.component('listar-especialidades', require('./components/Especialidades.vue').default);
 Vue.component('crear-cita', require('./components/CrearCita.vue').default);
 Vue.component('editar-cita', require('./components/EditarCita.vue').default);
 Vue.component('fecha-component', require('./components/FechaComponent.vue').default);

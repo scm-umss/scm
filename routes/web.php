@@ -52,7 +52,6 @@ Route::put('/horarios/{medico}', 'HorarioController@update')->name('horarios.upd
 Route::get('/medicos', 'MedicoController@index')->name('medicos.index');
 /** Gestion de pacientes  */
 Route::get('/pacientes', 'PacienteController@index')->name('pacientes.index');
-Route::get('/pacientes/create', 'PacienteController@create')->name('pacientes.create');
 
 /** Gestion de citas Admin */
 /** Rspuesta JSON */

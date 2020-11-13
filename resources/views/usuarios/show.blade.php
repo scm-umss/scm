@@ -17,19 +17,25 @@
                 </div>
                 @endif
                 <div class="row no-gutters">
-                    <div class="col-md-4">
+                    <div class="col-md-4 bg-secondary">
                         <img src="/storage/{{$usuario->imagen}}" class="card-img rounded-circle" alt="foto">
+                        <div class="container text-center mt-4">
+                            @if (auth()->user()->isSuperAdmin())
+                            <a class="btn btn-warning d-block" href="{{ route('usuarios.edit', $usuario->id) }}"
+                                role="button">Editar</a>
+                            @endif
+                        </div>
                     </div>
                     <div class="col-md-8">
                         <div class="card-body">
-                            <div></div>
-                            <h5 class="card-title">Estás registrado como:
-                                {{ $usuario->roles->pluck('nombre')->implode(', ') }}</h5>
-                            <hr>
-                            @if (auth()->user()->isSuperAdmin())
-                            <a class="btn btn-success" href="{{ route('usuarios.edit', $usuario->id) }}"
-                                role="button">Editar</a>
-                            @endif
+                            <div class="container bg-secondary mb-4 d-flex justify-content-between">
+                                <h4 class="card-title">Estás registrado como:
+                                    {{ $usuario->roles->pluck('nombre')->implode(', ') }}</h4>
+                                    <a class="btn btn-danger" href="{{ redirect()->getUrlGenerator()->previous() }}" role="button"><i class="fa fa-arrow-circle-left" aria-hidden="true"></i> Volver</a>
+                            </div>
+
+                            {{-- <hr> --}}
+
                             <p class="card-text"> <strong>Nombre:</strong> {{ $usuario->nombreCompleto }}</p>
 
                             <p class="card-text"><strong>CI:</strong> {{ $usuario->ci }}</p>
