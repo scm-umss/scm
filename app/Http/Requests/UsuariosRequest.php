@@ -23,7 +23,6 @@ class UsuariosRequest extends FormRequest
      */
     public function rules()
     {
-        // dd($this->request);
         switch ($this->method()) {
             case "POST": {
                 return [

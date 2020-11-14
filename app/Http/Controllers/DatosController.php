@@ -96,7 +96,7 @@ class DatosController extends Controller
     private function getIntervalos($inicio, $fin, $fecha, $medico){
         $inicio = new Carbon($inicio);
         $fin = new Carbon($fin);
-        // dd($fecha->format('Y-m-d'));
+
         $intervalos=[];
         while ($inicio < $fin) {
             $intervalo = [];
@@ -112,7 +112,7 @@ class DatosController extends Controller
                 $intervalos[]=$intervalo;
             }
         }
-        // dd($intervals);
+        
         return $intervalos;
     }
     private function estaDisponible($fecha, $medico, $inicio){

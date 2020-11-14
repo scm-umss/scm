@@ -75,7 +75,7 @@
                                     @enderror
                                 </div>
                             </div>
-                            {{-- {{ dd($usuario->fecha_nacimiento) }} --}}
+                            
                             <div class="form-group row">
                                 <label for="fecha_nacimiento" class="col-md-4 col-form-label text-md-right">Fecha Nacimiento:</label>
 

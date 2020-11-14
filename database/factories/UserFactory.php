@@ -60,6 +60,6 @@ $factory->define(Cita::class, function (Faker $faker) {
     return [
         'fecha_programada' => $faker->dateTimeBetween('+1 day', '+1 week', 'America/Caracas'),
         'hora_programada' => $faker->randomElement(['08:00:00', '08:30:00', '09:00:00', '09:30:00', '10:00:00', '10:30:00', '11:00:00', '11:30:00']),
-        'estado' => $faker->randomElement(['Reservada', 'Confirmada', 'Atendida', 'Cancelada']),
+        //'estado' => $faker->randomElement(['Reservada', 'Confirmada', 'Atendida', 'Cancelada']),
     ];
 });

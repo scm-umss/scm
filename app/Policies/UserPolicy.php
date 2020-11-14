@@ -25,7 +25,6 @@ class UserPolicy
      */
     public function viewAny(User $user)
     {
-        //dd($user);
         return false;
     }
 

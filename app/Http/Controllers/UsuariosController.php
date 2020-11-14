@@ -56,13 +56,13 @@ class UsuariosController extends Controller
     public function store(UsuariosRequest $request)
     {
         $this->authorize('create', User::class);
-        //dd($request->all());
+        
         $iNombre = $request->input('nombre');
         $iPaterno = $request->input('ap_paterno');
         $iMaterno = $request->input('ap_materno');
         $iNacimiento = $request->input('fecha_nacimiento');
         // $fecha = explode("-",$iNacimiento);
-        // dd($iNacimiento);
+        
         $matricula = strtoupper(substr($iNombre,0,1) . substr($iPaterno,0,1) . substr($iMaterno,0,1) .
         '-' . str_replace('-','',$iNacimiento));
         $usuario = new User();
@@ -117,10 +117,10 @@ class UsuariosController extends Controller
     public function edit(User $usuario)
     {
         $this->authorize('update', $usuario);
-        // dd($usuario->fecha_nacimiento);
+        
         $roles = Rol::orderBy('nombre', 'ASC')->get();
         $especialidades = Especialidad::orderBy('nombre', 'ASC')->get();
-        // dd($usuario->roles[0]->nombre);
+        
         return view('usuarios.edit', compact('usuario', 'roles', 'especialidades'));
     }
 
@@ -134,7 +134,7 @@ class UsuariosController extends Controller
     public function update(UsuariosRequest $request, User $usuario)
     {
         $this->authorize('update', $usuario);
-        //dd( $request->all());
+
         $usuario->nombre = $request->input('nombre');
         $usuario->email = $request->input('email');
         $usuario->ap_paterno = $request->input('ap_paterno');

@@ -38,7 +38,7 @@ class HorarioController extends Controller
         $this->authorize('update', $medico);
         // $medico->load('roles');
         $horarios_medico = Horario::where('user_id', $medico->id)->get();
-        // dd($horarios_medico);
+        
         $dias = $this->dias;
 
         if ($medico->tieneRol(['paciente'])) {
@@ -86,7 +86,6 @@ class HorarioController extends Controller
      */
     public function update(Request $request, $id)
     {
-        // dd($request->toArray());
         $usuario = User::findOrfail($id);
         $this->authorize('update', $usuario);
 
@@ -105,7 +104,6 @@ class HorarioController extends Controller
         // $dia_tt = $request->input('dia_tt');
 
         // $user_id = auth()->user()->id;
-        //dd($request->input());
         $error = [];
         for ($i = 0; $i < 7; $i++) {
             if (in_array($i, $tm_activo)) {

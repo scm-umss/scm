@@ -80,6 +80,7 @@ Route::get('/citas/historial', 'CitaController@historial')->name('citas.historia
 
 Route::post('/citas/{cita}/confirmar', 'CitaController@postConfirmar')->name('citas.confirmar');
 Route::post('/citas/{cita}/cancelar', 'CitaController@postCancelar')->name('citas.cancelar');
+Route::post('/citas/{cita}/atendido', 'CitaController@postAtendido')->name('citas.atendido');
 Route::resource('/citas', 'CitaController')->names('citas');
 // listar medicos por especialidad
 Route::get('/especialidad/{especialidad}/medicos', 'CitaController@getMedicos')->name('citas.medicos');

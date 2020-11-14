@@ -53,7 +53,8 @@ class CitaController extends Controller
     }
     public function confirmadas(){
         $rol = auth()->user()->roles[0]->slug;
-        // dd($rol);
+        $fecha_actual = Carbon::now()->format('Y-m-d');
+        
         if($rol == 'admin'){
             $citas_confirmadas = Cita::where('estado', 'Confirmada')
                                 ->orderBy('fecha_programada','ASC')
@@ -72,11 +73,12 @@ class CitaController extends Controller
                                 ->orderBy('hora_programada','ASC')
                                 ->paginate(10);
         }
-        return view('citas.tablas.confirmada', compact('citas_confirmadas','rol'));
+        
+        return view('citas.tablas.confirmada', compact('citas_confirmadas','rol','fecha_actual'));
     }
     public function historial(){
         $rol = auth()->user()->roles[0]->slug;
-        // dd($rol);
+        
         if($rol == 'admin'){
             $historial_citas = Cita::whereIn('estado', ['Atendida', 'Cancelada'])
                                 ->orderBy('fecha_programada','DESC')
@@ -124,7 +126,6 @@ class CitaController extends Controller
      */
     public function store(CitaRequest $request)
     {
-        // dd($request);
         $fecha = new Carbon($request->get('fecha_programada'));
         /** La hora ya esta ocupado por otro paciente  */
         $citaRegistrada = Cita::where('fecha_programada', $fecha->format('Y-m-d'))
@@ -135,7 +136,7 @@ class CitaController extends Controller
         $tieneCita = Cita::where('fecha_programada', $fecha->format('Y-m-d'))
                         ->where('paciente_id', $request->get('paciente'))
                         ->count();
-        // dd($tieneCita);
+        
         if(!$tieneCita && !$citaRegistrada){
             $cita = new Cita();
             $cita->paciente_id = $request->get('paciente');
@@ -180,8 +181,11 @@ class CitaController extends Controller
                                     ->where('cita_id', $cita->id)
                                     ->first();
 
+        $rol = auth()->user()->roles[0]->slug;
+        $fecha_actual = Carbon::now()->format('Y-m-d');
+
         $this->authorize('view', $cita);
-        return view('citas.show', compact('cita','hCancelado'));
+        return view('citas.show', compact('cita','hCancelado','rol','fecha_actual'));
     }
 
     /**
@@ -213,7 +217,7 @@ class CitaController extends Controller
     {
         $this->authorize('update', $cita);
         $fecha = (new Carbon($request['params']['fecha_programada']))->format('Y-m-d');
-        // dd($fecha);
+        
         $cita->paciente_id = $request['params']['paciente'];
         $cita->medico_id = $request['params']['medico'];
         $cita->especialidad_id = $request['params']['especialidad'];
@@ -251,13 +255,23 @@ class CitaController extends Controller
     }
     // admin o medico
     public function postConfirmar(Cita $cita){
-        // dd($cita);
         $cita->estado = 'Confirmada';
         $cita->save();
         $cita->citaHistorials()->create([
             'cita_id' => $cita->id,
             'user_id' => auth()->user()->id,
             'evento' => 'Confirmado'
+        ]);
+        return back();
+    }
+    // admin o medico
+    public function postAtendido(Cita $cita){
+        $cita->estado = 'Atendida';
+        $cita->save();
+        $cita->citaHistorials()->create([
+            'cita_id' => $cita->id,
+            'user_id' => auth()->user()->id,
+            'evento' => 'Atendido'
         ]);
         return back();
     }

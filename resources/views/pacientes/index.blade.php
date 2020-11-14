@@ -1,7 +1,6 @@
 @extends('layouts.app')
 
 @section('content')
-{{-- {{ dd($u->roles()->nombre) }} --}}
 
 <div class="container">
     <div class="card shadow">

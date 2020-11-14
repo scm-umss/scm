@@ -35,20 +35,20 @@ class HomeController extends Controller
                         ->whereRaw('rol_user.user_id = users.id and rol_user.rol_id = 3');
                     })
                     ->count();
-        // dd($pacientes);
+        
         $medicos = User::whereExists(function($query){
                         $query->select(DB::raw(1))
                         ->from('rol_user')
                         ->whereRaw('rol_user.user_id = users.id and rol_user.rol_id = 2');
                     })
                     ->count();
-        // dd($medicos);
+        
         $especialidades = Especialidad::all()->count();
         $citas = Cita::where('estado','Reservada')->count();
 
 
         // $rol = auth()->user()->roles[0]->slug;
-        // dd($rol);
+        
         if($rol == 'admin'){
             $citas_confirmadas = Cita::where('estado', 'Confirmada')
                                 ->orderBy('fecha_programada','ASC')

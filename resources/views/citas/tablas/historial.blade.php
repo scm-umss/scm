@@ -10,6 +10,14 @@
                 <th scope="col">Fecha</th>
                 <th scope="col">Hora</th>
                 <th scope="col">Especialidad</th>
+                @if ($rol == 'paciente')
+                    <th scope="col">Médico</th>
+                @elseif ($rol == 'medico')
+                    <th scope="col">Paciente</th>
+                @elseif ($rol == 'admin')
+                    <th scope="col">Paciente</th>
+                    <th scope="col">Médico</th>
+                @endif
                 <th scope="col">Estado</th>
                 <th scope="col">Acciones</th>
             </tr>
@@ -20,6 +28,14 @@
                     <td>{{ $cita->fecha_programada->format('d-m-Y') }}</td>
                     <td>{{ $cita->hora_programada }}</td>
                     <td>{{ $cita->especialidad->nombre }}</td>
+                    @if ($rol == 'paciente')
+                        <td>{{ $cita->medico->nombreCompleto }}</td>
+                    @elseif ($rol == 'medico')
+                        <td>{{ $cita->paciente->nombreCompleto }}</td>
+                    @elseif ($rol == 'admin')
+                        <td>{{ $cita->paciente->nombreCompleto }}</td>
+                        <td>{{ $cita->medico->nombreCompleto }}</td>
+                    @endif
                     @if ($cita->estado == 'Cancelada')
                     <td><span class="badge badge-danger">{{ $cita->estado }}</span></td>
 

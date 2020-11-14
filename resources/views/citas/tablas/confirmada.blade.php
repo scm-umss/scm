@@ -33,20 +33,27 @@
                 @if ($rol == 'paciente')
                     <td>{{ $cita->medico->nombreCompleto }}</td>
                 @elseif ($rol == 'medico')
-                    <td>{{ $cita->paciente->nombre }}</td>
+                    <td>{{ $cita->paciente->nombreCompleto }}</td>
                 @elseif ($rol == 'admin')
-                    <td>{{ $cita->paciente->nombre }}</td>
+                    <td>{{ $cita->paciente->nombreCompleto }}</td>
                     <td>{{ $cita->medico->nombreCompleto }}</td>
                 @endif
                 <td>{{ $cita->sucursal->nombre }}</td>
                 <td class="d-flex">
                     @if ($rol == 'admin')
                     <a class="btn btn-sm btn-primary mr-2" href="{{ route('citas.show', $cita->id) }}">
-                        Ver cita
+                        Ver
                     </a>
                     @endif
-                    @if ($rol == 'medico')
-                    <a class="btn btn-sm btn-success mr-2" href="#">Atendido</a>
+                    @if (($rol == 'medico' || $rol == 'admin') && ($cita->fecha_programada->format('Y-m-d') <= $fecha_actual))
+                        <form action="{{ route('citas.atendido',$cita->id) }}"
+                        method="POST" class="d-inline-block mr-2">
+                        @csrf
+
+                        <button class="btn btn-sm btn-success" type="submit" dusk="atender-cita-{{ $cita->id }}">
+                            Atendido
+                        </button>
+                        </form>
                     @endif
                     <cancelar-cita cita-id="{{ $cita->id }}" />
                 </td>

@@ -43,6 +43,17 @@
                     </div>
                 </div>
                 <div class="mb-4 text-center">
+                    @if (($rol == 'medico' || $rol == 'admin') && ($cita->estado == 'Confirmada')
+                        && ($cita->fecha_programada->format('Y-m-d') <= $fecha_actual))
+                        <form action="{{ route('citas.atendido',$cita->id) }}"
+                        method="POST" class="d-inline-block mr-2">
+                        @csrf
+
+                        <button class="btn btn-success" type="submit" dusk="atender-cita-{{ $cita->id }}">
+                            Atendido
+                        </button>
+                        </form>
+                    @endif
                     <a href="{{ url()->previous() }}" class="btn btn-danger">
                         Volver
                     </a>

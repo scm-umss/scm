@@ -21,7 +21,7 @@ class AdminMiddleware
         // }else{
         //     return redirect('/');
         // }
-        // dd(auth()->user()->tieneRol(['admin']));
+        
         if (auth()->user()->tieneRol(['admin'])) {
           return $next($request);
         }else {

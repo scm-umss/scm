@@ -40,7 +40,6 @@ class EspecialidadController extends Controller
      */
     public function store(Request $request)
     {
-        // dd($request->all());
         $rules = [
             'nombre' => 'required|min:5'
         ];
@@ -90,7 +89,6 @@ class EspecialidadController extends Controller
      */
     public function update(Request $request, Especialidad $especialidad)
     {
-        // dd($request->all());
         // Reglas de validación
         $rules = [
             'nombre' => 'required|min:5'
