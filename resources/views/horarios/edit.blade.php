@@ -11,9 +11,12 @@
             <div class="card">
                 <div class="card-header d-flex justify-content-between">
                     <div>
-                        <h4>Horario de trabajo de: <span class="badge badge-secondary">{{ $medico->nombreCompleto }}</span></h4>
+                        <h4>Horario de: <span class="badge badge-secondary">{{ $medico->nombreCompleto }}</span></h4>
                     </div>
-                    <button type="submit" class="btn btn-primary">Guardar Horario</button>
+                    <div>
+                        <a class="btn btn-danger" href="{{ redirect()->getUrlGenerator()->previous() }}" role="button"><i class="fa fa-arrow-circle-left" aria-hidden="true"></i> Volver</a>
+                        <button type="submit" class="btn btn-primary">Guardar Horario</button>
+                    </div>
                 </div>
 
                 <div class="card-body">

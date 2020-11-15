@@ -41,7 +41,8 @@ class User extends Authenticatable
     ];
 
     protected $dates = [
-        'fecha_nacimiento'
+        'fecha_nacimiento',
+        'deleted_at'
     ];
     // protected static function booted()
     // {
@@ -66,6 +67,14 @@ class User extends Authenticatable
     }
     public function citasCanceladas(){
         return $this->citasMedico()->where('estado','Cancelada');
+    }
+
+    public function citasPaciente(){
+        return $this->hasMany(Cita::class,'paciente_id');
+    }
+
+    public function citasConfirmadas(){
+        return $this->citasPaciente()->where('estado','Confirmada');
     }
 
     public function isSuperAdmin() {

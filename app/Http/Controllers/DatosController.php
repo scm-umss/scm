@@ -29,8 +29,19 @@ class DatosController extends Controller
     }
 
     public function getMedicosJson(Request $request, Especialidad $especialidad){
+        // dd($request->edit);
         if($request->ajax()){
             return $especialidad->users()
+                                ->get(['users.id','nombre','ap_paterno','ap_materno']);
+
+        }else{
+            return "Acceso denegado";
+        }
+    }
+    public function getMedicosJsonEditar(Request $request, Especialidad $especialidad){
+        // dd($request->edit);
+        if($request->ajax()){
+            return $especialidad->users()->withTrashed()
                                 ->get(['users.id','nombre','ap_paterno','ap_materno']);
 
         }else{
@@ -112,7 +123,7 @@ class DatosController extends Controller
                 $intervalos[]=$intervalo;
             }
         }
-        
+
         return $intervalos;
     }
     private function estaDisponible($fecha, $medico, $inicio){

@@ -17,7 +17,7 @@
                 </select>
             </div>
         </div>
-        <!-- <p>{{ especialidadId}}</p> -->
+        <!-- <p>{{ formulario}}</p> -->
     </div>
 </template>
 
@@ -26,7 +26,8 @@ export default {
     props:[
        'medicoId',
        'especialidadId',
-       'formulario'
+       'formulario',
+    //    'edit'
     ],
     data() {
         return {
@@ -39,10 +40,13 @@ export default {
     methods: {
         cargarMedicos: function(id) {
             if (id != '') {
-                let urlMedicos = '/especialidad/'+id+'/medicosjson';
+                console.log('formulario: '+ this.formulario)
+                let urlMedicos = '/especialidad/'+id+'/medicosjson'+(this.formulario=='editar'? 'editar':'');
+                // console.log(urlMedicos);
+                let param = {};
                 axios.get(urlMedicos)
                     .then(response => {
-                        // console.log(response)
+                        // console.log(response.data)
                         this.medicos = response.data;
                         // this.getNombreMedico(this.medicoId)
                     })
@@ -54,7 +58,7 @@ export default {
             }
         },
         getNombreMedico: function(id) {
-            console.log('medico id: '+this.medicos);
+            // console.log('medico id: '+this.medicos);
             const medicos = this.medicos.find(function(medico){
                 return medico.id == id;
             });

@@ -27,16 +27,16 @@ class Cita extends Model
 
     public function paciente()
     {
-        return $this->belongsTo(User::class);
+        return $this->belongsTo(User::class)->withTrashed();
     }
 
     public function medico()
     {
-        return $this->belongsTo(User::class);
+        return $this->belongsTo(User::class)->withTrashed();
     }
     public function especialidad()
     {
-        return $this->belongsTo(Especialidad::class);
+        return $this->belongsTo(Especialidad::class)->withTrashed();
     }
 
     public function sucursal(){

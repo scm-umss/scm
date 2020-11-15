@@ -54,7 +54,7 @@ class CitaController extends Controller
     public function confirmadas(){
         $rol = auth()->user()->roles[0]->slug;
         $fecha_actual = Carbon::now()->format('Y-m-d');
-        
+
         if($rol == 'admin'){
             $citas_confirmadas = Cita::where('estado', 'Confirmada')
                                 ->orderBy('fecha_programada','ASC')
@@ -73,12 +73,12 @@ class CitaController extends Controller
                                 ->orderBy('hora_programada','ASC')
                                 ->paginate(10);
         }
-        
+
         return view('citas.tablas.confirmada', compact('citas_confirmadas','rol','fecha_actual'));
     }
     public function historial(){
         $rol = auth()->user()->roles[0]->slug;
-        
+
         if($rol == 'admin'){
             $historial_citas = Cita::whereIn('estado', ['Atendida', 'Cancelada'])
                                 ->orderBy('fecha_programada','DESC')
@@ -136,7 +136,7 @@ class CitaController extends Controller
         $tieneCita = Cita::where('fecha_programada', $fecha->format('Y-m-d'))
                         ->where('paciente_id', $request->get('paciente'))
                         ->count();
-        
+
         if(!$tieneCita && !$citaRegistrada){
             $cita = new Cita();
             $cita->paciente_id = $request->get('paciente');
@@ -197,6 +197,7 @@ class CitaController extends Controller
     public function edit(Request $request, Cita $cita)
     {
         $this->authorize('update', $cita);
+        // dd($cita);
         if($request->ajax()){
             // $data = [];
             return response()->json($cita);
@@ -217,7 +218,7 @@ class CitaController extends Controller
     {
         $this->authorize('update', $cita);
         $fecha = (new Carbon($request['params']['fecha_programada']))->format('Y-m-d');
-        
+
         $cita->paciente_id = $request['params']['paciente'];
         $cita->medico_id = $request['params']['medico'];
         $cita->especialidad_id = $request['params']['especialidad'];

@@ -52,45 +52,7 @@
                 </a>
             </li>
 
-            <li class="nav-item has-treeview menu-open">
-                <a href="#" class="nav-link {{ request()->is('reportes*') ? 'active' : '' }}">
-                    <i class="nav-icon fas fa-user-clock"></i>
-                    <p>
-                        Reportes
-                        <i class="right fas fa-angle-left"></i>
-                    </p>
-                </a>
-                <ul class="nav nav-treeview">
-                    <li class="nav-item">
-                        <a href="{{ route('reportes.pacientes') }}"
-                            class="nav-link {{ request()->is('reportes/pacientes') ? 'active' : '' }}">
-                            <i class="fas fa-arrow-right nav-icon"></i>
-                            <p>Pacientes registrados</p>
-                        </a>
-                    </li>
-                    <li class="nav-item">
-                        <a href="{{ route('reportes.estadocitas') }}"
-                            class="nav-link {{ request()->is('reportes/estado/citas') ? 'active' : '' }}">
-                            <i class="fas fa-arrow-right nav-icon"></i>
-                            <p>Estado de citas</p>
-                        </a>
-                    </li>
-                    <li class="nav-item">
-                        <a href="{{ route('reportes.especialidadcitas') }}"
-                            class="nav-link {{ request()->is('reportes/especialidad/citas') ? 'active' : '' }}">
-                            <i class="fas fa-arrow-right nav-icon"></i>
-                            <p>Citas por especialidad</p>
-                        </a>
-                    </li>
-                    <li class="nav-item">
-                        <a href="{{ route('reportes.citasmedico') }}"
-                            class="nav-link {{ request()->is('reportes/citas/medico') ? 'active' : '' }}">
-                            <i class="fas fa-arrow-right nav-icon"></i>
-                            <p>Citas por Médico</p>
-                        </a>
-                    </li>
-                </ul>
-            </li>
+
 
 
 
@@ -118,7 +80,7 @@
             </li>
             <div class="border border-primary"></div>
             @endif
-            <li class="nav-item has-treeview menu-open">
+            <li class="nav-item has-treeview {{ request()->is('citas*') ? 'menu-open' : '' }}">
                 <a href="#" class="nav-link {{ request()->is('citas*') ? 'active' : '' }}">
                     <i class="nav-icon fas fa-user-clock"></i>
                     <p>
@@ -150,6 +112,49 @@
                     </li>
                 </ul>
             </li>
+
+            @if (auth()->user()->tieneRol(['admin']))
+            <div class="border border-primary"></div>
+            <li class="nav-item has-treeview {{ request()->is('reportes*') ? 'menu-open' : '' }}">
+                <a href="#" class="nav-link {{ request()->is('reportes*') ? 'active' : '' }}">
+                    <i class="nav-icon fas fa-chart-bar"></i>
+                    <p>
+                        Reportes
+                        <i class="right fas fa-angle-left"></i>
+                    </p>
+                </a>
+                <ul class="nav nav-treeview">
+                    <li class="nav-item">
+                        <a href="{{ route('reportes.pacientes') }}"
+                            class="nav-link {{ request()->is('reportes/pacientes') ? 'active' : '' }}">
+                            <i class="fas fa-caret-right nav-icon"></i>
+                            <p>Pacientes registrados</p>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="{{ route('reportes.estadocitas') }}"
+                            class="nav-link {{ request()->is('reportes/estado/citas') ? 'active' : '' }}">
+                            <i class="fas fa-caret-right nav-icon"></i>
+                            <p>Estado de citas</p>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="{{ route('reportes.especialidadcitas') }}"
+                            class="nav-link {{ request()->is('reportes/especialidad/citas') ? 'active' : '' }}">
+                            <i class="fas fa-caret-right nav-icon"></i>
+                            <p>Citas por especialidad</p>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="{{ route('reportes.citasmedico') }}"
+                            class="nav-link {{ request()->is('reportes/citas/medico') ? 'active' : '' }}">
+                            <i class="fas fa-caret-right nav-icon"></i>
+                            <p>Citas por Médico</p>
+                        </a>
+                    </li>
+                </ul>
+            </li>
+            @endif
 
         </ul>
     </nav>

@@ -38,7 +38,7 @@ class HorarioController extends Controller
         $this->authorize('update', $medico);
         // $medico->load('roles');
         $horarios_medico = Horario::where('user_id', $medico->id)->get();
-        
+
         $dias = $this->dias;
 
         if ($medico->tieneRol(['paciente'])) {
@@ -61,8 +61,10 @@ class HorarioController extends Controller
         }
 
         $sucursales = Sucursal::get(['id','nombre']);
-
         $especialidades = $medico->especialidades()->get(['especialidads.id','especialidads.nombre']);
+        if ($especialidades->count()<=0) {
+            return back()->with('info','El médico no tiene especialidad.');
+        }
         return view('horarios.edit', compact('dias', 'medico', 'horario_tm', 'horario_tt', 'sucursales', 'especialidades', 'horarios_medico'));
     }
 

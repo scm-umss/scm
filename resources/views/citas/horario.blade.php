@@ -10,10 +10,14 @@
             <div class="card mb-3 shadow">
                 <div class="row no-gutters">
                 <div class="col-md-4">
-                    <div class="m-3">
+                    <div class="m-3 bg-light">
                         <img src="/storage/{{$medico->imagen}}" class="card-img" alt="foto">
-                        <p class="card-text">Estás reservando cita con el <strong>Médico</strong> {{ $medico->nombreCompleto }} de la <strong>Especialidad</strong> {{ $especialidad->nombre }}</p>
-
+                        {{-- <h4 class="card-text">Estás reservando la cita en la </h4> --}}
+                        <div class="m-3">
+                            <p> <strong>Médico:</strong> {{ $medico->nombreCompleto }} </p>
+                            <p> <strong>Especialidad:</strong> {{ $especialidad->nombre }}</p>
+                            <hr>
+                        </div>
                     </div>
                 </div>
                 <div class="col-md-8">

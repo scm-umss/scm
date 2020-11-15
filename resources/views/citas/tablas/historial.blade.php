@@ -29,12 +29,13 @@
                     <td>{{ $cita->hora_programada }}</td>
                     <td>{{ $cita->especialidad->nombre }}</td>
                     @if ($rol == 'paciente')
-                        <td>{{ $cita->medico->nombreCompleto }}</td>
+                            <td>{{ $cita->medico->nombreCompleto }}</td>
+
                     @elseif ($rol == 'medico')
-                        <td>{{ $cita->paciente->nombreCompleto }}</td>
-                    @elseif ($rol == 'admin')
-                        <td>{{ $cita->paciente->nombreCompleto }}</td>
-                        <td>{{ $cita->medico->nombreCompleto }}</td>
+                            <td>{{ $cita->paciente->nombreCompleto }}</td>
+                    @elseif($rol == 'admin')
+                            <td>{{ $cita->paciente->nombreCompleto }}</td>
+                            <td>{{ $cita->medico->nombreCompleto }}</td>
                     @endif
                     @if ($cita->estado == 'Cancelada')
                     <td><span class="badge badge-danger">{{ $cita->estado }}</span></td>

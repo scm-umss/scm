@@ -132,7 +132,7 @@ class ReportesController extends Controller
 
 
         if (request()->ajax()) {
-            $especialidadCitas = Especialidad::select('nombre')
+            $especialidadCitas = Especialidad::withTrashed()->select('nombre')
                             ->withCount([
                                 'citas',
                                 'citas' => function (Builder $query) use ($start, $end) {

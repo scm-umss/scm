@@ -29,7 +29,6 @@
                         </p>
                         <p class="card-text"><strong>Medico:</strong> {{ $cita->medico->nombreCompleto }}</p>
                         <p class="card-text"><strong>Especialidad:</strong> {{ $cita->especialidad->nombre }}</p>
-                        <p class="card-text"><strong>Numero de ficha:</strong> {{ $cita->numero_ficha }}</p>
                         <p class="card-text"><strong>Sucursal:</strong> {{ $cita->sucursal->nombre }}</p>
                         @if ($cita->estado == 'Cancelada')
                         <div class="alert alert-warning">

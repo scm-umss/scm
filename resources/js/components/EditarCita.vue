@@ -143,12 +143,12 @@ export default {
   },
   methods: {
     getCita() {
-      console.log("cita id: " + this.citaId);
+    //   console.log("cita id: " + this.citaId);
       const urlCita = `/citas/${this.citaId}/edit`;
       axios
         .get(urlCita)
         .then((response) => {
-        //   console.log('Citassss '+response.data);
+        //   console.log('Citassss '+response.data.medico_id);
           this.especialidad_seleccionada = response.data.especialidad_id;
         //   this.especialidad_nombre = response.data.
           this.medico_seleccionado = response.data.medico_id;
@@ -261,7 +261,7 @@ export default {
       });
     },
     editarCita() {
-        console.log("hora seleccionada: " + this.hora_seleccionada);
+        // console.log("hora seleccionada: " + this.hora_seleccionada);
       const params = {
         fecha_programada: this.fecha_seleccionada,
         hora_programada: this.hora_seleccionada,
@@ -309,7 +309,7 @@ export default {
         this.especialidad_seleccionada === 0 ||
         this.medico_seleccionado === ''
       ) {
-        console.log("datos incompletos");
+        // console.log("datos incompletos");
         return false;
       } else {
         return true;

@@ -4,6 +4,7 @@
 
 @section('citas')
 <div class="table-responsive">
+    @if ($citas_pendientes->count())
     <table class="table table-striped">
         <thead>
             <tr>
@@ -30,12 +31,12 @@
                     <td>{{ $cita->hora_programada }}</td>
                     <td>{{ $cita->especialidad->nombre }}</td>
                     @if ($rol == 'paciente')
-                        <td>{{ $cita->medico->nombreCompleto }}</td>
+                            <td>{{ $cita->medico->nombreCompleto }}</td>
                     @elseif ($rol == 'medico')
-                        <td>{{ $cita->paciente->nombreCompleto }}</td>
-                    @else
-                    <td>{{ $cita->medico->nombreCompleto }}</td>
-                    <td>{{ $cita->paciente->nombreCompleto }}</td>
+                            <td>{{ $cita->paciente->nombreCompleto }}</td>
+                    @elseif($rol == 'admin')
+                            <td>{{ $cita->medico->nombreCompleto }}</td>
+                            <td>{{ $cita->paciente->nombreCompleto }}</td>
                     @endif
                     <td>{{ $cita->sucursal->nombre }}</td>
                     <td class="d-flex">
@@ -66,5 +67,8 @@
         </tbody>
     </table>
     {{ $citas_pendientes->links() }}
+    @else
+    <p>Aún no tiene citas registradas</p>
+    @endif
 </div>
 @endsection

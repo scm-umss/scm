@@ -85,6 +85,7 @@ class UsuariosSeeder extends Seeder
             'telefono' => '12354678',
             'email' => 'admin@admin.com',
             'password' => Hash::make('12345678'),
+            'matricula' => 'APM-20000101'
         ]);
 
         $medico = User::create([
@@ -96,6 +97,7 @@ class UsuariosSeeder extends Seeder
             'telefono' => '12354678',
             'email' => 'medico@scm.com',
             'password' => Hash::make('12345678'),
+            'matricula' => 'MPM-20020101'
         ]);
 
         $paciente = User::create([
@@ -107,6 +109,7 @@ class UsuariosSeeder extends Seeder
             'telefono' => '12354678',
             'email' => 'paciente@scm.com',
             'password' => Hash::make('12345678'),
+            'matricula' => 'PPM-19900101'
         ]);
 
         $admin->roles()->sync([$rolAdmin->id, $rolMedico->id]);
@@ -212,7 +215,7 @@ class UsuariosSeeder extends Seeder
 
             $c->each(function($cita_ex) use ($pacientes_ex, $medicos_ex, $admin, $faker, $fecha_cita, $fecha_hoy) {
                 $med = $medicos_ex->random();
-                
+
                 $cita_ex->paciente_id = $pacientes_ex->random()->id;
                 $cita_ex->medico_id = $med->id;
                 $cita_ex->especialidad_id = $med->especialidades()->first()->id;

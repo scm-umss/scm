@@ -18,7 +18,7 @@
                     <div class="card m-3" style="width: 18rem;">
                         <img class="card-img-top" src="/storage/{{ $medico->imagen }}" alt="Card image cap">
                         <div class="card-body">
-                          <h5 class="card-title">{{ $medico->nombre }}</h5>
+                          <h5 class="card-title">{{ $medico->nombreCompleto }}</h5>
                           <p class="card-text">{{ $medico->ap_paterno }}</p>
                           <a href="{{ route('citas.horario', ['medico' => $medico->id, 'especialidad' => $especialidad->id]) }}" class="btn btn-primary">Seleccionar</a>
                         </div>

@@ -38,7 +38,7 @@ export default {
     },
     created: function(){
         // const ff = this.$set.fechaSel
-        console.log('FechaSel: '+this.fecha)
+        // console.log('FechaSel: '+this.fecha)
         // this.fecha = this.fechaSel
     },
     methods: {

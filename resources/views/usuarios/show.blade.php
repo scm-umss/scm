@@ -27,8 +27,8 @@
                         </div>
                     </div>
                     <div class="col-md-8">
-                        <div class="card-body">
-                            <div class="container bg-secondary mb-4 d-flex justify-content-between">
+                        <div class="card-body bg-light">
+                            <div class="container bg-secondary p-4 mb-4 d-flex justify-content-between">
                                 <h4 class="card-title">Estás registrado como:
                                     {{ $usuario->roles->pluck('nombre')->implode(', ') }}</h4>
                                     <a class="btn btn-danger" href="{{ redirect()->getUrlGenerator()->previous() }}" role="button"><i class="fa fa-arrow-circle-left" aria-hidden="true"></i> Volver</a>
@@ -74,21 +74,39 @@
                                     @if ($usuario->roles->pluck('slug')->contains('medico'))
                                     <div class="tab-pane fade show active" id="medico" role="tabpanel"
                                         aria-labelledby="home-tab">
+                                        @if($usuario->especialidades->count())
                                         <p class="card-text"><strong>Tus especialidades:</strong>
                                             {{ $usuario->especialidades->pluck('nombre')->implode(', ') }}</p>
+                                        @else
+                                            <p>Aún no tiene asignado una especialidad</p>
+                                        @endif
                                         <div>
                                             <a href="{{ route('horarios.edit', $usuario->id) }}" class="btn btn-info"
-                                                dusk="crear-horario-{{ $usuario->id }}">Ver Horarios</a>
+                                                dusk="crear-horario-{{ $usuario->id }}">Gestionar Horario</a>
                                         </div>
                                     </div>
                                     @endif
                                     @if ($usuario->roles->pluck('slug')->contains('paciente'))
                                     <div class="tab-pane fade @if(! $usuario->roles->pluck('slug')->contains('medico')) show active @endif"
-                                        id="paciente" role="tabpanel" aria-labelledby="profile-tab">Tu informacion como
-                                        paciente
+                                        id="paciente" role="tabpanel" aria-labelledby="profile-tab">
+                                        <p><strong>Tu informacion como paciente</strong></p>
                                         <p class="card-text"><strong>Matrícula:</strong> {{ $usuario->matricula }}</p>
                                         <hr>
-                                        <p>Tus proximas citas se mostrarán aquí</p>
+
+                                        <div class="card card-outline card-primary">
+                                            <div class="card-header">Tus próximas citas</div>
+                                            <div class="card-body">
+                                                @forelse ($citas_confirmadas as $cita)
+                                                    <p><strong> Fecha programada: </strong> {{ $cita->fecha_programada->format('Y-m-d') }}</p>
+                                                    <p><strong> Hora programada: </strong> {{ $cita->hora_programada }}</p>
+                                                    <p><strong> Especilidad: </strong> {{ $cita->especialidad->nombre }}</p>
+                                                    <p><strong> Médico: </strong> {{ $cita->medico->nombreCompleto }}</p>
+                                                    <hr>
+                                                @empty
+                                                    <p>Aún no tienes citas confirmadas</p>
+                                                @endforelse
+                                            </div>
+                                        </div>
                                     </div>
                                     @endif
                                 </div>

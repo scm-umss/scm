@@ -58,6 +58,7 @@ Route::get('/pacientes', 'PacienteController@index')->name('pacientes.index');
 // medicos por especialidad
 Route::get('/citas/especialidades', 'DatosController@getEspecialidades');
 Route::get('/especialidad/{especialidad}/medicosjson', 'DatosController@getMedicosJson');
+Route::get('/especialidad/{especialidad}/medicosjsoneditar', 'DatosController@getMedicosJsonEditar');
 // Horarios de cada medico API JSON
 Route::get('/horasmedico', 'DatosController@horasMedico');
 //Reportes

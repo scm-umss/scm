@@ -17,7 +17,8 @@ class UsuariosController extends Controller
 {
     public function __construct()
     {
-        $this->middleware(['auth', 'admin'])->except(['show']);
+        $this->middleware(['auth']);
+        $this->middleware(['admin'])->except(['show']);
     }
     /**
      * Display a listing of the resource.
@@ -56,13 +57,13 @@ class UsuariosController extends Controller
     public function store(UsuariosRequest $request)
     {
         $this->authorize('create', User::class);
-        
+
         $iNombre = $request->input('nombre');
         $iPaterno = $request->input('ap_paterno');
         $iMaterno = $request->input('ap_materno');
         $iNacimiento = $request->input('fecha_nacimiento');
         // $fecha = explode("-",$iNacimiento);
-        
+
         $matricula = strtoupper(substr($iNombre,0,1) . substr($iPaterno,0,1) . substr($iMaterno,0,1) .
         '-' . str_replace('-','',$iNacimiento));
         $usuario = new User();
@@ -105,7 +106,10 @@ class UsuariosController extends Controller
     {
         $this->authorize('view', $usuario);
         // $roles = Rol::pluck('slug','id');
-        return view('usuarios.show', compact('usuario'));
+        $citas_confirmadas = $usuario->citasConfirmadas;
+        // $rol = $usuario->roles[0]]->slug;
+        // dd($rol);
+        return view('usuarios.show', compact('usuario','citas_confirmadas'));
     }
 
     /**
@@ -117,10 +121,10 @@ class UsuariosController extends Controller
     public function edit(User $usuario)
     {
         $this->authorize('update', $usuario);
-        
+
         $roles = Rol::orderBy('nombre', 'ASC')->get();
         $especialidades = Especialidad::orderBy('nombre', 'ASC')->get();
-        
+
         return view('usuarios.edit', compact('usuario', 'roles', 'especialidades'));
     }
 
@@ -163,7 +167,8 @@ class UsuariosController extends Controller
             $usuario->especialidades()->detach();
         }
         // $usuario->update();
-        return redirect()->route('usuarios.index')->with('status', 'Usuario actualizado exitosamente!');
+        return redirect()->route('usuarios.show',compact('usuario'))->with('status', 'Usuario actualizado exitosamente!');
+        // return redirect()->route('usuarios.index')->with('status', 'Usuario actualizado exitosamente!');
     }
 
     /**
