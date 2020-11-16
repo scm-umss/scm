@@ -44,8 +44,8 @@
                     <td><span class="badge badge-success">{{ $cita->estado }}</span></td>
                     @endif
                     <td>
-                        <a class="btn btn-sm btn-primary" href="{{ route('citas.show', $cita->id) }}">
-                            Ver
+                        <a class="btn btn-sm btn-info" href="{{ route('citas.show', $cita->id) }}">
+                            <i class="fas fa-eye"></i> Ver
                         </a>
                       </td>
                 </tr>

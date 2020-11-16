@@ -1,11 +1,16 @@
 <template>
     <div>
-        <input
+        <!-- <input
         type="submit"
         class="btn btn-sm btn-danger"
         value="Dar de baja"
         :dusk="dusk"
-        @click="darDeBaja">
+        @click="darDeBaja"> -->
+        <button
+        type="submit"
+        class="btn btn-sm btn-danger"
+        :dusk="dusk"
+        @click="darDeBaja"><i class="fas fa-minus-circle"></i> Dar de baja</button>
     </div>
 </template>
 <script>

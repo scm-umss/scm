@@ -17,8 +17,8 @@
         <div class="card-header d-flex justify-content-between">
             <h4>Lista de médicos</h4>
             <div class="d-flex align-right">
-                <a class="btn btn-warning mr-2" href="{{ route('usuarios.inactivos') }}" role="button" dusk="ver-inactivos">Ver Inactivos</a>
-                <a class="btn btn-success" href="{{ route('usuarios.create') }}" role="button" dusk="crear-medico">Nuevo Médico</a>
+                <a class="btn btn-outline-warning mr-2" href="{{ route('usuarios.inactivos') }}" role="button" dusk="ver-inactivos"><i class="fas fa-user-minus"></i> Ver Inactivos</a>
+                <a class="btn btn-outline-success" href="{{ route('usuarios.create') }}" role="button" dusk="crear-medico"><i class="fas fa-plus-circle"></i> Nuevo Médico</a>
             </div>
         </div>
         <div class="card-body">
@@ -44,9 +44,9 @@
 
                             <td><img src="/storage/{{ $medico->imagen }}" style="width:60px"></td>
                             <td class="d-flex">
-                                <a href="{{ route('usuarios.show', ['usuario' => $medico->id]) }}" class="btn btn-sm btn-info mr-2" dusk="ver-detalles-{{ $medico->id }}">Perfil</a>
-                                <a href="{{ route('horarios.edit', ['medico' => $medico->id]) }}" class="btn btn-sm btn-dark mr-2" dusk="horario-medico-{{ $medico->id }}">Asignar horario</a>
-                                <a href="{{ route('usuarios.edit', ['usuario' => $medico->id]) }}" class="btn btn-sm btn-secondary mr-2" dusk="editar-medico-{{ $medico->id }}">Editar</a>
+                                <a href="{{ route('usuarios.show', ['usuario' => $medico->id]) }}" class="btn btn-sm btn-info mr-2" dusk="ver-detalles-{{ $medico->id }}"><i class="fas fa-info-circle"></i> Perfil</a>
+                                <a href="{{ route('horarios.edit', ['medico' => $medico->id]) }}" class="btn btn-sm btn-dark mr-2" dusk="horario-medico-{{ $medico->id }}"><i class="fas fa-clock"></i> Asignar horario</a>
+                                <a href="{{ route('usuarios.edit', ['usuario' => $medico->id]) }}" class="btn btn-sm btn-secondary mr-2" dusk="editar-medico-{{ $medico->id }}"><i class="fas fa-user-edit"></i> Editar</a>
 
                                 <eliminar-usuario usuario-id="{{ $medico->id }}"></eliminar-usuario>
                             </td>

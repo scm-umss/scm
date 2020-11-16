@@ -82,10 +82,10 @@
     <div class="form-group mt-3 d-flex justify-content-center">
       <button
         type="submit"
-        class="btn btn-primary p3"
+        class="btn btn-outline-success p3"
         @click.prevent="registrarCita"
         v-if="datosCorrectos()"
-      >Registrar Cita</button>
+      ><i class="fas fa-calendar-check"></i> Registrar Cita</button>
     </div>
   </div>
 </template>
@@ -94,6 +94,7 @@
 import ComboEspecialidad from "./ComboEspecialidad.vue";
 import ComboMedicos from "./ComboMedicos.vue";
 import ComboFecha from "./ComboFecha.vue";
+import moment from "moment";
 
 const noHorasAlert = `<div class="alert alert-danger" role="alert">
                     <strong>Lo sentimos!</strong> No se encontraron horas disponibles para el médico y el día seleccionado.
@@ -115,7 +116,7 @@ export default {
     return {
       especialidad_seleccionada: "",
       medico_seleccionado: "",
-      fecha_seleccionada: null,
+      fecha_seleccionada: moment().format("DD-MM-YYYY"),
       horas: [],
       tm_sucursal: '',
       tt_sucursal: '',
@@ -128,7 +129,7 @@ export default {
     especialidadSelect(especialidadId) {
       this.especialidad_seleccionada = especialidadId;
       this.$refs.especialidadSeleccionada.cargarMedicos(especialidadId);
-      this.fecha_seleccionada = null
+      this.fecha_seleccionada = moment().format("DD-MM-YYYY")
       this.$refs.fechaSeleccionada.setFecha(this.fecha_seleccionada);
       this.medico_seleccionado = "0";
       this.horas = [];
@@ -140,7 +141,7 @@ export default {
       this.cargarHoras();
     },
     fechaSelect(fecha) {
-      console.log("Fecha seleccionada: " + fecha);
+    //   console.log("Fecha seleccionada: " + fecha);
       this.fecha_seleccionada = fecha;
       this.horas = [];
       this.cargarHoras();
@@ -157,13 +158,6 @@ export default {
     },
     cargarHoras() {
       // this.value = [date, new Date(date.getTime() + 30 * 24 * 3600 * 1000)]
-      console.log(
-        "la fecha sellecionada es: " +
-          this.fecha_seleccionada +
-          " Medico: " +
-          this.medico_seleccionado+
-          "especialidad: "+ this.especialidad_seleccionada
-      );
       let urlHorasMedico = "/horasmedico";
       const params = {
         fecha: this.fecha_seleccionada,
@@ -262,7 +256,7 @@ export default {
         this.especialidad_seleccionada === 0 ||
         this.medico_seleccionado === 0
       ) {
-        console.log("datos incompletos");
+        // console.log("datos incompletos");
         return false;
       } else {
         return true;

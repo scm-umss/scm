@@ -11,7 +11,7 @@
             <div class="card shadow">
                 <div class="card-header d-flex justify-content-between">
                     <h4>Registrar usuario</h4>
-                    <a class="btn btn-danger" href="{{ route('usuarios.index') }}" role="button" dusk="ver-activos">Cancelar</a>
+                    <a class="btn btn-outline-danger" href="{{ url()->previous() }}" role="button" dusk="ver-activos"><i class="fas fa-arrow-circle-left"></i> Cancelar</a>
                 </div>
 
                 <div class="card-body">
@@ -202,7 +202,7 @@
 
                         <div class="form-group mt-3 d-flex justify-content-center">
                             <div class="">
-                                <button type="submit" class="btn btn-primary p3">
+                                <button type="submit" class="btn btn-outline-success p3"><i class="fas fa-check-circle"></i>
                                     Registrar Usuario
                                 </button>
                             </div>

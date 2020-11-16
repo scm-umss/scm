@@ -10,7 +10,7 @@
             <h4>Especialidades</h4>
             <div class="d-flex align-right">
                 <especialidades-inactivos></especialidades-inactivos>
-                <a class="btn btn-success" href="{{ route('especialidad.create') }}" role="button" dusk="nueva-especialidad">Nueva Especialidad</a>
+                <a class="btn btn-outline-success" href="{{ route('especialidad.create') }}" role="button" dusk="nueva-especialidad"><i class="fas fa-plus-circle"></i> Nueva Especialidad</a>
             </div>
         </div>
         <div class="card-body">
@@ -35,7 +35,7 @@
                             <td>{{ $especialidad->nombre }}</td>
                             <td>{{ $especialidad->descripcion }}</td>
                             <td class="d-flex justify-content-center">
-                                <a href="{{ route('especialidad.edit', ['especialidad' => $especialidad->id]) }}" class="btn btn-sm btn-primary mr-2" dusk="editar-especialidad-{{ $especialidad->id }}">Editar</a>
+                                <a href="{{ route('especialidad.edit', ['especialidad' => $especialidad->id]) }}" class="btn btn-sm btn-secondary mr-2" dusk="editar-especialidad-{{ $especialidad->id }}"><i class="fas fa-pen"></i> Editar</a>
                                 <eliminar-especialidad especialidad-id="{{ $especialidad->id }}"></eliminar-especialidad>
                             </td>
                         </tr>

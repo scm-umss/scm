@@ -3,12 +3,6 @@
         <div class="form-group row">
             <label class="col-md-4 col-form-label text-md-right">Elegir fecha para la cita:</label>
             <div class="col-md-6">
-                <!-- <date-picker v-model="time1"
-                    format="YYYY-MM-DD"
-                    type="date"
-                    :default-value="new Date()"
-                    :disabled-date="rangoHabilitado"
-                    ></date-picker> -->
                 <date-picker
                     v-model="fecha"
                     placeholder="Seleccionar fecha"
@@ -16,10 +10,6 @@
                     format="DD-MM-YYYY"
                     @pick="cargarHoras"
                 ></date-picker>
-
-
-                <!-- <date-picker v-model="time2" type="datetime"></date-picker>
-                <date-picker v-model="time3" range></date-picker> -->
             </div>
         </div>
     </div>
@@ -44,25 +34,20 @@ export default {
     ],
     data() {
         return {
-            // lang: {
-            // formatLocale: {
-            //     firstDayOfWeek: 1,
-            // },
-            // monthBeforeYear: false,
-            // },
-            // time1: null,
             fecha:'',
             horasTM: [],
             horasTT: []
         }
     },
     created: function(){
-        console.log('Fecha')
+        console.log('Fecha: '+moment())
+    },
+    mounted: function(){
+        console.log('FECHA: ')
     },
     methods: {
         cargarHoras: function(date){
-            // this.value = [date, new Date(date.getTime() + 30 * 24 * 3600 * 1000)]
-            console.log('la fecha sellecionada es: '+this.fecha+ ' Medico: '+this.medicoId)
+            // console.log('la fecha sellecionada es: ');
             let urlHorasMedico = '/horasmedico';
             const params = {fecha: this.fecha, id:this.medicoId};
             // this.$emit('fechaSeleccionada', this.fecha);

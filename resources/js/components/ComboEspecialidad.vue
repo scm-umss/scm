@@ -3,9 +3,6 @@
         <div class="form-group row">
             <label for="especialidad" class="col-md-4 col-form-label text-md-right">Especialidad:</label>
             <div class="col-md-6">
-                <!-- <div v-if="formulario == 'editar'">
-                    <h5><span class="badge badge-info p-2"> {{ nombreEspecialidad}}</span></h5>
-                </div> -->
                 <div v-if="formulario == 'editar'">
                     <div v-for="especialidad in especialidades" :key="especialidad.id" :value="especialidad.id">
                         <h5><span class="badge badge-info p-2" v-if="especialidad.id == especialidadId"> {{ especialidad.nombre }}</span></h5>
@@ -39,12 +36,10 @@ export default {
     },
     methods: {
         getEspecialidades: function (){
-            // console.log(this.especialidadId+'ididididi');
             let urlEspecialidades = '/citas/especialidades';
              axios.get(urlEspecialidades)
             .then(response => {
                 this.especialidades = response.data;
-                // this.getNombreEspecialidad(this.especialidadId)
             })
             .catch(error => {
                 console.log(error);

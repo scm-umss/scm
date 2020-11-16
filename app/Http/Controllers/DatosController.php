@@ -29,7 +29,6 @@ class DatosController extends Controller
     }
 
     public function getMedicosJson(Request $request, Especialidad $especialidad){
-        // dd($request->edit);
         if($request->ajax()){
             return $especialidad->users()
                                 ->get(['users.id','nombre','ap_paterno','ap_materno']);
@@ -39,7 +38,6 @@ class DatosController extends Controller
         }
     }
     public function getMedicosJsonEditar(Request $request, Especialidad $especialidad){
-        // dd($request->edit);
         if($request->ajax()){
             return $especialidad->users()->withTrashed()
                                 ->get(['users.id','nombre','ap_paterno','ap_materno']);

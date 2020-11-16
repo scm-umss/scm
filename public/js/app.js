@@ -1918,8 +1918,6 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
-//
-//
 /* harmony default export */ __webpack_exports__["default"] = ({
   props: ['citaId'],
   data: function data() {
@@ -2379,9 +2377,6 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
-//
-//
-//
 /* harmony default export */ __webpack_exports__["default"] = ({
   props: ['especialidadId', 'especialidadNombre', 'formulario'],
   data: function data() {
@@ -2397,10 +2392,9 @@ __webpack_require__.r(__webpack_exports__);
     getEspecialidades: function getEspecialidades() {
       var _this = this;
 
-      // console.log(this.especialidadId+'ididididi');
       var urlEspecialidades = '/citas/especialidades';
       axios.get(urlEspecialidades).then(function (response) {
-        _this.especialidades = response.data; // this.getNombreEspecialidad(this.especialidadId)
+        _this.especialidades = response.data;
       })["catch"](function (error) {
         console.log(error);
       });
@@ -2429,6 +2423,8 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var vue2_datepicker_index_css__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(vue2_datepicker_index_css__WEBPACK_IMPORTED_MODULE_1__);
 /* harmony import */ var vue2_datepicker_locale_es__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! vue2-datepicker/locale/es */ "./node_modules/vue2-datepicker/locale/es.js");
 /* harmony import */ var vue2_datepicker_locale_es__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(vue2_datepicker_locale_es__WEBPACK_IMPORTED_MODULE_2__);
+/* harmony import */ var moment__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! moment */ "./node_modules/moment/moment.js");
+/* harmony import */ var moment__WEBPACK_IMPORTED_MODULE_3___default = /*#__PURE__*/__webpack_require__.n(moment__WEBPACK_IMPORTED_MODULE_3__);
 //
 //
 //
@@ -2449,6 +2445,7 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+
 
 
 
@@ -2459,7 +2456,7 @@ __webpack_require__.r(__webpack_exports__);
   props: ['medicoId'],
   data: function data() {
     return {
-      fecha: new Date()
+      fecha: moment__WEBPACK_IMPORTED_MODULE_3___default()().format("DD-MM-YYYY")
     };
   },
   created: function created() {// const ff = this.$set.fechaSel
@@ -2509,15 +2506,10 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
-//
-//
-//
 /* harmony default export */ __webpack_exports__["default"] = ({
-  props: ['medicoId', 'especialidadId', 'formulario' //    'edit'
-  ],
+  props: ['medicoId', 'especialidadId', 'formulario'],
   data: function data() {
     return {
-      // medico_seleccionado: '',
       medicos: [],
       nombreMedico: ''
     };
@@ -2527,13 +2519,10 @@ __webpack_require__.r(__webpack_exports__);
       var _this = this;
 
       if (id != '') {
-        console.log('formulario: ' + this.formulario);
-        var urlMedicos = '/especialidad/' + id + '/medicosjson' + (this.formulario == 'editar' ? 'editar' : ''); // console.log(urlMedicos);
-
+        var urlMedicos = '/especialidad/' + id + '/medicosjson' + (this.formulario == 'editar' ? 'editar' : '');
         var param = {};
         axios.get(urlMedicos).then(function (response) {
-          // console.log(response.data)
-          _this.medicos = response.data; // this.getNombreMedico(this.medicoId)
+          _this.medicos = response.data;
         })["catch"](function (error) {
           console.log(error);
         });
@@ -2565,6 +2554,8 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _ComboEspecialidad_vue__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./ComboEspecialidad.vue */ "./resources/js/components/ComboEspecialidad.vue");
 /* harmony import */ var _ComboMedicos_vue__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./ComboMedicos.vue */ "./resources/js/components/ComboMedicos.vue");
 /* harmony import */ var _ComboFecha_vue__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./ComboFecha.vue */ "./resources/js/components/ComboFecha.vue");
+/* harmony import */ var moment__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! moment */ "./node_modules/moment/moment.js");
+/* harmony import */ var moment__WEBPACK_IMPORTED_MODULE_3___default = /*#__PURE__*/__webpack_require__.n(moment__WEBPACK_IMPORTED_MODULE_3__);
 //
 //
 //
@@ -2657,6 +2648,7 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+
 
 
 
@@ -2677,7 +2669,7 @@ var noHorasAlert = "<div class=\"alert alert-danger\" role=\"alert\">\n         
     return {
       especialidad_seleccionada: "",
       medico_seleccionado: "",
-      fecha_seleccionada: null,
+      fecha_seleccionada: moment__WEBPACK_IMPORTED_MODULE_3___default()().format("DD-MM-YYYY"),
       horas: [],
       tm_sucursal: '',
       tt_sucursal: '',
@@ -2690,7 +2682,7 @@ var noHorasAlert = "<div class=\"alert alert-danger\" role=\"alert\">\n         
     especialidadSelect: function especialidadSelect(especialidadId) {
       this.especialidad_seleccionada = especialidadId;
       this.$refs.especialidadSeleccionada.cargarMedicos(especialidadId);
-      this.fecha_seleccionada = null;
+      this.fecha_seleccionada = moment__WEBPACK_IMPORTED_MODULE_3___default()().format("DD-MM-YYYY");
       this.$refs.fechaSeleccionada.setFecha(this.fecha_seleccionada);
       this.medico_seleccionado = "0";
       this.horas = [];
@@ -2702,7 +2694,7 @@ var noHorasAlert = "<div class=\"alert alert-danger\" role=\"alert\">\n         
       this.cargarHoras();
     },
     fechaSelect: function fechaSelect(fecha) {
-      console.log("Fecha seleccionada: " + fecha);
+      //   console.log("Fecha seleccionada: " + fecha);
       this.fecha_seleccionada = fecha;
       this.horas = [];
       this.cargarHoras();
@@ -2722,7 +2714,6 @@ var noHorasAlert = "<div class=\"alert alert-danger\" role=\"alert\">\n         
       var _this = this;
 
       // this.value = [date, new Date(date.getTime() + 30 * 24 * 3600 * 1000)]
-      console.log("la fecha sellecionada es: " + this.fecha_seleccionada + " Medico: " + this.medico_seleccionado + "especialidad: " + this.especialidad_seleccionada);
       var urlHorasMedico = "/horasmedico";
       var params = {
         fecha: this.fecha_seleccionada,
@@ -2817,7 +2808,7 @@ var noHorasAlert = "<div class=\"alert alert-danger\" role=\"alert\">\n         
     },
     datosCorrectos: function datosCorrectos() {
       if (!this.fecha_seleccionada || !this.hora_seleccionada || this.especialidad_seleccionada === 0 || this.medico_seleccionado === 0) {
-        console.log("datos incompletos");
+        // console.log("datos incompletos");
         return false;
       } else {
         return true;
@@ -3174,7 +3165,6 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
-//
 /* harmony default export */ __webpack_exports__["default"] = ({
   props: ['especialidadId'],
   methods: {
@@ -3229,6 +3219,11 @@ __webpack_require__.r(__webpack_exports__);
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
+//
+//
+//
+//
+//
 //
 //
 //
@@ -3662,16 +3657,6 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
 
 
 
@@ -3683,27 +3668,22 @@ var noHorasAlert = "<div class=\"alert alert-danger\" role=\"alert\">\n    <stro
   props: ['medicoId'],
   data: function data() {
     return {
-      // lang: {
-      // formatLocale: {
-      //     firstDayOfWeek: 1,
-      // },
-      // monthBeforeYear: false,
-      // },
-      // time1: null,
       fecha: '',
       horasTM: [],
       horasTT: []
     };
   },
   created: function created() {
-    console.log('Fecha');
+    console.log('Fecha: ' + moment());
+  },
+  mounted: function mounted() {
+    console.log('FECHA: ');
   },
   methods: {
     cargarHoras: function cargarHoras(date) {
       var _this = this;
 
-      // this.value = [date, new Date(date.getTime() + 30 * 24 * 3600 * 1000)]
-      console.log('la fecha sellecionada es: ' + this.fecha + ' Medico: ' + this.medicoId);
+      // console.log('la fecha sellecionada es: ');
       var urlHorasMedico = '/horasmedico';
       var params = {
         fecha: this.fecha,
@@ -83571,11 +83551,15 @@ var render = function() {
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
   return _c("div", [
-    _c("input", {
-      staticClass: "btn btn-sm btn-danger",
-      attrs: { type: "submit", value: "Cancelar", dusk: _vm.dusk },
-      on: { click: _vm.cancelarCita }
-    })
+    _c(
+      "button",
+      {
+        staticClass: "btn btn-sm btn-danger",
+        attrs: { type: "submit", dusk: _vm.dusk },
+        on: { click: _vm.cancelarCita }
+      },
+      [_c("i", { staticClass: "fas fa-ban" }), _vm._v(" Cancelar")]
+    )
   ])
 }
 var staticRenderFns = []
@@ -84274,7 +84258,7 @@ var render = function() {
           ? _c(
               "button",
               {
-                staticClass: "btn btn-primary p3",
+                staticClass: "btn btn-outline-success p3",
                 attrs: { type: "submit" },
                 on: {
                   click: function($event) {
@@ -84283,7 +84267,10 @@ var render = function() {
                   }
                 }
               },
-              [_vm._v("Registrar Cita")]
+              [
+                _c("i", { staticClass: "fas fa-calendar-check" }),
+                _vm._v(" Registrar Cita")
+              ]
             )
           : _vm._e()
       ]
@@ -84577,11 +84564,15 @@ var render = function() {
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
   return _c("div", [
-    _c("input", {
-      staticClass: "btn btn-sm btn-danger",
-      attrs: { type: "submit", value: "Dar de baja" },
-      on: { click: _vm.darDeBaja }
-    })
+    _c(
+      "button",
+      {
+        staticClass: "btn btn-sm btn-danger",
+        attrs: { type: "submit" },
+        on: { click: _vm.darDeBaja }
+      },
+      [_c("i", { staticClass: "fas fa-minus-circle" }), _vm._v(" Dar de baja")]
+    )
   ])
 }
 var staticRenderFns = []
@@ -84607,11 +84598,15 @@ var render = function() {
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
   return _c("div", [
-    _c("input", {
-      staticClass: "btn btn-sm btn-danger",
-      attrs: { type: "submit", value: "Dar de baja", dusk: _vm.dusk },
-      on: { click: _vm.darDeBaja }
-    })
+    _c(
+      "button",
+      {
+        staticClass: "btn btn-sm btn-danger",
+        attrs: { type: "submit", dusk: _vm.dusk },
+        on: { click: _vm.darDeBaja }
+      },
+      [_c("i", { staticClass: "fas fa-minus-circle" }), _vm._v(" Dar de baja")]
+    )
   ])
 }
 var staticRenderFns = []
@@ -84850,7 +84845,7 @@ var render = function() {
     _c(
       "button",
       {
-        staticClass: "btn btn-info mr-2",
+        staticClass: "btn btn-outline-warning mr-2",
         attrs: { type: "submit" },
         on: {
           click: function($event) {
@@ -84858,7 +84853,7 @@ var render = function() {
           }
         }
       },
-      [_vm._v("Ver Inactivos")]
+      [_c("i", { staticClass: "fas fa-eye" }), _vm._v(" Ver Inactivos")]
     )
   ])
 }

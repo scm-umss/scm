@@ -6,9 +6,9 @@
         <div class="col-md-12">
             <div class="card shadow">
                 <div class="card-header d-flex justify-content-between">
-                    <h4>Medicos de la especialidad: {{ $especialidad->nombre }}</h4>
+                    <h4>Medicos de la especialidad: <span class="badge badge-secondary">{{ $especialidad->nombre }}</span></h4>
 
-                    <a class="btn btn-danger" href="{{ route('citas.create') }}" role="button"><i class="fa fa-arrow-circle-left" aria-hidden="true"></i> Volver</a>
+                    <a class="btn btn-outline-danger" href="{{ route('citas.create') }}" role="button"><i class="fa fa-arrow-circle-left" aria-hidden="true"></i> Volver</a>
                 </div>
 
                 <div class="card-body">
@@ -20,7 +20,7 @@
                         <div class="card-body">
                           <h5 class="card-title">{{ $medico->nombreCompleto }}</h5>
                           <p class="card-text">{{ $medico->ap_paterno }}</p>
-                          <a href="{{ route('citas.horario', ['medico' => $medico->id, 'especialidad' => $especialidad->id]) }}" class="btn btn-primary">Seleccionar</a>
+                          <a href="{{ route('citas.horario', ['medico' => $medico->id, 'especialidad' => $especialidad->id]) }}" class="btn btn-primary"><i class="fas fa-check-circle"></i> Seleccionar</a>
                         </div>
                       </div>
 

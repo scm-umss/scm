@@ -11,7 +11,7 @@
         @endif
         <div class="card-header d-flex justify-content-between">
             <h4>Usuarios inactivos</h4>
-            <a class="btn btn-warning mr-2" href="{{ route('usuarios.index') }}" role="button" dusk="ver-activos">Ver Activos</a>
+            <a class="btn btn-outline-warning mr-2" href="{{ route('usuarios.index') }}" role="button" dusk="ver-activos"><i class="fas fa-users"></i> Ver Activos</a>
         </div>
         <div class="card-body">
 
@@ -40,7 +40,7 @@
 
                             {{-- <td><img src="/storage/{{ $usuario->imagen }}" style="width:60px"></td> --}}
                             <td>
-                                <a href="{{ route('usuarios.restore', $usuario->id) }}" class="btn btn-sm btn-secondary" dusk="restaurar-usuario-{{ $usuario->id }}"> Restaurar</a>
+                                <a href="{{ route('usuarios.restore', $usuario->id) }}" class="btn btn-sm btn-secondary" dusk="restaurar-usuario-{{ $usuario->id }}"><i class="fas fa-trash-restore"></i> Restaurar</a>
                             </td>
                         </tr>
                         @empty

@@ -14,8 +14,8 @@
                         <h4>Horario de: <span class="badge badge-secondary">{{ $medico->nombreCompleto }}</span></h4>
                     </div>
                     <div>
-                        <a class="btn btn-danger" href="{{ redirect()->getUrlGenerator()->previous() }}" role="button"><i class="fa fa-arrow-circle-left" aria-hidden="true"></i> Volver</a>
-                        <button type="submit" class="btn btn-primary">Guardar Horario</button>
+                        <a class="btn btn-outline-danger" href="{{ redirect()->getUrlGenerator()->previous() }}" role="button"><i class="fa fa-arrow-circle-left" aria-hidden="true"></i> Volver</a>
+                        <button type="submit" class="btn btn-outline-success"><i class="fas fa-check-circle"></i> Guardar Horario</button>
                     </div>
                 </div>
 

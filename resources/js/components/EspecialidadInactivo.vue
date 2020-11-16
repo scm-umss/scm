@@ -47,7 +47,7 @@
                 </div>
             </transition>
         </div>
-        <button type="submit" class="btn btn-info mr-2" @click="verModal = true, getInactivos()">Ver Inactivos</button>
+        <button type="submit" class="btn btn-outline-warning mr-2" @click="verModal = true, getInactivos()"><i class="fas fa-eye"></i> Ver Inactivos</button>
     </div>
 </template>
 <script>

@@ -7,7 +7,7 @@
             <div class="card shadow">
                 <div class="card-header d-flex justify-content-between">
                     <h4>Registrar Cita</h4>
-                    <a class="btn btn-danger text-white" href="{{ route('citas.index') }}" role="button">Cancelar</a>
+                    <a class="btn btn-outline-danger" href="{{ route('citas.index') }}" role="button"><i class="fas fa-arrow-circle-left"></i> Cancelar</a>
                 </div>
 
                 <div class="card-body">
@@ -19,7 +19,7 @@
                         <div class="card-body">
                           <h5 class="card-title">{{ $especialidad->nombre }}</h5>
                           <p class="card-text">{{ $especialidad->descripcion }}</p>
-                          <a href="{{ route('citas.medicos', $especialidad->id) }}" class="btn btn-primary">Seleccionar</a>
+                          <a href="{{ route('citas.medicos', $especialidad->id) }}" class="btn btn-primary"><i class="fas fa-check-circle"></i> Seleccionar</a>
                         </div>
                       </div>
 

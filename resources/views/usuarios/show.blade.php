@@ -21,15 +21,15 @@
                         <img src="/storage/{{$usuario->imagen}}" class="card-img rounded-circle" alt="foto">
                         <div class="container text-center mt-4">
                             @if (auth()->user()->isSuperAdmin())
-                            <a class="btn btn-warning d-block" href="{{ route('usuarios.edit', $usuario->id) }}"
-                                role="button">Editar</a>
+                            <a class="btn btn-outline-warning d-block" href="{{ route('usuarios.edit', $usuario->id) }}"
+                                role="button"><i class="fas fa-user-edit"></i> Editar</a>
                             @endif
                         </div>
                     </div>
                     <div class="col-md-8">
                         <div class="card-body bg-light">
                             <div class="container bg-secondary p-4 mb-4 d-flex justify-content-between">
-                                <h4 class="card-title">Estás registrado como:
+                                <h4 class="card-title"><strong>Tienes rol de:</strong>
                                     {{ $usuario->roles->pluck('nombre')->implode(', ') }}</h4>
                                     <a class="btn btn-danger" href="{{ redirect()->getUrlGenerator()->previous() }}" role="button"><i class="fa fa-arrow-circle-left" aria-hidden="true"></i> Volver</a>
                             </div>
@@ -82,7 +82,7 @@
                                         @endif
                                         <div>
                                             <a href="{{ route('horarios.edit', $usuario->id) }}" class="btn btn-info"
-                                                dusk="crear-horario-{{ $usuario->id }}">Gestionar Horario</a>
+                                                dusk="crear-horario-{{ $usuario->id }}"><i class="fas fa-clock"></i> Gestionar Horario</a>
                                         </div>
                                     </div>
                                     @endif

@@ -56,9 +56,9 @@
                         </div>
                 </div>
 
-                <div class="form-group">
-                    <input type="submit" class="btn btn-primary" value="Actualizar">
-                    <a href="{{ route('especialidad.index') }}" class="btn btn-danger px4">Cancelar</a>
+                <div class="form-group d-flex justify-content-center">
+                    <input type="submit" class="btn btn-outline-success mr-2 fas" value="&#xf058; Actualizar">
+                    <a href="{{ route('especialidad.index') }}" class="btn btn-outline-danger px4"><i class="fas fa-arrow-circle-left"></i> Cancelar</a>
                 </div>
 
             </fieldset>

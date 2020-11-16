@@ -8,7 +8,6 @@
     <table class="table table-striped">
         <thead>
             <tr>
-                {{-- <th scope="col">Numero ficha</th> --}}
                 <th scope="col">Fecha</th>
                 <th scope="col">Hora</th>
                 <th scope="col">Especialidad</th>
@@ -20,7 +19,7 @@
                 <th scope="col">Médico</th>
                 <th scope="col">Paciente</th>
                 @endif
-                <th scope="col">Sucursal</th>
+                {{-- <th scope="col">Sucursal</th> --}}
                 <th scope="col">Acciones</th>
             </tr>
         </thead>
@@ -38,14 +37,12 @@
                             <td>{{ $cita->medico->nombreCompleto }}</td>
                             <td>{{ $cita->paciente->nombreCompleto }}</td>
                     @endif
-                    <td>{{ $cita->sucursal->nombre }}</td>
+                    {{-- <td>{{ $cita->sucursal->nombre }}</td> --}}
                     <td class="d-flex">
                         @if ($rol == 'admin')
-                    <a class="btn btn-sm btn-primary mr-2" href="{{ route('citas.show', $cita->id) }}" dusk="ver-cita-{{ $cita->id }}">
-                              Ver
+                    <a class="btn btn-sm btn-info mr-2" href="{{ route('citas.show', $cita->id) }}" dusk="ver-cita-{{ $cita->id }}"><i class="fas fa-eye"></i> Ver
                           </a>
-                          <a class="btn btn-sm btn-secondary mr-2" href="{{ route('citas.edit', $cita->id) }}" dusk="editar-cita-{{ $cita->id }}">
-                              Editar
+                          <a class="btn btn-sm btn-secondary mr-2" href="{{ route('citas.edit', $cita->id) }}" dusk="editar-cita-{{ $cita->id }}"><i class="fas fa-pen"></i> Editar
                           </a>
                         @endif
 
@@ -55,7 +52,7 @@
                             @csrf
 
                             <button class="btn btn-sm btn-success" type="submit" dusk="confirmar-cita-{{ $cita->id }}">
-                              Confirmar
+                                <i class="fas fa-check-circle"></i> Confirmar
                             </button>
                           </form>
                         @endif

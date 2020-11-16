@@ -108,7 +108,6 @@ class UsuariosController extends Controller
         // $roles = Rol::pluck('slug','id');
         $citas_confirmadas = $usuario->citasConfirmadas;
         // $rol = $usuario->roles[0]]->slug;
-        // dd($rol);
         return view('usuarios.show', compact('usuario','citas_confirmadas'));
     }
 

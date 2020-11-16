@@ -1,12 +1,11 @@
 <div class="sidebar">
     <div class="user-panel mt-3 pb-3 mb-3 d-flex">
         <div class="image">
-          {{-- <img src="../../dist/img/user2-160x160.jpg" class="img-circle elevation-2" alt="User Image"> --}}
           <img src="/storage/{{ auth()->user()->imagen }}" class="img-circle"
                 alt="User Image">
         </div>
         <div class="info">
-          <a href="#" class="d-block">{{ Auth::user()->nombre }} {{ Auth::user()->ap_paterno }}</a>
+          <a href="{{ route('usuarios.show', Auth::user()->id) }}" class="d-block">{{ Auth::user()->nombre }} {{ Auth::user()->ap_paterno }}</a>
         </div>
     </div>
 
@@ -51,12 +50,6 @@
                     </p>
                 </a>
             </li>
-
-
-
-
-
-            {{-- <li class="nav-header">ADMINISTRATIVO</li> --}}
             <div class="border border-primary"></div>
             <li class="nav-item">
                 <a href="{{ route('especialidad.index') }}"

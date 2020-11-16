@@ -5,7 +5,7 @@
 
     <div class="row justify-content-center">
         <div class="col-md-8">
-            <div class="card mb-3 shadow">
+            <div class="card mb-3 shadow  bg-light">
                 <div class="jumbotron">
                     <div class="container">
                         <h1 class="display-4">Detalle de citas</h1>
@@ -14,8 +14,7 @@
                 </div>
                 <div class="px-5">
                     <div class="card-body">
-                        <h5 class="card-title"><strong>Cita del paciente:</strong> {{ $cita->paciente->nombreCompleto }}</h5>
-                        <hr>
+                        <h5 class="card-title mb-3"><strong>Cita del paciente:</strong> {{ $cita->paciente->nombreCompleto }}</h5>
                         <p class="card-text"><strong>Fecha de la cita:</strong> {{ $cita->fecha_programada->format('d-m-Y') }} </p>
                         <p class="card-text"><strong>Hora de la cita:</strong> {{ $cita->hora_programada }} </p>
                         <p class="card-text"><strong>Estado:</strong>
@@ -53,8 +52,8 @@
                         </button>
                         </form>
                     @endif
-                    <a href="{{ url()->previous() }}" class="btn btn-danger">
-                        Volver
+                    <a href="{{ url()->previous() }}" class="btn btn-outline-danger">
+                        <i class="fas fa-arrow-circle-left"></i> Volver
                     </a>
                 </div>
             </div>

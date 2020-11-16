@@ -25,7 +25,7 @@
                         <div class="d-flex justify-content-between">
                         <h5 class="card-title font-weight-bold">Horas disponible</h5>
 
-                            <a class="btn btn-danger" href="{{ route('citas.medicos', $especialidad->id) }}" role="button"><i class="fa fa-arrow-circle-left" aria-hidden="true"></i> Volver</a>
+                            <a class="btn btn-outline-danger" href="{{ route('citas.medicos', $especialidad->id) }}" role="button"><i class="fa fa-arrow-circle-left" aria-hidden="true"></i> Volver</a>
 
                     </div>
                         <hr>

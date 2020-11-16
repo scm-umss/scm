@@ -1,12 +1,10 @@
 <template>
   <div>
-    <input
-      type="submit"
+    <button
+    type="submit"
       class="btn btn-sm btn-danger"
-      value="Cancelar"
       @click="cancelarCita"
-      :dusk="dusk"
-    />
+      :dusk="dusk"><i class="fas fa-ban"></i> Cancelar</button>
   </div>
 </template>
 

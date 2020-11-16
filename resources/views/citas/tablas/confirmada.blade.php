@@ -20,7 +20,7 @@
                     <th scope="col">Paciente</th>
                     <th scope="col">Médico</th>
                 @endif
-                <th scope="col">Sucursal</th>
+                {{-- <th scope="col">Sucursal</th> --}}
                 <th scope="col">Acciones</th>
             </tr>
         </thead>
@@ -38,11 +38,11 @@
                         <td>{{ $cita->paciente->nombreCompleto }}</td>
                         <td>{{ $cita->medico->nombreCompleto }}</td>
                 @endif
-                <td>{{ $cita->sucursal->nombre }}</td>
+                {{-- <td>{{ $cita->sucursal->nombre }}</td> --}}
                 <td class="d-flex">
                     @if ($rol == 'admin')
-                    <a class="btn btn-sm btn-primary mr-2" href="{{ route('citas.show', $cita->id) }}">
-                        Ver
+                    <a class="btn btn-sm btn-info mr-2" href="{{ route('citas.show', $cita->id) }}">
+                        <i class="fas fa-eye"></i> Ver
                     </a>
                     @endif
                     @if (($rol == 'medico' || $rol == 'admin') && ($cita->fecha_programada->format('Y-m-d') <= $fecha_actual))
@@ -50,8 +50,8 @@
                         method="POST" class="d-inline-block mr-2">
                         @csrf
 
-                        <button class="btn btn-sm btn-success" type="submit" dusk="atender-cita-{{ $cita->id }}">
-                            Atendido
+                        <button class="btn btn-sm btn-primary" type="submit" dusk="atender-cita-{{ $cita->id }}">
+                            <i class="fas fa-calendar-check"></i> Atendido
                         </button>
                         </form>
                     @endif

@@ -12,7 +12,7 @@
         <div class="col-md-8">
             <div class="card">
                 <div class="card-header d-flex justify-content-between">Actualización de usuario
-                    <a href="{{ route('usuarios.index') }}" class="btn btn-danger px-4" role="button">Cancelar</a>
+                    <a href="{{ url()->previous() }}" class="btn btn-outline-danger px-4" role="button"><i class="fas fa-arrow-circle-left"></i> Cancelar</a>
                 </div>
 
                 <div class="card-body">
@@ -75,7 +75,7 @@
                                     @enderror
                                 </div>
                             </div>
-                            
+
                             <div class="form-group row">
                                 <label for="fecha_nacimiento" class="col-md-4 col-form-label text-md-right">Fecha Nacimiento:</label>
 
@@ -208,7 +208,7 @@
 
                         <div class="form-group row mb-0">
                             <div class="col-md-6 offset-md-4">
-                                <button type="submit" class="btn btn-primary">
+                                <button type="submit" class="btn btn-outline-success"><i class="fas fa-check-circle"></i>
                                     Actualizar
                                 </button>
                             </div>

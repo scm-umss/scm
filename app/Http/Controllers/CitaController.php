@@ -197,7 +197,6 @@ class CitaController extends Controller
     public function edit(Request $request, Cita $cita)
     {
         $this->authorize('update', $cita);
-        // dd($cita);
         if($request->ajax()){
             // $data = [];
             return response()->json($cita);

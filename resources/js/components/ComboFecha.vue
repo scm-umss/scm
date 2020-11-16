@@ -23,6 +23,7 @@
 import DatePicker from 'vue2-datepicker';
 import 'vue2-datepicker/index.css';
 import 'vue2-datepicker/locale/es';
+import moment from 'moment';
 
 export default {
     components:{
@@ -33,7 +34,7 @@ export default {
     ],
     data() {
         return {
-            fecha: new Date()
+            fecha: moment().format("DD-MM-YYYY")
         }
     },
     created: function(){

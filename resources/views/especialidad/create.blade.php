@@ -45,8 +45,10 @@
                                         <strong>{{ $message }}</strong>
                                     </span>
                                 @enderror
-                        <button type="submit" class="btn btn-primary btn-md">Guardar</button>
-                        <a href="{{ route('especialidad.index') }}" class="btn btn-danger px4">Cancelar</a>
+                        <div class="pt-4 d-flex justify-content-center">
+                            <button type="submit" class="btn btn-outline-success btn-md mr-2"><i class="fas fa-check-circle"></i> Guardar</button>
+                        <a href="{{ route('especialidad.index') }}" class="btn btn-outline-danger px4"><i class="fas fa-arrow-circle-left"></i> Cancelar</a>
+                        </div>
                     </div>
                 </fieldset>
 
