@@ -11,6 +11,10 @@
         @endif
         <div class="card-header d-flex justify-content-between">
             <h4>Lista de usuarios</h4>
+            <form action="{{ route('usuarios.index') }}" method="get" class="form-inline pull-right">
+                <input id="busqueda" type="text" class="form-control" name="busqueda" value="{{ old('busqueda', request()->busqueda) }}" placeholder="Nombre o apellidos..." autofocus>
+                <button type="submit" class="btn btn-info"><i class="fa fa-search"></i></button>
+            </form>
             <div class="d-flex align-right">
                 <a class="btn btn-outline-warning mr-2" href="{{ route('usuarios.inactivos') }}" role="button" dusk="ver-inactivos"><i class="fas fa-user-minus"></i> Ver Inactivos</a>
                 <a class="btn btn-outline-success" href="{{ route('usuarios.create') }}" role="button" dusk="crear-usuario"><i class="fas fa-plus-circle"></i> Nuevo Usuario</a>

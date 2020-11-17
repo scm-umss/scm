@@ -25,12 +25,17 @@ class UsuariosController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
-        //$this->authorize('view', null);
+        $nombre = $request->get('busqueda');
+        $ap_paterno = $request->get('busqueda');
+        $ap_materno = $request->get('busqueda');
 
-        // $usuarios = User::all();
-        $usuarios = User::with('roles')->paginate(10);
+        $usuarios = User::with('roles')
+                    ->buscar($nombre, $ap_paterno, $ap_materno)
+                    ->paginate(10);
+
+        // $usuarios = User::with('roles')->paginate(10);
         return view('usuarios.index', compact('usuarios'));
     }
 

@@ -19,4 +19,8 @@ class ForgotPasswordController extends Controller
     */
 
     use SendsPasswordResetEmails;
+
+    public function showLinkRequestForm(){
+        return 'Contacta al administrador, para resolver el inconveniente.';
+    }
 }

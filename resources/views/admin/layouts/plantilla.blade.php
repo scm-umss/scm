@@ -20,11 +20,11 @@
     <!-- Site wrapper -->
     <div class="wrapper" id="app">
         <!-- Navbar -->
+        @auth
         @include('admin.layouts.plantilla.navbar')
         <!-- /.navbar -->
 
         <!-- Main Sidebar Container -->
-        @auth
         <aside class="main-sidebar sidebar-dark-primary elevation-4">
             <!-- Brand Logo -->
             <a href="/home" class="brand-link">

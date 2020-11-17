@@ -44,12 +44,14 @@ class User extends Authenticatable
         'fecha_nacimiento',
         'deleted_at'
     ];
-    // protected static function booted()
-    // {
-    //     static::created(function ($user) {
-    //         $user->perfil()->create();
-    //     });
-    // }
+
+    public function scopeBuscar($query, $nombre, $ap_paterno, $ap_materno){
+        if ($nombre or $ap_paterno or $ap_materno) {
+            return $query->where('nombre', 'LIKE', "%$nombre%")
+                        ->orWhere('ap_paterno', 'LIKE', "%$ap_paterno%")
+                        ->orWhere('ap_materno', 'LIKE', "%$ap_materno%");
+        }
+    }
 
     public function roles(){
         return $this->belongsToMany(Rol::class, 'rol_user');
