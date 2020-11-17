@@ -204,59 +204,61 @@ class UsuariosSeeder extends Seeder
         $citas_ex = collect();
 
         for ($i = 0; $i < 14; $i++) {
-            $c = factory(App\Cita::class, 6)->create([
-                'paciente_id' => $paciente->id,
-                'medico_id' => $medico->id,
-                'especialidad_id' => $traumatologia->id,
-                'sucursal_id' => $sucursal1->id,
-                'fecha_programada' => $fecha_cita->format('Y-m-d'),
-                'estado' => 'Reservada',
-            ]);
-
-            $c->each(function($cita_ex) use ($pacientes_ex, $medicos_ex, $admin, $faker, $fecha_cita, $fecha_hoy) {
-                $med = $medicos_ex->random();
-
-                $cita_ex->paciente_id = $pacientes_ex->random()->id;
-                $cita_ex->medico_id = $med->id;
-                $cita_ex->especialidad_id = $med->especialidades()->first()->id;
-                //$cita_ex->sucursal_id = $sucursal1->id;
-                if ($fecha_cita < $fecha_hoy) {
-                    $p = mt_rand(1,100);
-                    if ($p < 25) {
-                        $cita_ex->estado = 'Cancelada';
-                    } else {
-                        $cita_ex->estado = 'Atendida';
-                    }
-                } else {
-                    $p = mt_rand(1,100);
-                    if ($p < 25) {
-                        $cita_ex->estado = 'Cancelada';
-                    } else if ($p < 75) {
-                        $cita_ex->estado = 'Confirmada';
-                    }
-                }
-                $cita_ex->hora_programada = $faker->unique()->randomElement(['08:00:00','08:30:00','09:00:00','09:30:00','10:00:00','10:30:00']);
-                $cita_ex->save();
-
-                $historialCreado = CitaHistorial::create([
-                    'cita_id' => $cita_ex->id,
-                    'user_id' => $admin->id,
-                    'evento' => 'Creado',
+            if ($fecha_cita->dayOfWeek > 0) {
+                $c = factory(App\Cita::class, 6)->create([
+                    'paciente_id' => $paciente->id,
+                    'medico_id' => $medico->id,
+                    'especialidad_id' => $traumatologia->id,
+                    'sucursal_id' => $sucursal1->id,
+                    'fecha_programada' => $fecha_cita->format('Y-m-d'),
+                    'estado' => 'Reservada',
                 ]);
 
-                if ($cita_ex->estado == 'Cancelada') {
-                    $historialCancelado = CitaHistorial::create([
+                $c->each(function($cita_ex) use ($pacientes_ex, $medicos_ex, $admin, $faker, $fecha_cita, $fecha_hoy) {
+                    $med = $medicos_ex->random();
+
+                    $cita_ex->paciente_id = $pacientes_ex->random()->id;
+                    $cita_ex->medico_id = $med->id;
+                    $cita_ex->especialidad_id = $med->especialidades()->first()->id;
+                    //$cita_ex->sucursal_id = $sucursal1->id;
+                    if ($fecha_cita < $fecha_hoy) {
+                        $p = mt_rand(1,100);
+                        if ($p < 25) {
+                            $cita_ex->estado = 'Cancelada';
+                        } else {
+                            $cita_ex->estado = 'Atendida';
+                        }
+                    } else {
+                        $p = mt_rand(1,100);
+                        if ($p < 25) {
+                            $cita_ex->estado = 'Cancelada';
+                        } else if ($p < 75) {
+                            $cita_ex->estado = 'Confirmada';
+                        }
+                    }
+                    $cita_ex->hora_programada = $faker->unique()->randomElement(['08:00:00','08:30:00','09:00:00','09:30:00','10:00:00','10:30:00']);
+                    $cita_ex->save();
+
+                    $historialCreado = CitaHistorial::create([
                         'cita_id' => $cita_ex->id,
                         'user_id' => $admin->id,
-                        'evento' => 'Cancelado',
-                        'descripcion' => $faker->realText($maxNbChars = 100),
+                        'evento' => 'Creado',
                     ]);
-                }
-            });
 
-            $citas_ex = $citas_ex->concat($c);
+                    if ($cita_ex->estado == 'Cancelada') {
+                        $historialCancelado = CitaHistorial::create([
+                            'cita_id' => $cita_ex->id,
+                            'user_id' => $admin->id,
+                            'evento' => 'Cancelado',
+                            'descripcion' => $faker->realText($maxNbChars = 100),
+                        ]);
+                    }
+                });
 
-            $faker->unique($reset = true);
+                $citas_ex = $citas_ex->concat($c);
+
+                $faker->unique($reset = true);
+            }
             $fecha_cita->addDay(1);
         }
     }
