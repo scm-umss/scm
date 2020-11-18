@@ -4,7 +4,13 @@
 <div class="container">
 
     <div class="card shadow">
+        @if (session('rol'))
+            <div class="alert alert-danger">
+                {{ session('rol') }}
+            </div>
+            @endif
         <div class="card-header d-flex justify-content-between">
+
             <h4> @yield('cabecera') </h4>
             <div class="">
                 <a class="btn btn-outline-success" href="{{ route('citas.create') }}"><i class="fas fa-plus-circle"></i> Crear Cita</a>

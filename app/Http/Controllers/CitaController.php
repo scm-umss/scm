@@ -115,6 +115,9 @@ class CitaController extends Controller
             })->paginate(5);
             return view('pacientes.index', compact('pacientes'));
         }
+        if (auth()->user()->tieneRol(['medico']) and !(auth()->user()->tieneRol(['paciente']))) {
+            return back()->with('rol', 'Solicita al administrador el rol de paciente.');
+        }
         return view('citas.create', compact('especialidades'));
     }
 
