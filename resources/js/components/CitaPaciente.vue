@@ -7,74 +7,76 @@
     ></combo-fecha>
     <fieldset class="border p-4" v-if="horas.length">
       <legend class="text-primary">Horas disponibles</legend>
-      <div class="container">
-        <div class="row row-cols-2">
-          <div class="col" v-if="this.tm_sucursal">
-            <div
-              class="shadow p-2 mb-4 bg-white rounded text-center border border-primary"
-            >
-              Sucursal Mañana: {{ tm_sucursal.nombre }}
-            </div>
-          </div>
-          <div class="col" v-if="this.tt_sucursal">
-            <div
-              class="shadow p-2 mb-4 bg-white rounded text-center border border-secondary"
-            >
-              Sucursal Tarde: {{ tt_sucursal.nombre }}
-            </div>
-          </div>
-        </div>
-      </div>
-      <hr />
-      <div class="container">
-        <div class="row row-cols-4">
-          <div v-for="(hora, index) in horas" :key="index">
-            <div class="col mb-4" v-if="hora < '12:00'">
-              <div class="card shadow text-white bg-primary mb-3">
-                <div class="card-header">
-                  <div class="form-check">
-                    <input
-                      class="form-check-input"
-                      type="radio"
-                      name="hora_inicio"
-                      :id="'hora_inicio_' + index"
-                      :value="hora"
-                      @click="horaSelect"
-                    />
-                    <label
-                      class="form-check-label"
-                      :for="'hora_inicio_' + index"
-                      >{{ hora }}</label
-                    >
-                  </div>
+        <div class="container">
+            <div class="row row-cols-1 row row-cols-md-2">
+                <div class="col" v-if="this.tm_sucursal">
+                    <div class="shadow p-2 mb-4 bg-white rounded text-center border border-primary">
+                        <h4>Turno Mañana: {{ tm_sucursal.nombre }}</h4>
+                        <hr>
+                        <div class="row row-cols-2">
+                            <div v-for="(hora, index) in horas" :key="index">
+                                <div class="col mb-4" v-if="hora<'12:00'">
+                                    <div class="card shadow text-white bg-primary mb-3">
+                                        <div class="card-header">
+                                        <div class="form-check">
+                                            <input
+                                            class="form-check-input"
+                                            type="radio"
+                                            name="hora_inicio"
+                                            :id="'hora_inicio_'+index"
+                                            :value="hora"
+                                            @click="horaSelect"
+                                            />
+                                            <label class="form-check-label" :for="'hora_inicio_'+index">{{ hora }}</label>
+                                        </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
                 </div>
-              </div>
-            </div>
-            <div class="col" v-else>
-              <div class="card shadow text-white bg-secondary mb-3">
-                <div class="card-header">
-                  <div class="form-check">
-                    <input
-                      class="form-check-input"
-                      type="radio"
-                      name="hora_inicio"
-                      :id="'hora_inicio' + index"
-                      :value="hora"
-                      @click="horaSelect"
-                    />
-                    <label
-                      class="form-check-label"
-                      :for="'hora_inicio' + index"
-                      >{{ hora }}</label
-                    >
-                  </div>
+                <div class="col" v-else>
+                    <div class="shadow p-2 mb-4 bg-white rounded text-center border border-secondary">
+                        <h4>Horario no disponible para el <span class="badge bg-primary">turno mañana</span> para la fecha seleccionada.</h4>
+                    </div>
                 </div>
-              </div>
+                <div class="col" v-if="this.tt_sucursal">
+                    <div class="shadow p-2 mb-4 bg-white rounded text-center border border-secondary">
+                        <h4>Turno Tarde: {{ tt_sucursal.nombre }}</h4>
+                        <hr>
+                        <div class="row row-cols-2">
+                            <div v-for="(hora, index) in horas" :key="index">
+                                <div class="col mb-4" v-if="hora>'12:00'">
+                                    <div class="card shadow text-white bg-secondary mb-3">
+                                        <div class="card-header">
+                                        <div class="form-check">
+                                            <input
+                                            class="form-check-input"
+                                            type="radio"
+                                            name="hora_inicio"
+                                            :id="'hora_inicio_'+index"
+                                            :value="hora"
+                                            @click="horaSelect"
+                                            />
+                                            <label class="form-check-label" :for="'hora_inicio_'+index">{{ hora }}</label>
+                                        </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col" v-else>
+                    <div class="shadow p-2 mb-4 bg-white rounded text-center border border-secondary">
+                        <h4>Horario no disponible para el <span class="badge bg-secondary">turno tarde</span> para la fecha seleccionada.</h4>
+                    </div>
+                </div>
             </div>
-          </div>
         </div>
-      </div>
     </fieldset>
+
     <div class="form-group mt-3 d-flex justify-content-center">
       <button
         type="submit"
