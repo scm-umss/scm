@@ -45,18 +45,18 @@ class UsuariosSeeder extends Seeder
             'descripcion' => 'Descripcion 1',
         ]);
 
-        $psicologia = Especialidad::create([
-            'nombre' => 'Psicologia',
+        $urologia = Especialidad::create([
+            'nombre' => 'Urología',
             'descripcion' => 'Descripcion 2',
         ]);
 
-        $cardiologia = Especialidad::create([
-            'nombre' => 'Cardiologia',
+        $dermatologia = Especialidad::create([
+            'nombre' => 'Dermatología',
             'descripcion' => 'Descripcion 3',
         ]);
 
-        $odontologia = Especialidad::create([
-            'nombre' => 'Odontologia',
+        $medicinainterna = Especialidad::create([
+            'nombre' => 'Medicina Interna',
             'descripcion' => 'Descripcion 4',
         ]);
 
@@ -116,21 +116,21 @@ class UsuariosSeeder extends Seeder
         $medico->roles()->sync([$rolMedico->id]);
         $paciente->roles()->sync([$rolPaciente->id]);
 
-        $admin->especialidades()->sync([$traumatologia->id, $psicologia->id]);
-        $medico->especialidades()->sync([$traumatologia->id, $psicologia->id]);
+        $admin->especialidades()->sync([$traumatologia->id, $urologia->id]);
+        $medico->especialidades()->sync([$traumatologia->id, $urologia->id]);
 
         $medicos_ex = factory(App\User::class, 20)->create();
-        $medicos_ex->each(function ($user) use ($rolMedico, $traumatologia, $psicologia, $cardiologia, $odontologia) {
+        $medicos_ex->each(function ($user) use ($rolMedico, $traumatologia, $urologia, $dermatologia, $medicinainterna) {
             $user->roles()->sync([$rolMedico->id]);
             $p = mt_rand(1,100);
             if ($p < 25) {
                 $user->especialidades()->sync([$traumatologia->id]);
             } else if ($p < 50) {
-                $user->especialidades()->sync([$cardiologia->id]);
+                $user->especialidades()->sync([$dermatologia->id]);
             } else if ($p < 75) {
-                $user->especialidades()->sync([$odontologia->id]);
+                $user->especialidades()->sync([$medicinainterna->id]);
             } else {
-                $user->especialidades()->sync([$psicologia->id]);
+                $user->especialidades()->sync([$urologia->id]);
             }
         });
 
@@ -156,13 +156,13 @@ class UsuariosSeeder extends Seeder
                 'tt_hora_inicio' => ($tt_activo ? '15:00:00' : '14:00:00'),
                 'tt_hora_fin' => ($tt_activo ? '17:00:00' : '18:00:00'),
                 'tt_sucursal' => $sucursal2->id,
-                'tt_especialidad' => $psicologia->id,
+                'tt_especialidad' => $urologia->id,
                 'tt_consultorio' => '201',
                 'user_id' => $medico->id,
             ]);
         }
 
-        $medicos_ex->each(function ($medico_ex) use ($sucursal1, $sucursal2, $traumatologia, $psicologia, $cardiologia, $odontologia) {
+        $medicos_ex->each(function ($medico_ex) use ($sucursal1, $sucursal2, $traumatologia, $urologia, $dermatologia, $medicinainterna) {
             for ($i = 0; $i < 7; $i++) {
                 $tm_activo = ($i < 6);  // Lun-Vie
                 $tt_activo = ($i < 5);
